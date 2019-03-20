@@ -5,4 +5,4 @@ img.onload = function() {
   div.innerHTML += '<img src="'+img.src+'" />'; 
 };
  
-img.src = 'image.jpg';
+img.src = 'image.png';

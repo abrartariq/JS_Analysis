@@ -1,4 +1,4 @@
 var img = document.createElement("img");
-img.src = "";
+// img.src = "";
 //var src = document.getElementById("x");
 //src.appendChild(img);

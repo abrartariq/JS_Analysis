@@ -1,0 +1,1 @@
+var img1 = document.getElementById("x");
