@@ -1,0 +1,1973 @@
+[
+    {
+        "load": 84.9,
+        "cpu_time": 159365
+    },
+    {
+        "id": "http://192.168.0.173:8081/1-8.html",
+        "objs": [
+            {
+                "activityId": "Networking_0",
+                "id": "717DD3F5168E230FD3268B6567713304",
+                "startTime": 0.0,
+                "endTime": 28.003,
+                "mimeType": "text/html",
+                "url": "http://192.168.0.173:8081/1-8.html",
+                "fromScript": "Null",
+                "transferSize": 93,
+                "responseReceivedTime": 2.593,
+                "statusCode": 200
+            },
+            {
+                "activityId": "Loading_0",
+                "fromScript": null,
+                "styleSheetUrl": null,
+                "url": "http://192.168.0.173:8081/1-8.html",
+                "name": "ParseHTML",
+                "startTime": 30.875,
+                "endTime": 33.409
+            },
+            {
+                "activityId": "Loading_1",
+                "fromScript": "http://192.168.0.173:8081/1-8.js",
+                "styleSheetUrl": null,
+                "url": "http://192.168.0.173:8081/1-8.html",
+                "name": "ParseHTML",
+                "startTime": 53.383,
+                "endTime": 53.523
+            },
+            {
+                "activityId": "Loading_2",
+                "fromScript": "http://192.168.0.173:8081/1-8.js",
+                "styleSheetUrl": null,
+                "url": "http://192.168.0.173:8081/1-8.html",
+                "name": "ParseHTML",
+                "startTime": 54.227,
+                "endTime": 54.289
+            },
+            {
+                "activityId": "Loading_3",
+                "fromScript": "http://192.168.0.173:8081/1-8.js",
+                "styleSheetUrl": null,
+                "url": "http://192.168.0.173:8081/1-8.html",
+                "name": "ParseHTML",
+                "startTime": 54.431,
+                "endTime": 54.457
+            },
+            {
+                "activityId": "Loading_4",
+                "fromScript": "http://192.168.0.173:8081/1-8.js",
+                "styleSheetUrl": null,
+                "url": "http://192.168.0.173:8081/1-8.html",
+                "name": "ParseHTML",
+                "startTime": 54.546,
+                "endTime": 54.565
+            },
+            {
+                "activityId": "Loading_5",
+                "fromScript": "http://192.168.0.173:8081/1-8.js",
+                "styleSheetUrl": null,
+                "url": "http://192.168.0.173:8081/1-8.html",
+                "name": "ParseHTML",
+                "startTime": 54.641,
+                "endTime": 54.659
+            },
+            {
+                "activityId": "Loading_6",
+                "fromScript": "http://192.168.0.173:8081/1-8.js",
+                "styleSheetUrl": null,
+                "url": "http://192.168.0.173:8081/1-8.html",
+                "name": "ParseHTML",
+                "startTime": 54.758,
+                "endTime": 54.776
+            },
+            {
+                "activityId": "Loading_7",
+                "fromScript": "http://192.168.0.173:8081/1-8.js",
+                "styleSheetUrl": null,
+                "url": "http://192.168.0.173:8081/1-8.html",
+                "name": "ParseHTML",
+                "startTime": 54.852,
+                "endTime": 54.87
+            },
+            {
+                "activityId": "Loading_8",
+                "fromScript": "http://192.168.0.173:8081/1-8.js",
+                "styleSheetUrl": null,
+                "url": "http://192.168.0.173:8081/1-8.html",
+                "name": "ParseHTML",
+                "startTime": 54.983,
+                "endTime": 55.008
+            },
+            {
+                "activityId": "Loading_9",
+                "fromScript": "http://192.168.0.173:8081/1-8.js",
+                "styleSheetUrl": null,
+                "url": "http://192.168.0.173:8081/1-8.html",
+                "name": "ParseHTML",
+                "startTime": 55.11,
+                "endTime": 55.135
+            },
+            {
+                "activityId": "Loading_10",
+                "fromScript": "http://192.168.0.173:8081/1-8.js",
+                "styleSheetUrl": null,
+                "url": "http://192.168.0.173:8081/1-8.html",
+                "name": "ParseHTML",
+                "startTime": 55.236,
+                "endTime": 55.262
+            },
+            {
+                "activityId": "Loading_11",
+                "fromScript": "http://192.168.0.173:8081/1-8.js",
+                "styleSheetUrl": null,
+                "url": "http://192.168.0.173:8081/1-8.html",
+                "name": "ParseHTML",
+                "startTime": 55.592,
+                "endTime": 55.649
+            },
+            {
+                "activityId": "Loading_12",
+                "fromScript": "http://192.168.0.173:8081/1-8.js",
+                "styleSheetUrl": null,
+                "url": "http://192.168.0.173:8081/1-8.html",
+                "name": "ParseHTML",
+                "startTime": 55.852,
+                "endTime": 55.89
+            },
+            {
+                "activityId": "Loading_13",
+                "fromScript": "http://192.168.0.173:8081/1-8.js",
+                "styleSheetUrl": null,
+                "url": "http://192.168.0.173:8081/1-8.html",
+                "name": "ParseHTML",
+                "startTime": 56.048,
+                "endTime": 56.099
+            },
+            {
+                "activityId": "Loading_14",
+                "fromScript": "http://192.168.0.173:8081/1-8.js",
+                "styleSheetUrl": null,
+                "url": "http://192.168.0.173:8081/1-8.html",
+                "name": "ParseHTML",
+                "startTime": 56.294,
+                "endTime": 56.744
+            },
+            {
+                "activityId": "Loading_15",
+                "fromScript": "http://192.168.0.173:8081/1-8.js",
+                "styleSheetUrl": null,
+                "url": "http://192.168.0.173:8081/1-8.html",
+                "name": "ParseHTML",
+                "startTime": 57.011,
+                "endTime": 57.084
+            },
+            {
+                "activityId": "Loading_16",
+                "fromScript": "http://192.168.0.173:8081/1-8.js",
+                "styleSheetUrl": null,
+                "url": "http://192.168.0.173:8081/1-8.html",
+                "name": "ParseHTML",
+                "startTime": 57.278,
+                "endTime": 57.318
+            },
+            {
+                "activityId": "Loading_17",
+                "fromScript": "http://192.168.0.173:8081/1-8.js",
+                "styleSheetUrl": null,
+                "url": "http://192.168.0.173:8081/1-8.html",
+                "name": "ParseHTML",
+                "startTime": 57.497,
+                "endTime": 57.533
+            },
+            {
+                "activityId": "Loading_18",
+                "fromScript": "http://192.168.0.173:8081/1-8.js",
+                "styleSheetUrl": null,
+                "url": "http://192.168.0.173:8081/1-8.html",
+                "name": "ParseHTML",
+                "startTime": 57.788,
+                "endTime": 57.831
+            },
+            {
+                "activityId": "Loading_19",
+                "fromScript": "http://192.168.0.173:8081/1-8.js",
+                "styleSheetUrl": null,
+                "url": "http://192.168.0.173:8081/1-8.html",
+                "name": "ParseHTML",
+                "startTime": 58.041,
+                "endTime": 58.077
+            },
+            {
+                "activityId": "Loading_20",
+                "fromScript": "http://192.168.0.173:8081/1-8.js",
+                "styleSheetUrl": null,
+                "url": "http://192.168.0.173:8081/1-8.html",
+                "name": "ParseHTML",
+                "startTime": 58.233,
+                "endTime": 58.267
+            },
+            {
+                "activityId": "Loading_21",
+                "fromScript": "http://192.168.0.173:8081/1-8.js",
+                "styleSheetUrl": null,
+                "url": "http://192.168.0.173:8081/1-8.html",
+                "name": "ParseHTML",
+                "startTime": 58.418,
+                "endTime": 58.45
+            },
+            {
+                "activityId": "Loading_22",
+                "fromScript": "http://192.168.0.173:8081/1-8.js",
+                "styleSheetUrl": null,
+                "url": "http://192.168.0.173:8081/1-8.html",
+                "name": "ParseHTML",
+                "startTime": 58.593,
+                "endTime": 58.626
+            },
+            {
+                "activityId": "Loading_23",
+                "fromScript": "http://192.168.0.173:8081/1-8.js",
+                "styleSheetUrl": null,
+                "url": "http://192.168.0.173:8081/1-8.html",
+                "name": "ParseHTML",
+                "startTime": 58.775,
+                "endTime": 58.834
+            },
+            {
+                "activityId": "Loading_24",
+                "fromScript": "http://192.168.0.173:8081/1-8.js",
+                "styleSheetUrl": null,
+                "url": "http://192.168.0.173:8081/1-8.html",
+                "name": "ParseHTML",
+                "startTime": 59.014,
+                "endTime": 59.051
+            },
+            {
+                "activityId": "Loading_25",
+                "fromScript": "http://192.168.0.173:8081/1-8.js",
+                "styleSheetUrl": null,
+                "url": "http://192.168.0.173:8081/1-8.html",
+                "name": "ParseHTML",
+                "startTime": 59.778,
+                "endTime": 59.841
+            },
+            {
+                "activityId": "Loading_26",
+                "fromScript": "http://192.168.0.173:8081/1-8.js",
+                "styleSheetUrl": null,
+                "url": "http://192.168.0.173:8081/1-8.html",
+                "name": "ParseHTML",
+                "startTime": 60.062,
+                "endTime": 60.107
+            },
+            {
+                "activityId": "Loading_27",
+                "fromScript": "http://192.168.0.173:8081/1-8.js",
+                "styleSheetUrl": null,
+                "url": "http://192.168.0.173:8081/1-8.html",
+                "name": "ParseHTML",
+                "startTime": 60.323,
+                "endTime": 60.362
+            },
+            {
+                "activityId": "Loading_28",
+                "fromScript": "http://192.168.0.173:8081/1-8.js",
+                "styleSheetUrl": null,
+                "url": "http://192.168.0.173:8081/1-8.html",
+                "name": "ParseHTML",
+                "startTime": 60.528,
+                "endTime": 60.563
+            },
+            {
+                "activityId": "Loading_29",
+                "fromScript": "http://192.168.0.173:8081/1-8.js",
+                "styleSheetUrl": null,
+                "url": "http://192.168.0.173:8081/1-8.html",
+                "name": "ParseHTML",
+                "startTime": 60.721,
+                "endTime": 60.765
+            },
+            {
+                "activityId": "Loading_30",
+                "fromScript": "http://192.168.0.173:8081/1-8.js",
+                "styleSheetUrl": null,
+                "url": "http://192.168.0.173:8081/1-8.html",
+                "name": "ParseHTML",
+                "startTime": 60.929,
+                "endTime": 60.963
+            },
+            {
+                "activityId": "Loading_31",
+                "fromScript": "http://192.168.0.173:8081/1-8.js",
+                "styleSheetUrl": null,
+                "url": "http://192.168.0.173:8081/1-8.html",
+                "name": "ParseHTML",
+                "startTime": 61.108,
+                "endTime": 61.139
+            },
+            {
+                "activityId": "Loading_32",
+                "fromScript": "http://192.168.0.173:8081/1-8.js",
+                "styleSheetUrl": null,
+                "url": "http://192.168.0.173:8081/1-8.html",
+                "name": "ParseHTML",
+                "startTime": 61.318,
+                "endTime": 61.361
+            },
+            {
+                "activityId": "Loading_33",
+                "fromScript": "http://192.168.0.173:8081/1-8.js",
+                "styleSheetUrl": null,
+                "url": "http://192.168.0.173:8081/1-8.html",
+                "name": "ParseHTML",
+                "startTime": 61.527,
+                "endTime": 61.563
+            },
+            {
+                "activityId": "Loading_34",
+                "fromScript": "http://192.168.0.173:8081/1-8.js",
+                "styleSheetUrl": null,
+                "url": "http://192.168.0.173:8081/1-8.html",
+                "name": "ParseHTML",
+                "startTime": 61.694,
+                "endTime": 61.746
+            },
+            {
+                "activityId": "Loading_35",
+                "fromScript": "http://192.168.0.173:8081/1-8.js",
+                "styleSheetUrl": null,
+                "url": "http://192.168.0.173:8081/1-8.html",
+                "name": "ParseHTML",
+                "startTime": 61.85,
+                "endTime": 61.87
+            },
+            {
+                "activityId": "Loading_36",
+                "fromScript": "http://192.168.0.173:8081/1-8.js",
+                "styleSheetUrl": null,
+                "url": "http://192.168.0.173:8081/1-8.html",
+                "name": "ParseHTML",
+                "startTime": 61.947,
+                "endTime": 61.965
+            },
+            {
+                "activityId": "Loading_37",
+                "fromScript": "http://192.168.0.173:8081/1-8.js",
+                "styleSheetUrl": null,
+                "url": "http://192.168.0.173:8081/1-8.html",
+                "name": "ParseHTML",
+                "startTime": 62.036,
+                "endTime": 62.054
+            },
+            {
+                "activityId": "Loading_38",
+                "fromScript": "http://192.168.0.173:8081/1-8.js",
+                "styleSheetUrl": null,
+                "url": "http://192.168.0.173:8081/1-8.html",
+                "name": "ParseHTML",
+                "startTime": 62.123,
+                "endTime": 62.139
+            },
+            {
+                "activityId": "Loading_39",
+                "fromScript": "http://192.168.0.173:8081/1-8.js",
+                "styleSheetUrl": null,
+                "url": "http://192.168.0.173:8081/1-8.html",
+                "name": "ParseHTML",
+                "startTime": 62.205,
+                "endTime": 62.222
+            },
+            {
+                "activityId": "Loading_40",
+                "fromScript": "http://192.168.0.173:8081/1-8.js",
+                "styleSheetUrl": null,
+                "url": "http://192.168.0.173:8081/1-8.html",
+                "name": "ParseHTML",
+                "startTime": 62.296,
+                "endTime": 62.327
+            },
+            {
+                "activityId": "Loading_41",
+                "fromScript": "http://192.168.0.173:8081/1-8.js",
+                "styleSheetUrl": null,
+                "url": "http://192.168.0.173:8081/1-8.html",
+                "name": "ParseHTML",
+                "startTime": 62.437,
+                "endTime": 62.458
+            },
+            {
+                "activityId": "Loading_42",
+                "fromScript": "http://192.168.0.173:8081/1-8.js",
+                "styleSheetUrl": null,
+                "url": "http://192.168.0.173:8081/1-8.html",
+                "name": "ParseHTML",
+                "startTime": 62.536,
+                "endTime": 62.554
+            },
+            {
+                "activityId": "Loading_43",
+                "fromScript": "http://192.168.0.173:8081/1-8.js",
+                "styleSheetUrl": null,
+                "url": "http://192.168.0.173:8081/1-8.html",
+                "name": "ParseHTML",
+                "startTime": 62.638,
+                "endTime": 62.659
+            },
+            {
+                "activityId": "Loading_44",
+                "fromScript": "http://192.168.0.173:8081/1-8.js",
+                "styleSheetUrl": null,
+                "url": "http://192.168.0.173:8081/1-8.html",
+                "name": "ParseHTML",
+                "startTime": 62.739,
+                "endTime": 62.757
+            },
+            {
+                "activityId": "Loading_45",
+                "fromScript": "http://192.168.0.173:8081/1-8.js",
+                "styleSheetUrl": null,
+                "url": "http://192.168.0.173:8081/1-8.html",
+                "name": "ParseHTML",
+                "startTime": 62.828,
+                "endTime": 62.845
+            },
+            {
+                "activityId": "Loading_46",
+                "fromScript": "http://192.168.0.173:8081/1-8.js",
+                "styleSheetUrl": null,
+                "url": "http://192.168.0.173:8081/1-8.html",
+                "name": "ParseHTML",
+                "startTime": 62.915,
+                "endTime": 62.952
+            },
+            {
+                "activityId": "Loading_47",
+                "fromScript": "http://192.168.0.173:8081/1-8.js",
+                "styleSheetUrl": null,
+                "url": "http://192.168.0.173:8081/1-8.html",
+                "name": "ParseHTML",
+                "startTime": 63.025,
+                "endTime": 63.043
+            },
+            {
+                "activityId": "Loading_48",
+                "fromScript": "http://192.168.0.173:8081/1-8.js",
+                "styleSheetUrl": null,
+                "url": "http://192.168.0.173:8081/1-8.html",
+                "name": "ParseHTML",
+                "startTime": 63.136,
+                "endTime": 63.164
+            },
+            {
+                "activityId": "Loading_49",
+                "fromScript": "http://192.168.0.173:8081/1-8.js",
+                "styleSheetUrl": null,
+                "url": "http://192.168.0.173:8081/1-8.html",
+                "name": "ParseHTML",
+                "startTime": 63.632,
+                "endTime": 63.692
+            },
+            {
+                "activityId": "Loading_50",
+                "fromScript": "http://192.168.0.173:8081/1-8.js",
+                "styleSheetUrl": null,
+                "url": "http://192.168.0.173:8081/1-8.html",
+                "name": "ParseHTML",
+                "startTime": 63.861,
+                "endTime": 63.889
+            },
+            {
+                "activityId": "Loading_51",
+                "fromScript": "http://192.168.0.173:8081/1-8.js",
+                "styleSheetUrl": null,
+                "url": "http://192.168.0.173:8081/1-8.html",
+                "name": "ParseHTML",
+                "startTime": 64.022,
+                "endTime": 64.052
+            },
+            {
+                "activityId": "Loading_52",
+                "fromScript": "http://192.168.0.173:8081/1-8.js",
+                "styleSheetUrl": null,
+                "url": "http://192.168.0.173:8081/1-8.html",
+                "name": "ParseHTML",
+                "startTime": 64.221,
+                "endTime": 64.249
+            },
+            {
+                "activityId": "Loading_53",
+                "fromScript": "http://192.168.0.173:8081/1-8.js",
+                "styleSheetUrl": null,
+                "url": "http://192.168.0.173:8081/1-8.html",
+                "name": "ParseHTML",
+                "startTime": 64.36,
+                "endTime": 64.382
+            },
+            {
+                "activityId": "Loading_54",
+                "fromScript": "http://192.168.0.173:8081/1-8.js",
+                "styleSheetUrl": null,
+                "url": "http://192.168.0.173:8081/1-8.html",
+                "name": "ParseHTML",
+                "startTime": 64.468,
+                "endTime": 64.487
+            },
+            {
+                "activityId": "Loading_55",
+                "fromScript": "http://192.168.0.173:8081/1-8.js",
+                "styleSheetUrl": null,
+                "url": "http://192.168.0.173:8081/1-8.html",
+                "name": "ParseHTML",
+                "startTime": 64.561,
+                "endTime": 64.578
+            },
+            {
+                "activityId": "Loading_56",
+                "fromScript": "http://192.168.0.173:8081/1-8.js",
+                "styleSheetUrl": null,
+                "url": "http://192.168.0.173:8081/1-8.html",
+                "name": "ParseHTML",
+                "startTime": 64.654,
+                "endTime": 64.672
+            },
+            {
+                "activityId": "Loading_57",
+                "fromScript": "http://192.168.0.173:8081/1-8.js",
+                "styleSheetUrl": null,
+                "url": "http://192.168.0.173:8081/1-8.html",
+                "name": "ParseHTML",
+                "startTime": 64.748,
+                "endTime": 64.77
+            },
+            {
+                "activityId": "Loading_58",
+                "fromScript": "http://192.168.0.173:8081/1-8.js",
+                "styleSheetUrl": null,
+                "url": "http://192.168.0.173:8081/1-8.html",
+                "name": "ParseHTML",
+                "startTime": 64.924,
+                "endTime": 64.974
+            },
+            {
+                "activityId": "Loading_59",
+                "fromScript": "http://192.168.0.173:8081/1-8.js",
+                "styleSheetUrl": null,
+                "url": "http://192.168.0.173:8081/1-8.html",
+                "name": "ParseHTML",
+                "startTime": 65.092,
+                "endTime": 65.116
+            },
+            {
+                "activityId": "Loading_60",
+                "fromScript": "http://192.168.0.173:8081/1-8.js",
+                "styleSheetUrl": null,
+                "url": "http://192.168.0.173:8081/1-8.html",
+                "name": "ParseHTML",
+                "startTime": 65.206,
+                "endTime": 65.226
+            },
+            {
+                "activityId": "Loading_61",
+                "fromScript": "http://192.168.0.173:8081/1-8.js",
+                "styleSheetUrl": null,
+                "url": "http://192.168.0.173:8081/1-8.html",
+                "name": "ParseHTML",
+                "startTime": 66.531,
+                "endTime": 66.608
+            },
+            {
+                "activityId": "Loading_62",
+                "fromScript": "http://192.168.0.173:8081/1-8.js",
+                "styleSheetUrl": null,
+                "url": "http://192.168.0.173:8081/1-8.html",
+                "name": "ParseHTML",
+                "startTime": 66.829,
+                "endTime": 66.876
+            },
+            {
+                "activityId": "Loading_63",
+                "fromScript": "http://192.168.0.173:8081/1-8.js",
+                "styleSheetUrl": null,
+                "url": "http://192.168.0.173:8081/1-8.html",
+                "name": "ParseHTML",
+                "startTime": 67.001,
+                "endTime": 67.024
+            },
+            {
+                "activityId": "Loading_64",
+                "fromScript": "http://192.168.0.173:8081/1-8.js",
+                "styleSheetUrl": null,
+                "url": "http://192.168.0.173:8081/1-8.html",
+                "name": "ParseHTML",
+                "startTime": 67.121,
+                "endTime": 67.142
+            },
+            {
+                "activityId": "Loading_65",
+                "fromScript": "http://192.168.0.173:8081/1-8.js",
+                "styleSheetUrl": null,
+                "url": "http://192.168.0.173:8081/1-8.html",
+                "name": "ParseHTML",
+                "startTime": 67.246,
+                "endTime": 67.267
+            },
+            {
+                "activityId": "Loading_66",
+                "fromScript": "http://192.168.0.173:8081/1-8.js",
+                "styleSheetUrl": null,
+                "url": "http://192.168.0.173:8081/1-8.html",
+                "name": "ParseHTML",
+                "startTime": 67.358,
+                "endTime": 67.378
+            },
+            {
+                "activityId": "Loading_67",
+                "fromScript": "http://192.168.0.173:8081/1-8.js",
+                "styleSheetUrl": null,
+                "url": "http://192.168.0.173:8081/1-8.html",
+                "name": "ParseHTML",
+                "startTime": 67.506,
+                "endTime": 67.53
+            },
+            {
+                "activityId": "Loading_68",
+                "fromScript": "http://192.168.0.173:8081/1-8.js",
+                "styleSheetUrl": null,
+                "url": "http://192.168.0.173:8081/1-8.html",
+                "name": "ParseHTML",
+                "startTime": 67.648,
+                "endTime": 67.68
+            },
+            {
+                "activityId": "Loading_69",
+                "fromScript": "http://192.168.0.173:8081/1-8.js",
+                "styleSheetUrl": null,
+                "url": "http://192.168.0.173:8081/1-8.html",
+                "name": "ParseHTML",
+                "startTime": 67.811,
+                "endTime": 67.846
+            },
+            {
+                "activityId": "Loading_70",
+                "fromScript": "http://192.168.0.173:8081/1-8.js",
+                "styleSheetUrl": null,
+                "url": "http://192.168.0.173:8081/1-8.html",
+                "name": "ParseHTML",
+                "startTime": 67.988,
+                "endTime": 68.026
+            },
+            {
+                "activityId": "Loading_71",
+                "fromScript": "http://192.168.0.173:8081/1-8.js",
+                "styleSheetUrl": null,
+                "url": "http://192.168.0.173:8081/1-8.html",
+                "name": "ParseHTML",
+                "startTime": 68.162,
+                "endTime": 68.21
+            },
+            {
+                "activityId": "Loading_72",
+                "fromScript": "http://192.168.0.173:8081/1-8.js",
+                "styleSheetUrl": null,
+                "url": "http://192.168.0.173:8081/1-8.html",
+                "name": "ParseHTML",
+                "startTime": 68.377,
+                "endTime": 68.413
+            },
+            {
+                "activityId": "Loading_73",
+                "fromScript": "http://192.168.0.173:8081/1-8.js",
+                "styleSheetUrl": null,
+                "url": "http://192.168.0.173:8081/1-8.html",
+                "name": "ParseHTML",
+                "startTime": 68.539,
+                "endTime": 68.565
+            },
+            {
+                "activityId": "Loading_74",
+                "fromScript": "http://192.168.0.173:8081/1-8.js",
+                "styleSheetUrl": null,
+                "url": "http://192.168.0.173:8081/1-8.html",
+                "name": "ParseHTML",
+                "startTime": 68.699,
+                "endTime": 68.726
+            },
+            {
+                "activityId": "Loading_75",
+                "fromScript": "http://192.168.0.173:8081/1-8.js",
+                "styleSheetUrl": null,
+                "url": "http://192.168.0.173:8081/1-8.html",
+                "name": "ParseHTML",
+                "startTime": 68.819,
+                "endTime": 68.858
+            },
+            {
+                "activityId": "Loading_76",
+                "fromScript": "http://192.168.0.173:8081/1-8.js",
+                "styleSheetUrl": null,
+                "url": "http://192.168.0.173:8081/1-8.html",
+                "name": "ParseHTML",
+                "startTime": 68.946,
+                "endTime": 68.966
+            },
+            {
+                "activityId": "Loading_77",
+                "fromScript": "http://192.168.0.173:8081/1-8.js",
+                "styleSheetUrl": null,
+                "url": "http://192.168.0.173:8081/1-8.html",
+                "name": "ParseHTML",
+                "startTime": 69.037,
+                "endTime": 69.055
+            },
+            {
+                "activityId": "Loading_78",
+                "fromScript": "http://192.168.0.173:8081/1-8.js",
+                "styleSheetUrl": null,
+                "url": "http://192.168.0.173:8081/1-8.html",
+                "name": "ParseHTML",
+                "startTime": 69.13,
+                "endTime": 69.148
+            },
+            {
+                "activityId": "Loading_79",
+                "fromScript": "http://192.168.0.173:8081/1-8.js",
+                "styleSheetUrl": null,
+                "url": "http://192.168.0.173:8081/1-8.html",
+                "name": "ParseHTML",
+                "startTime": 69.267,
+                "endTime": 69.294
+            },
+            {
+                "activityId": "Loading_80",
+                "fromScript": "http://192.168.0.173:8081/1-8.js",
+                "styleSheetUrl": null,
+                "url": "http://192.168.0.173:8081/1-8.html",
+                "name": "ParseHTML",
+                "startTime": 69.386,
+                "endTime": 69.407
+            },
+            {
+                "activityId": "Loading_81",
+                "fromScript": "http://192.168.0.173:8081/1-8.js",
+                "styleSheetUrl": null,
+                "url": "http://192.168.0.173:8081/1-8.html",
+                "name": "ParseHTML",
+                "startTime": 69.488,
+                "endTime": 69.553
+            },
+            {
+                "activityId": "Loading_82",
+                "fromScript": "http://192.168.0.173:8081/1-8.js",
+                "styleSheetUrl": null,
+                "url": "http://192.168.0.173:8081/1-8.html",
+                "name": "ParseHTML",
+                "startTime": 69.692,
+                "endTime": 69.731
+            },
+            {
+                "activityId": "Loading_83",
+                "fromScript": "http://192.168.0.173:8081/1-8.js",
+                "styleSheetUrl": null,
+                "url": "http://192.168.0.173:8081/1-8.html",
+                "name": "ParseHTML",
+                "startTime": 69.868,
+                "endTime": 69.903
+            },
+            {
+                "activityId": "Loading_84",
+                "fromScript": "http://192.168.0.173:8081/1-8.js",
+                "styleSheetUrl": null,
+                "url": "http://192.168.0.173:8081/1-8.html",
+                "name": "ParseHTML",
+                "startTime": 70.035,
+                "endTime": 70.069
+            },
+            {
+                "activityId": "Loading_85",
+                "fromScript": "http://192.168.0.173:8081/1-8.js",
+                "styleSheetUrl": null,
+                "url": "http://192.168.0.173:8081/1-8.html",
+                "name": "ParseHTML",
+                "startTime": 70.208,
+                "endTime": 70.245
+            },
+            {
+                "activityId": "Loading_86",
+                "fromScript": "http://192.168.0.173:8081/1-8.js",
+                "styleSheetUrl": null,
+                "url": "http://192.168.0.173:8081/1-8.html",
+                "name": "ParseHTML",
+                "startTime": 70.373,
+                "endTime": 70.401
+            },
+            {
+                "activityId": "Loading_87",
+                "fromScript": "http://192.168.0.173:8081/1-8.js",
+                "styleSheetUrl": null,
+                "url": "http://192.168.0.173:8081/1-8.html",
+                "name": "ParseHTML",
+                "startTime": 70.54,
+                "endTime": 70.576
+            },
+            {
+                "activityId": "Loading_88",
+                "fromScript": "http://192.168.0.173:8081/1-8.js",
+                "styleSheetUrl": null,
+                "url": "http://192.168.0.173:8081/1-8.html",
+                "name": "ParseHTML",
+                "startTime": 70.736,
+                "endTime": 70.772
+            },
+            {
+                "activityId": "Loading_89",
+                "fromScript": "http://192.168.0.173:8081/1-8.js",
+                "styleSheetUrl": null,
+                "url": "http://192.168.0.173:8081/1-8.html",
+                "name": "ParseHTML",
+                "startTime": 70.929,
+                "endTime": 70.966
+            },
+            {
+                "activityId": "Loading_90",
+                "fromScript": "http://192.168.0.173:8081/1-8.js",
+                "styleSheetUrl": null,
+                "url": "http://192.168.0.173:8081/1-8.html",
+                "name": "ParseHTML",
+                "startTime": 71.114,
+                "endTime": 71.154
+            },
+            {
+                "activityId": "Loading_91",
+                "fromScript": "http://192.168.0.173:8081/1-8.js",
+                "styleSheetUrl": null,
+                "url": "http://192.168.0.173:8081/1-8.html",
+                "name": "ParseHTML",
+                "startTime": 71.31,
+                "endTime": 71.346
+            },
+            {
+                "activityId": "Loading_92",
+                "fromScript": "http://192.168.0.173:8081/1-8.js",
+                "styleSheetUrl": null,
+                "url": "http://192.168.0.173:8081/1-8.html",
+                "name": "ParseHTML",
+                "startTime": 71.497,
+                "endTime": 71.538
+            },
+            {
+                "activityId": "Loading_93",
+                "fromScript": "http://192.168.0.173:8081/1-8.js",
+                "styleSheetUrl": null,
+                "url": "http://192.168.0.173:8081/1-8.html",
+                "name": "ParseHTML",
+                "startTime": 71.687,
+                "endTime": 71.77
+            },
+            {
+                "activityId": "Loading_94",
+                "fromScript": "http://192.168.0.173:8081/1-8.js",
+                "styleSheetUrl": null,
+                "url": "http://192.168.0.173:8081/1-8.html",
+                "name": "ParseHTML",
+                "startTime": 71.95,
+                "endTime": 71.994
+            },
+            {
+                "activityId": "Loading_95",
+                "fromScript": "http://192.168.0.173:8081/1-8.js",
+                "styleSheetUrl": null,
+                "url": "http://192.168.0.173:8081/1-8.html",
+                "name": "ParseHTML",
+                "startTime": 72.167,
+                "endTime": 72.204
+            },
+            {
+                "activityId": "Loading_96",
+                "fromScript": "http://192.168.0.173:8081/1-8.js",
+                "styleSheetUrl": null,
+                "url": "http://192.168.0.173:8081/1-8.html",
+                "name": "ParseHTML",
+                "startTime": 72.904,
+                "endTime": 72.983
+            },
+            {
+                "activityId": "Loading_97",
+                "fromScript": "http://192.168.0.173:8081/1-8.js",
+                "styleSheetUrl": null,
+                "url": "http://192.168.0.173:8081/1-8.html",
+                "name": "ParseHTML",
+                "startTime": 73.208,
+                "endTime": 73.252
+            },
+            {
+                "activityId": "Loading_98",
+                "fromScript": "http://192.168.0.173:8081/1-8.js",
+                "styleSheetUrl": null,
+                "url": "http://192.168.0.173:8081/1-8.html",
+                "name": "ParseHTML",
+                "startTime": 73.398,
+                "endTime": 73.429
+            },
+            {
+                "activityId": "Loading_99",
+                "fromScript": "http://192.168.0.173:8081/1-8.js",
+                "styleSheetUrl": null,
+                "url": "http://192.168.0.173:8081/1-8.html",
+                "name": "ParseHTML",
+                "startTime": 73.565,
+                "endTime": 73.604
+            },
+            {
+                "activityId": "Loading_100",
+                "fromScript": "http://192.168.0.173:8081/1-8.js",
+                "styleSheetUrl": null,
+                "url": "http://192.168.0.173:8081/1-8.html",
+                "name": "ParseHTML",
+                "startTime": 73.766,
+                "endTime": 73.805
+            },
+            {
+                "activityId": "Loading_101",
+                "fromScript": "http://192.168.0.173:8081/1-8.js",
+                "styleSheetUrl": null,
+                "url": "http://192.168.0.173:8081/1-8.html",
+                "name": "ParseHTML",
+                "startTime": 73.973,
+                "endTime": 74.006
+            },
+            {
+                "activityId": "Loading_102",
+                "fromScript": "http://192.168.0.173:8081/1-8.js",
+                "styleSheetUrl": null,
+                "url": "http://192.168.0.173:8081/1-8.html",
+                "name": "ParseHTML",
+                "startTime": 74.138,
+                "endTime": 74.172
+            },
+            {
+                "activityId": "Loading_103",
+                "fromScript": "http://192.168.0.173:8081/1-8.js",
+                "styleSheetUrl": null,
+                "url": "http://192.168.0.173:8081/1-8.html",
+                "name": "ParseHTML",
+                "startTime": 74.36,
+                "endTime": 74.411
+            },
+            {
+                "activityId": "Loading_104",
+                "fromScript": "http://192.168.0.173:8081/1-8.js",
+                "styleSheetUrl": null,
+                "url": "http://192.168.0.173:8081/1-8.html",
+                "name": "ParseHTML",
+                "startTime": 74.588,
+                "endTime": 74.666
+            },
+            {
+                "activityId": "Loading_105",
+                "fromScript": "http://192.168.0.173:8081/1-8.js",
+                "styleSheetUrl": null,
+                "url": "http://192.168.0.173:8081/1-8.html",
+                "name": "ParseHTML",
+                "startTime": 74.849,
+                "endTime": 74.897
+            },
+            {
+                "activityId": "Loading_106",
+                "fromScript": "http://192.168.0.173:8081/1-8.js",
+                "styleSheetUrl": null,
+                "url": "http://192.168.0.173:8081/1-8.html",
+                "name": "ParseHTML",
+                "startTime": 75.069,
+                "endTime": 75.112
+            },
+            {
+                "activityId": "Loading_107",
+                "fromScript": "http://192.168.0.173:8081/1-8.js",
+                "styleSheetUrl": null,
+                "url": "http://192.168.0.173:8081/1-8.html",
+                "name": "ParseHTML",
+                "startTime": 75.265,
+                "endTime": 75.369
+            },
+            {
+                "activityId": "Loading_108",
+                "fromScript": "http://192.168.0.173:8081/1-8.js",
+                "styleSheetUrl": null,
+                "url": "http://192.168.0.173:8081/1-8.html",
+                "name": "ParseHTML",
+                "startTime": 75.569,
+                "endTime": 75.61
+            },
+            {
+                "activityId": "Loading_109",
+                "fromScript": "http://192.168.0.173:8081/1-8.js",
+                "styleSheetUrl": null,
+                "url": "http://192.168.0.173:8081/1-8.html",
+                "name": "ParseHTML",
+                "startTime": 75.775,
+                "endTime": 75.822
+            },
+            {
+                "activityId": "Loading_110",
+                "fromScript": "http://192.168.0.173:8081/1-8.js",
+                "styleSheetUrl": null,
+                "url": "http://192.168.0.173:8081/1-8.html",
+                "name": "ParseHTML",
+                "startTime": 75.987,
+                "endTime": 76.016
+            },
+            {
+                "activityId": "Loading_111",
+                "fromScript": "http://192.168.0.173:8081/1-8.js",
+                "styleSheetUrl": null,
+                "url": "http://192.168.0.173:8081/1-8.html",
+                "name": "ParseHTML",
+                "startTime": 76.138,
+                "endTime": 76.168
+            },
+            {
+                "activityId": "Loading_112",
+                "fromScript": "http://192.168.0.173:8081/1-8.js",
+                "styleSheetUrl": null,
+                "url": "http://192.168.0.173:8081/1-8.html",
+                "name": "ParseHTML",
+                "startTime": 76.302,
+                "endTime": 76.334
+            },
+            {
+                "activityId": "Loading_113",
+                "fromScript": "http://192.168.0.173:8081/1-8.js",
+                "styleSheetUrl": null,
+                "url": "http://192.168.0.173:8081/1-8.html",
+                "name": "ParseHTML",
+                "startTime": 76.444,
+                "endTime": 76.473
+            },
+            {
+                "activityId": "Loading_114",
+                "fromScript": "http://192.168.0.173:8081/1-8.js",
+                "styleSheetUrl": null,
+                "url": "http://192.168.0.173:8081/1-8.html",
+                "name": "ParseHTML",
+                "startTime": 76.594,
+                "endTime": 76.625
+            },
+            {
+                "activityId": "Loading_115",
+                "fromScript": "http://192.168.0.173:8081/1-8.js",
+                "styleSheetUrl": null,
+                "url": "http://192.168.0.173:8081/1-8.html",
+                "name": "ParseHTML",
+                "startTime": 76.786,
+                "endTime": 76.823
+            },
+            {
+                "activityId": "Loading_116",
+                "fromScript": "http://192.168.0.173:8081/1-8.js",
+                "styleSheetUrl": null,
+                "url": "http://192.168.0.173:8081/1-8.html",
+                "name": "ParseHTML",
+                "startTime": 76.965,
+                "endTime": 77.046
+            },
+            {
+                "activityId": "Loading_117",
+                "fromScript": "http://192.168.0.173:8081/1-8.js",
+                "styleSheetUrl": null,
+                "url": "http://192.168.0.173:8081/1-8.html",
+                "name": "ParseHTML",
+                "startTime": 77.193,
+                "endTime": 77.227
+            },
+            {
+                "activityId": "Loading_118",
+                "fromScript": "http://192.168.0.173:8081/1-8.js",
+                "styleSheetUrl": null,
+                "url": "http://192.168.0.173:8081/1-8.html",
+                "name": "ParseHTML",
+                "startTime": 77.342,
+                "endTime": 77.373
+            },
+            {
+                "activityId": "Loading_119",
+                "fromScript": "http://192.168.0.173:8081/1-8.js",
+                "styleSheetUrl": null,
+                "url": "http://192.168.0.173:8081/1-8.html",
+                "name": "ParseHTML",
+                "startTime": 77.532,
+                "endTime": 77.573
+            },
+            {
+                "activityId": "Loading_120",
+                "fromScript": "http://192.168.0.173:8081/1-8.js",
+                "styleSheetUrl": null,
+                "url": "http://192.168.0.173:8081/1-8.html",
+                "name": "ParseHTML",
+                "startTime": 77.734,
+                "endTime": 77.774
+            },
+            {
+                "activityId": "Loading_121",
+                "fromScript": "http://192.168.0.173:8081/1-8.js",
+                "styleSheetUrl": null,
+                "url": "http://192.168.0.173:8081/1-8.html",
+                "name": "ParseHTML",
+                "startTime": 77.943,
+                "endTime": 77.982
+            },
+            {
+                "activityId": "Loading_122",
+                "fromScript": "http://192.168.0.173:8081/1-8.js",
+                "styleSheetUrl": null,
+                "url": "http://192.168.0.173:8081/1-8.html",
+                "name": "ParseHTML",
+                "startTime": 78.133,
+                "endTime": 78.167
+            },
+            {
+                "activityId": "Loading_123",
+                "fromScript": "http://192.168.0.173:8081/1-8.js",
+                "styleSheetUrl": null,
+                "url": "http://192.168.0.173:8081/1-8.html",
+                "name": "ParseHTML",
+                "startTime": 78.283,
+                "endTime": 78.31
+            },
+            {
+                "activityId": "Loading_124",
+                "fromScript": "http://192.168.0.173:8081/1-8.js",
+                "styleSheetUrl": null,
+                "url": "http://192.168.0.173:8081/1-8.html",
+                "name": "ParseHTML",
+                "startTime": 78.412,
+                "endTime": 78.438
+            },
+            {
+                "activityId": "Loading_125",
+                "fromScript": "http://192.168.0.173:8081/1-8.js",
+                "styleSheetUrl": null,
+                "url": "http://192.168.0.173:8081/1-8.html",
+                "name": "ParseHTML",
+                "startTime": 78.551,
+                "endTime": 78.582
+            },
+            {
+                "activityId": "Loading_126",
+                "fromScript": "http://192.168.0.173:8081/1-8.js",
+                "styleSheetUrl": null,
+                "url": "http://192.168.0.173:8081/1-8.html",
+                "name": "ParseHTML",
+                "startTime": 78.703,
+                "endTime": 78.734
+            },
+            {
+                "activityId": "Loading_127",
+                "fromScript": "http://192.168.0.173:8081/1-8.js",
+                "styleSheetUrl": null,
+                "url": "http://192.168.0.173:8081/1-8.html",
+                "name": "ParseHTML",
+                "startTime": 78.859,
+                "endTime": 78.937
+            },
+            {
+                "activityId": "Loading_128",
+                "fromScript": "http://192.168.0.173:8081/1-8.js",
+                "styleSheetUrl": null,
+                "url": "http://192.168.0.173:8081/1-8.html",
+                "name": "ParseHTML",
+                "startTime": 79.119,
+                "endTime": 79.182
+            },
+            {
+                "activityId": "Loading_129",
+                "fromScript": null,
+                "styleSheetUrl": null,
+                "url": "http://192.168.0.173:8081/1-8.html",
+                "name": "ParseHTML",
+                "startTime": 79.469,
+                "endTime": 89.231
+            }
+        ]
+    },
+    {
+        "id": "http://192.168.0.173:8081/1-8.js",
+        "objs": [
+            {
+                "activityId": "Networking_1",
+                "id": "1000026083.3306",
+                "startTime": 31.51,
+                "endTime": 52.253,
+                "mimeType": "application/javascript",
+                "url": "http://192.168.0.173:8081/1-8.js",
+                "fromScript": "Null",
+                "transferSize": 66,
+                "responseReceivedTime": 49.733,
+                "statusCode": 200
+            },
+            {
+                "activityId": "Scripting_0",
+                "url": "http://192.168.0.173:8081/1-8.js",
+                "startTime": 52.577,
+                "endTime": 79.262
+            }
+        ]
+    },
+    {
+        "id": "Rendering",
+        "objs": [
+            {
+                "activityId": "Rendering_1",
+                "startTime": 85.03,
+                "name": "Layout",
+                "endTime": 87.788
+            },
+            {
+                "activityId": "Rendering_2",
+                "startTime": 91.441,
+                "name": "UpdateLayerTree",
+                "endTime": 92.12
+            },
+            {
+                "activityId": "Rendering_3",
+                "startTime": 110.628,
+                "name": "UpdateLayerTree",
+                "endTime": 110.695
+            }
+        ]
+    },
+    {
+        "id": "Painting",
+        "objs": [
+            {
+                "activityId": "Painting_1",
+                "startTime": 92.211,
+                "name": "Paint",
+                "endTime": 93.378
+            },
+            {
+                "activityId": "Painting_2",
+                "startTime": 98.034,
+                "name": "CompositeLayers",
+                "endTime": 98.859,
+                "layerTreeId": 1
+            },
+            {
+                "activityId": "Painting_3",
+                "startTime": 110.831,
+                "name": "CompositeLayers",
+                "endTime": 159.365,
+                "layerTreeId": 1
+            }
+        ]
+    },
+    {
+        "id": "Deps",
+        "objs": [
+            {
+                "time": -1,
+                "a1": "Networking_0",
+                "a2": "Loading_0"
+            },
+            {
+                "time": 31.51,
+                "a1": "Loading_0",
+                "a2": "Networking_1"
+            },
+            {
+                "time": -1,
+                "a1": "Networking_1",
+                "a2": "Scripting_0"
+            },
+            {
+                "time": 53.383,
+                "a1": "Scripting_0",
+                "a2": "Loading_1"
+            },
+            {
+                "time": 54.227,
+                "a1": "Scripting_0",
+                "a2": "Loading_2"
+            },
+            {
+                "time": 54.431,
+                "a1": "Scripting_0",
+                "a2": "Loading_3"
+            },
+            {
+                "time": 54.546,
+                "a1": "Scripting_0",
+                "a2": "Loading_4"
+            },
+            {
+                "time": 54.641,
+                "a1": "Scripting_0",
+                "a2": "Loading_5"
+            },
+            {
+                "time": 54.758,
+                "a1": "Scripting_0",
+                "a2": "Loading_6"
+            },
+            {
+                "time": 54.852,
+                "a1": "Scripting_0",
+                "a2": "Loading_7"
+            },
+            {
+                "time": 54.983,
+                "a1": "Scripting_0",
+                "a2": "Loading_8"
+            },
+            {
+                "time": 55.11,
+                "a1": "Scripting_0",
+                "a2": "Loading_9"
+            },
+            {
+                "time": 55.236,
+                "a1": "Scripting_0",
+                "a2": "Loading_10"
+            },
+            {
+                "time": 55.592,
+                "a1": "Scripting_0",
+                "a2": "Loading_11"
+            },
+            {
+                "time": 55.852,
+                "a1": "Scripting_0",
+                "a2": "Loading_12"
+            },
+            {
+                "time": 56.048,
+                "a1": "Scripting_0",
+                "a2": "Loading_13"
+            },
+            {
+                "time": 56.294,
+                "a1": "Scripting_0",
+                "a2": "Loading_14"
+            },
+            {
+                "time": 57.011,
+                "a1": "Scripting_0",
+                "a2": "Loading_15"
+            },
+            {
+                "time": 57.278,
+                "a1": "Scripting_0",
+                "a2": "Loading_16"
+            },
+            {
+                "time": 57.497,
+                "a1": "Scripting_0",
+                "a2": "Loading_17"
+            },
+            {
+                "time": 57.788,
+                "a1": "Scripting_0",
+                "a2": "Loading_18"
+            },
+            {
+                "time": 58.041,
+                "a1": "Scripting_0",
+                "a2": "Loading_19"
+            },
+            {
+                "time": 58.233,
+                "a1": "Scripting_0",
+                "a2": "Loading_20"
+            },
+            {
+                "time": 58.418,
+                "a1": "Scripting_0",
+                "a2": "Loading_21"
+            },
+            {
+                "time": 58.593,
+                "a1": "Scripting_0",
+                "a2": "Loading_22"
+            },
+            {
+                "time": 58.775,
+                "a1": "Scripting_0",
+                "a2": "Loading_23"
+            },
+            {
+                "time": 59.014,
+                "a1": "Scripting_0",
+                "a2": "Loading_24"
+            },
+            {
+                "time": 59.778,
+                "a1": "Scripting_0",
+                "a2": "Loading_25"
+            },
+            {
+                "time": 60.062,
+                "a1": "Scripting_0",
+                "a2": "Loading_26"
+            },
+            {
+                "time": 60.323,
+                "a1": "Scripting_0",
+                "a2": "Loading_27"
+            },
+            {
+                "time": 60.528,
+                "a1": "Scripting_0",
+                "a2": "Loading_28"
+            },
+            {
+                "time": 60.721,
+                "a1": "Scripting_0",
+                "a2": "Loading_29"
+            },
+            {
+                "time": 60.929,
+                "a1": "Scripting_0",
+                "a2": "Loading_30"
+            },
+            {
+                "time": 61.108,
+                "a1": "Scripting_0",
+                "a2": "Loading_31"
+            },
+            {
+                "time": 61.318,
+                "a1": "Scripting_0",
+                "a2": "Loading_32"
+            },
+            {
+                "time": 61.527,
+                "a1": "Scripting_0",
+                "a2": "Loading_33"
+            },
+            {
+                "time": 61.694,
+                "a1": "Scripting_0",
+                "a2": "Loading_34"
+            },
+            {
+                "time": 61.85,
+                "a1": "Scripting_0",
+                "a2": "Loading_35"
+            },
+            {
+                "time": 61.947,
+                "a1": "Scripting_0",
+                "a2": "Loading_36"
+            },
+            {
+                "time": 62.036,
+                "a1": "Scripting_0",
+                "a2": "Loading_37"
+            },
+            {
+                "time": 62.123,
+                "a1": "Scripting_0",
+                "a2": "Loading_38"
+            },
+            {
+                "time": 62.205,
+                "a1": "Scripting_0",
+                "a2": "Loading_39"
+            },
+            {
+                "time": 62.296,
+                "a1": "Scripting_0",
+                "a2": "Loading_40"
+            },
+            {
+                "time": 62.437,
+                "a1": "Scripting_0",
+                "a2": "Loading_41"
+            },
+            {
+                "time": 62.536,
+                "a1": "Scripting_0",
+                "a2": "Loading_42"
+            },
+            {
+                "time": 62.638,
+                "a1": "Scripting_0",
+                "a2": "Loading_43"
+            },
+            {
+                "time": 62.739,
+                "a1": "Scripting_0",
+                "a2": "Loading_44"
+            },
+            {
+                "time": 62.828,
+                "a1": "Scripting_0",
+                "a2": "Loading_45"
+            },
+            {
+                "time": 62.915,
+                "a1": "Scripting_0",
+                "a2": "Loading_46"
+            },
+            {
+                "time": 63.025,
+                "a1": "Scripting_0",
+                "a2": "Loading_47"
+            },
+            {
+                "time": 63.136,
+                "a1": "Scripting_0",
+                "a2": "Loading_48"
+            },
+            {
+                "time": 63.632,
+                "a1": "Scripting_0",
+                "a2": "Loading_49"
+            },
+            {
+                "time": 63.861,
+                "a1": "Scripting_0",
+                "a2": "Loading_50"
+            },
+            {
+                "time": 64.022,
+                "a1": "Scripting_0",
+                "a2": "Loading_51"
+            },
+            {
+                "time": 64.221,
+                "a1": "Scripting_0",
+                "a2": "Loading_52"
+            },
+            {
+                "time": 64.36,
+                "a1": "Scripting_0",
+                "a2": "Loading_53"
+            },
+            {
+                "time": 64.468,
+                "a1": "Scripting_0",
+                "a2": "Loading_54"
+            },
+            {
+                "time": 64.561,
+                "a1": "Scripting_0",
+                "a2": "Loading_55"
+            },
+            {
+                "time": 64.654,
+                "a1": "Scripting_0",
+                "a2": "Loading_56"
+            },
+            {
+                "time": 64.748,
+                "a1": "Scripting_0",
+                "a2": "Loading_57"
+            },
+            {
+                "time": 64.924,
+                "a1": "Scripting_0",
+                "a2": "Loading_58"
+            },
+            {
+                "time": 65.092,
+                "a1": "Scripting_0",
+                "a2": "Loading_59"
+            },
+            {
+                "time": 65.206,
+                "a1": "Scripting_0",
+                "a2": "Loading_60"
+            },
+            {
+                "time": 66.531,
+                "a1": "Scripting_0",
+                "a2": "Loading_61"
+            },
+            {
+                "time": 66.829,
+                "a1": "Scripting_0",
+                "a2": "Loading_62"
+            },
+            {
+                "time": 67.001,
+                "a1": "Scripting_0",
+                "a2": "Loading_63"
+            },
+            {
+                "time": 67.121,
+                "a1": "Scripting_0",
+                "a2": "Loading_64"
+            },
+            {
+                "time": 67.246,
+                "a1": "Scripting_0",
+                "a2": "Loading_65"
+            },
+            {
+                "time": 67.358,
+                "a1": "Scripting_0",
+                "a2": "Loading_66"
+            },
+            {
+                "time": 67.506,
+                "a1": "Scripting_0",
+                "a2": "Loading_67"
+            },
+            {
+                "time": 67.648,
+                "a1": "Scripting_0",
+                "a2": "Loading_68"
+            },
+            {
+                "time": 67.811,
+                "a1": "Scripting_0",
+                "a2": "Loading_69"
+            },
+            {
+                "time": 67.988,
+                "a1": "Scripting_0",
+                "a2": "Loading_70"
+            },
+            {
+                "time": 68.162,
+                "a1": "Scripting_0",
+                "a2": "Loading_71"
+            },
+            {
+                "time": 68.377,
+                "a1": "Scripting_0",
+                "a2": "Loading_72"
+            },
+            {
+                "time": 68.539,
+                "a1": "Scripting_0",
+                "a2": "Loading_73"
+            },
+            {
+                "time": 68.699,
+                "a1": "Scripting_0",
+                "a2": "Loading_74"
+            },
+            {
+                "time": 68.819,
+                "a1": "Scripting_0",
+                "a2": "Loading_75"
+            },
+            {
+                "time": 68.946,
+                "a1": "Scripting_0",
+                "a2": "Loading_76"
+            },
+            {
+                "time": 69.037,
+                "a1": "Scripting_0",
+                "a2": "Loading_77"
+            },
+            {
+                "time": 69.13,
+                "a1": "Scripting_0",
+                "a2": "Loading_78"
+            },
+            {
+                "time": 69.267,
+                "a1": "Scripting_0",
+                "a2": "Loading_79"
+            },
+            {
+                "time": 69.386,
+                "a1": "Scripting_0",
+                "a2": "Loading_80"
+            },
+            {
+                "time": 69.488,
+                "a1": "Scripting_0",
+                "a2": "Loading_81"
+            },
+            {
+                "time": 69.692,
+                "a1": "Scripting_0",
+                "a2": "Loading_82"
+            },
+            {
+                "time": 69.868,
+                "a1": "Scripting_0",
+                "a2": "Loading_83"
+            },
+            {
+                "time": 70.035,
+                "a1": "Scripting_0",
+                "a2": "Loading_84"
+            },
+            {
+                "time": 70.208,
+                "a1": "Scripting_0",
+                "a2": "Loading_85"
+            },
+            {
+                "time": 70.373,
+                "a1": "Scripting_0",
+                "a2": "Loading_86"
+            },
+            {
+                "time": 70.54,
+                "a1": "Scripting_0",
+                "a2": "Loading_87"
+            },
+            {
+                "time": 70.736,
+                "a1": "Scripting_0",
+                "a2": "Loading_88"
+            },
+            {
+                "time": 70.929,
+                "a1": "Scripting_0",
+                "a2": "Loading_89"
+            },
+            {
+                "time": 71.114,
+                "a1": "Scripting_0",
+                "a2": "Loading_90"
+            },
+            {
+                "time": 71.31,
+                "a1": "Scripting_0",
+                "a2": "Loading_91"
+            },
+            {
+                "time": 71.497,
+                "a1": "Scripting_0",
+                "a2": "Loading_92"
+            },
+            {
+                "time": 71.687,
+                "a1": "Scripting_0",
+                "a2": "Loading_93"
+            },
+            {
+                "time": 71.95,
+                "a1": "Scripting_0",
+                "a2": "Loading_94"
+            },
+            {
+                "time": 72.167,
+                "a1": "Scripting_0",
+                "a2": "Loading_95"
+            },
+            {
+                "time": 72.904,
+                "a1": "Scripting_0",
+                "a2": "Loading_96"
+            },
+            {
+                "time": 73.208,
+                "a1": "Scripting_0",
+                "a2": "Loading_97"
+            },
+            {
+                "time": 73.398,
+                "a1": "Scripting_0",
+                "a2": "Loading_98"
+            },
+            {
+                "time": 73.565,
+                "a1": "Scripting_0",
+                "a2": "Loading_99"
+            },
+            {
+                "time": 73.766,
+                "a1": "Scripting_0",
+                "a2": "Loading_100"
+            },
+            {
+                "time": 73.973,
+                "a1": "Scripting_0",
+                "a2": "Loading_101"
+            },
+            {
+                "time": 74.138,
+                "a1": "Scripting_0",
+                "a2": "Loading_102"
+            },
+            {
+                "time": 74.36,
+                "a1": "Scripting_0",
+                "a2": "Loading_103"
+            },
+            {
+                "time": 74.588,
+                "a1": "Scripting_0",
+                "a2": "Loading_104"
+            },
+            {
+                "time": 74.849,
+                "a1": "Scripting_0",
+                "a2": "Loading_105"
+            },
+            {
+                "time": 75.069,
+                "a1": "Scripting_0",
+                "a2": "Loading_106"
+            },
+            {
+                "time": 75.265,
+                "a1": "Scripting_0",
+                "a2": "Loading_107"
+            },
+            {
+                "time": 75.569,
+                "a1": "Scripting_0",
+                "a2": "Loading_108"
+            },
+            {
+                "time": 75.775,
+                "a1": "Scripting_0",
+                "a2": "Loading_109"
+            },
+            {
+                "time": 75.987,
+                "a1": "Scripting_0",
+                "a2": "Loading_110"
+            },
+            {
+                "time": 76.138,
+                "a1": "Scripting_0",
+                "a2": "Loading_111"
+            },
+            {
+                "time": 76.302,
+                "a1": "Scripting_0",
+                "a2": "Loading_112"
+            },
+            {
+                "time": 76.444,
+                "a1": "Scripting_0",
+                "a2": "Loading_113"
+            },
+            {
+                "time": 76.594,
+                "a1": "Scripting_0",
+                "a2": "Loading_114"
+            },
+            {
+                "time": 76.786,
+                "a1": "Scripting_0",
+                "a2": "Loading_115"
+            },
+            {
+                "time": 76.965,
+                "a1": "Scripting_0",
+                "a2": "Loading_116"
+            },
+            {
+                "time": 77.193,
+                "a1": "Scripting_0",
+                "a2": "Loading_117"
+            },
+            {
+                "time": 77.342,
+                "a1": "Scripting_0",
+                "a2": "Loading_118"
+            },
+            {
+                "time": 77.532,
+                "a1": "Scripting_0",
+                "a2": "Loading_119"
+            },
+            {
+                "time": 77.734,
+                "a1": "Scripting_0",
+                "a2": "Loading_120"
+            },
+            {
+                "time": 77.943,
+                "a1": "Scripting_0",
+                "a2": "Loading_121"
+            },
+            {
+                "time": 78.133,
+                "a1": "Scripting_0",
+                "a2": "Loading_122"
+            },
+            {
+                "time": 78.283,
+                "a1": "Scripting_0",
+                "a2": "Loading_123"
+            },
+            {
+                "time": 78.412,
+                "a1": "Scripting_0",
+                "a2": "Loading_124"
+            },
+            {
+                "time": 78.551,
+                "a1": "Scripting_0",
+                "a2": "Loading_125"
+            },
+            {
+                "time": 78.703,
+                "a1": "Scripting_0",
+                "a2": "Loading_126"
+            },
+            {
+                "time": 78.859,
+                "a1": "Scripting_0",
+                "a2": "Loading_127"
+            },
+            {
+                "time": 79.119,
+                "a1": "Scripting_0",
+                "a2": "Loading_128"
+            },
+            {
+                "time": -1,
+                "a1": "Networking_0",
+                "a2": "Loading_129"
+            },
+            {
+                "time": -1,
+                "a1": "Scripting_0",
+                "a2": "Loading_129"
+            },
+            {
+                "time": -1,
+                "a1": "Loading_128",
+                "a2": "Loading_129"
+            }
+        ]
+    },
+    {
+        "id": "Netlog",
+        "dns": {},
+        "sockets": {
+            "0x4abf": {
+                "bytes_in": 0,
+                "bytes_out": 0
+            },
+            "0x4acc": {
+                "bytes_in": 281,
+                "bytes_out": 432
+            },
+            "0x4ace": {
+                "bytes_in": 267,
+                "bytes_out": 363
+            }
+        },
+        "dnsTime": -1,
+        "sockets_bytes_in": 548,
+        "sockets_bytes_out": 795,
+        "ssl_sockets_bytes_out": 0,
+        "ssl_sockets_bytes_in": 0
+    },
+    {
+        "criticalPath": [
+            "Networking_0",
+            "Loading_0",
+            "Networking_1",
+            "Scripting_0",
+            "Loading_129"
+        ],
+        "networkingTime": 20.74,
+        "computationTime": 65.09
+    }
+]

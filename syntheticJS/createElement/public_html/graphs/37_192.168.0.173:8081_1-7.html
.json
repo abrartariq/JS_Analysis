@@ -1,0 +1,189 @@
+[
+    {
+        "load": 64.45,
+        "cpu_time": 85442
+    },
+    {
+        "id": "http://192.168.0.173:8081/1-7.html",
+        "objs": [
+            {
+                "activityId": "Networking_0",
+                "id": "D118CCD9CE6D5F1C672F81DA9D53A586",
+                "startTime": 0.0,
+                "endTime": 19.28,
+                "mimeType": "text/html",
+                "url": "http://192.168.0.173:8081/1-7.html",
+                "fromScript": "Null",
+                "transferSize": 93,
+                "responseReceivedTime": 1.869,
+                "statusCode": 200
+            },
+            {
+                "activityId": "Loading_0",
+                "fromScript": null,
+                "styleSheetUrl": null,
+                "url": "http://192.168.0.173:8081/1-7.html",
+                "name": "ParseHTML",
+                "startTime": 22.193,
+                "endTime": 25.868
+            },
+            {
+                "activityId": "Loading_1",
+                "fromScript": null,
+                "styleSheetUrl": null,
+                "url": "http://192.168.0.173:8081/1-7.html",
+                "name": "ParseHTML",
+                "startTime": 59.01,
+                "endTime": 67.518
+            }
+        ]
+    },
+    {
+        "id": "http://192.168.0.173:8081/1-7.js",
+        "objs": [
+            {
+                "activityId": "Networking_1",
+                "id": "1000026083.1041",
+                "startTime": 22.895,
+                "endTime": 56.137,
+                "mimeType": "application/javascript",
+                "url": "http://192.168.0.173:8081/1-7.js",
+                "fromScript": "Null",
+                "transferSize": 146,
+                "responseReceivedTime": 39.681,
+                "statusCode": 200
+            },
+            {
+                "activityId": "Scripting_0",
+                "url": "http://192.168.0.173:8081/1-7.js",
+                "startTime": 56.458,
+                "endTime": 58.828
+            }
+        ]
+    },
+    {
+        "id": "Rendering",
+        "objs": [
+            {
+                "activityId": "Rendering_1",
+                "startTime": 51.239,
+                "name": "Layout",
+                "endTime": 51.797
+            },
+            {
+                "activityId": "Rendering_2",
+                "startTime": 51.971,
+                "name": "UpdateLayerTree",
+                "endTime": 52.943
+            },
+            {
+                "activityId": "Rendering_3",
+                "startTime": 64.617,
+                "name": "Layout",
+                "endTime": 66.462
+            },
+            {
+                "activityId": "Rendering_4",
+                "startTime": 72.013,
+                "name": "UpdateLayerTree",
+                "endTime": 72.575
+            }
+        ]
+    },
+    {
+        "id": "Painting",
+        "objs": [
+            {
+                "activityId": "Painting_1",
+                "startTime": 53.04,
+                "name": "Paint",
+                "endTime": 53.173
+            },
+            {
+                "activityId": "Painting_2",
+                "startTime": 53.596,
+                "name": "CompositeLayers",
+                "endTime": 54.268,
+                "layerTreeId": 1
+            },
+            {
+                "activityId": "Painting_3",
+                "startTime": 72.689,
+                "name": "Paint",
+                "endTime": 72.82199999999999
+            },
+            {
+                "activityId": "Painting_4",
+                "startTime": 85.348,
+                "name": "CompositeLayers",
+                "endTime": 85.442,
+                "layerTreeId": 1
+            }
+        ]
+    },
+    {
+        "id": "Deps",
+        "objs": [
+            {
+                "time": -1,
+                "a1": "Networking_0",
+                "a2": "Loading_0"
+            },
+            {
+                "time": 22.895,
+                "a1": "Loading_0",
+                "a2": "Networking_1"
+            },
+            {
+                "time": -1,
+                "a1": "Networking_1",
+                "a2": "Scripting_0"
+            },
+            {
+                "time": -1,
+                "a1": "Networking_0",
+                "a2": "Loading_1"
+            },
+            {
+                "time": -1,
+                "a1": "Scripting_0",
+                "a2": "Loading_1"
+            },
+            {
+                "time": -1,
+                "a1": "Loading_0",
+                "a2": "Loading_1"
+            }
+        ]
+    },
+    {
+        "id": "Netlog",
+        "dns": {},
+        "sockets": {
+            "0x180d": {
+                "bytes_in": 281,
+                "bytes_out": 432
+            },
+            "0x1811": {
+                "bytes_in": 348,
+                "bytes_out": 363
+            }
+        },
+        "dnsTime": -1,
+        "sockets_bytes_in": 629,
+        "sockets_bytes_out": 795,
+        "ssl_sockets_bytes_out": 0,
+        "ssl_sockets_bytes_in": 0
+    },
+    {
+        "criticalPath": [
+            "Networking_0",
+            "Loading_0",
+            "Networking_1",
+            "Scripting_0",
+            "Loading_1"
+        ],
+        "networkingTime": 33.24,
+        "computationTime": 30.86
+    }
+]

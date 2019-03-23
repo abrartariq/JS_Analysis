@@ -1,2 +1,3 @@
-var img1 = document.createElement("img");
-var img2 = document.createElement("img");
+for (var i = 0; i < 64; i++) {
+	var img = document.createElement("img")
+}:

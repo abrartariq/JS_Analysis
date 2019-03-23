@@ -1,0 +1,202 @@
+[
+    {
+        "load": 111.28,
+        "cpu_time": 127546
+    },
+    {
+        "id": "http://192.168.0.173:8081/1-1.html",
+        "objs": [
+            {
+                "activityId": "Networking_0",
+                "id": "7FC69777C6EFF5318C9FEF9BF6C01A33",
+                "startTime": 0.0,
+                "endTime": 22.968,
+                "mimeType": "text/html",
+                "url": "http://192.168.0.173:8081/1-1.html",
+                "fromScript": "Null",
+                "transferSize": 93,
+                "responseReceivedTime": 1.849,
+                "statusCode": 200
+            },
+            {
+                "activityId": "Loading_0",
+                "fromScript": null,
+                "styleSheetUrl": null,
+                "url": "http://192.168.0.173:8081/1-1.html",
+                "name": "ParseHTML",
+                "startTime": 25.625,
+                "endTime": 27.83
+            },
+            {
+                "activityId": "Loading_1",
+                "fromScript": null,
+                "styleSheetUrl": null,
+                "url": "http://192.168.0.173:8081/1-1.html",
+                "name": "ParseHTML",
+                "startTime": 109.539,
+                "endTime": 112.929
+            }
+        ]
+    },
+    {
+        "id": "http://192.168.0.173:8081/1-1.js",
+        "objs": [
+            {
+                "activityId": "Networking_1",
+                "id": "1000026083.54",
+                "startTime": 26.158,
+                "endTime": 104.619,
+                "mimeType": "application/javascript",
+                "url": "http://192.168.0.173:8081/1-1.js",
+                "fromScript": "Null",
+                "transferSize": 145,
+                "responseReceivedTime": 99.086,
+                "statusCode": 200
+            },
+            {
+                "activityId": "Scripting_0",
+                "url": "http://192.168.0.173:8081/1-1.js",
+                "startTime": 107.751,
+                "endTime": 109.352
+            }
+        ]
+    },
+    {
+        "id": "Rendering",
+        "objs": [
+            {
+                "activityId": "Rendering_1",
+                "startTime": 57.206,
+                "name": "Layout",
+                "endTime": 57.667
+            },
+            {
+                "activityId": "Rendering_2",
+                "startTime": 57.815,
+                "name": "UpdateLayerTree",
+                "endTime": 59.299
+            },
+            {
+                "activityId": "Rendering_3",
+                "startTime": 72.472,
+                "name": "UpdateLayerTree",
+                "endTime": 72.586
+            },
+            {
+                "activityId": "Rendering_4",
+                "startTime": 111.369,
+                "name": "Layout",
+                "endTime": 111.645
+            },
+            {
+                "activityId": "Rendering_5",
+                "startTime": 121.532,
+                "name": "UpdateLayerTree",
+                "endTime": 121.844
+            }
+        ]
+    },
+    {
+        "id": "Painting",
+        "objs": [
+            {
+                "activityId": "Painting_1",
+                "startTime": 59.393,
+                "name": "Paint",
+                "endTime": 59.529
+            },
+            {
+                "activityId": "Painting_2",
+                "startTime": 59.957,
+                "name": "CompositeLayers",
+                "endTime": 60.516,
+                "layerTreeId": 1
+            },
+            {
+                "activityId": "Painting_3",
+                "startTime": 72.638,
+                "name": "CompositeLayers",
+                "endTime": 72.729,
+                "layerTreeId": 1
+            },
+            {
+                "activityId": "Painting_4",
+                "startTime": 122.024,
+                "name": "Paint",
+                "endTime": 122.168
+            },
+            {
+                "activityId": "Painting_5",
+                "startTime": 127.45,
+                "name": "CompositeLayers",
+                "endTime": 127.546,
+                "layerTreeId": 1
+            }
+        ]
+    },
+    {
+        "id": "Deps",
+        "objs": [
+            {
+                "time": -1,
+                "a1": "Networking_0",
+                "a2": "Loading_0"
+            },
+            {
+                "time": 26.158,
+                "a1": "Loading_0",
+                "a2": "Networking_1"
+            },
+            {
+                "time": -1,
+                "a1": "Networking_1",
+                "a2": "Scripting_0"
+            },
+            {
+                "time": -1,
+                "a1": "Networking_0",
+                "a2": "Loading_1"
+            },
+            {
+                "time": -1,
+                "a1": "Scripting_0",
+                "a2": "Loading_1"
+            },
+            {
+                "time": -1,
+                "a1": "Loading_0",
+                "a2": "Loading_1"
+            }
+        ]
+    },
+    {
+        "id": "Netlog",
+        "dns": {},
+        "sockets": {
+            "0x1f2": {
+                "bytes_in": 281,
+                "bytes_out": 432
+            },
+            "0x1f6": {
+                "bytes_in": 347,
+                "bytes_out": 363
+            }
+        },
+        "dnsTime": -1,
+        "sockets_bytes_in": 628,
+        "sockets_bytes_out": 795,
+        "ssl_sockets_bytes_out": 0,
+        "ssl_sockets_bytes_in": 0
+    },
+    {
+        "criticalPath": [
+            "Networking_0",
+            "Loading_0",
+            "Networking_1",
+            "Scripting_0",
+            "Loading_1"
+        ],
+        "networkingTime": 78.46,
+        "computationTime": 28.49
+    }
+]

@@ -1,2 +1,3 @@
-var img1 = document.getElementById("x");
-var img2 = document.getElementById("x");
+for (var i = 0; i < 64; i++) {
+	var img1 = document.getElementById("x");
+}

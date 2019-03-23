@@ -1,4 +1,3 @@
-var img1 = document.createElement("img");
-var img2 = document.createElement("img");
-var img3 = document.createElement("img");
-var img4 = document.createElement("img");
+for (var i = 0; i < 32; i++) {
+	var img = document.createElement("img")
+}:
