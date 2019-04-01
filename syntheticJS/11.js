@@ -1,1 +1,0 @@
-document.getElementById('x').setAttribute("href", "https://www.w3schools.com");

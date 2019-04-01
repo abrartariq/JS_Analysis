@@ -1,5 +1,0 @@
-from adb import ADB
-
-debug = ADB()
-print debug.devices()
-print debug.shell("dumpsys meminfo com.android.chrome -d").split("TOTAL")[1][:69]

@@ -6,3 +6,4 @@ var a = $("<a>")
 a[0].click();
 
 a.remove();
+//Hi! window.location
