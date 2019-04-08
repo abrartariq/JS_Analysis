@@ -1,0 +1,1742 @@
+var pxtop = 0;
+
+
+function absolutizeHeader() {
+  if(Utils.isAndroid() && Utils.isMobileDevice()) {
+    $('header').addClass('absolute');
+  }
+}
+
+
+function BodyFixed() {
+  pxtop = $(window).scrollTop();
+  $("body").addClass("fixed");
+  $("body").css("top", -pxtop);
+}
+function removeBodyFixed() {
+  $("body").removeClass("fixed");
+  $("body").css("top", "auto");
+  if (pxtop > 10) {
+    document.body.scrollTop = document.documentElement.scrollTop = pxtop;
+  }
+}
+
+function goToCommentSection(npage) {
+  if (typeof npage == 'undefined') {
+    var npage = 1;
+  }
+  
+  if ($("#commenti-facebook-p"+npage).length || $("#commenti-facebook").length > 0) {
+    var commentBox = $("#commenti-facebook-p"+npage+", #commenti-facebook");
+    var offsetAdds = (66 + 150);
+    if(commentBox.hasClass("commenti-facebook-live")){
+      offsetAdds = (255+57); 
+    }
+    
+    $('html,body').animate({scrollTop: commentBox.offset().top - offsetAdds }, 1000);
+    $("#commenti-facebook-p"+npage).trigger("click");
+  }
+}
+
+function isAmp() {
+  if (typeof __isamp !== 'undefined') {
+    return __isamp;
+  }
+  return false;
+}
+
+var scrollBarWidth = 0;
+var scrollBarWidth_half = 0;
+//var trackedHeaderEvents = {};
+
+function iol_unfixed () {
+  var iolmobilecontainer = $("#iol-mobile-container-fix");
+  iolmobilecontainer.css("top", iolmobilecontainer.offset().top  + "px").css("position","absolute");
+  iolmobilecontainer.animate({
+    top:90,
+    }, 1500, function() {
+      iolmobilecontainer.css("position","relative").css("top", "0");
+  });
+}
+
+//DEALER BUTTON
+var dealer_statuses = [
+  'pending',
+  'active',
+  'disabled',
+  'suspended',
+  'no-logged',
+  'status-null'
+];
+
+var dealer_button_init = function(page){
+  var dealer_share_button = $("#dealer-share" + (page > 1 ? '-p' + page : ''));
+  var social_block = $("#social-block" + (page > 1 ? '-p' + page : ''));
+  var dealer_share_text = $("#dealer-share" + (page > 1 ? '-p' + page : '') + " .text");
+  var box_content_box_count = $(".box-content-box-count" + (page > 1 ? '-p' + page : ''));
+  var document_ready_calling = 1;
+  
+  if(dealer_share_button.length > 0) {
+    $(document).on('UserStatusChanged', function() {
+
+      //reconfigure/unbind all events
+//      if(document_ready_calling === 1) { //se è stato chiamato dal document ready (flag) allora, annulla il flag e non esegue il closeLatestModal
+//        document_ready_calling = 0;
+//      } else {
+//        closeLatestModal();
+//      }
+      modalDealerLogin(dealer_share_button, null, true);
+      modalDealerLink(dealer_share_button, true);
+      //-end unbind events
+
+      if(flagLogged && dealer_share_button.data('uid') == loggedAuthorId){
+        dealer_share_button.addClass('hide');
+        social_block.addClass('news-not-distributable');
+      } else {
+        dealer_share_button.removeClass('hide');
+        social_block.removeClass('news-not-distributable');
+        dealer_share_button.removeClass(dealer_statuses.join(' '));
+        if (typeof dealer_status_description !== 'undefined'){
+          if (dealer_status_description === false){
+            dealer_share_button.addClass('disabled');
+          } else {
+            dealer_share_button.addClass(dealer_status_description);
+          }
+        }
+
+        var thisurl = window.location.href;
+        thisurl = thisurl.replace("http://", "");
+        thisurl = thisurl.replace("https://", "");
+        thisurl = thisurl.split(".html")[0];
+        var social_blaster_redirect_url = '/social-blaster/?redirect='+thisurl;
+
+        if (!flagLogged) {
+          if(!box_content_box_count.hasClass('with-dealer-button')) box_content_box_count.addClass('with-dealer-button');
+          dealer_share_button.addClass("no-logged");
+          dealer_share_text.html(message_92);
+          modalDealerLogin(dealer_share_button, social_blaster_redirect_url);
+        } else if (dealer_share_button.is(".no-logged")) {
+          modalDealerLogin(dealer_share_button, social_blaster_redirect_url);
+        }
+
+        if(dealer_share_button.is(".active")) {
+          if(!box_content_box_count.hasClass('with-dealer-button')) box_content_box_count.addClass('with-dealer-button');
+          modalDealerLink(dealer_share_button);
+          dealer_share_text.html(message_93);
+        }
+
+        if(dealer_share_button.is(".suspended")) {
+          box_content_box_count.removeClass('with-dealer-button');
+          dealer_share_button.addClass('hide');
+          social_block.addClass('news-not-distributable');
+        }
+
+        if(dealer_share_button.is(".pending")) {
+          if(!box_content_box_count.hasClass('with-dealer-button')) box_content_box_count.addClass('with-dealer-button');
+          dealer_share_text.html(message_94);
+        }
+
+        if (dealer_share_button.is(".disabled") && !dealer_share_button.is(".no-logged")) {
+          if(!box_content_box_count.hasClass('with-dealer-button')) box_content_box_count.addClass('with-dealer-button');
+          dealer_share_text.html(message_92);
+          dealer_share_button.on("click", function () {
+            window.location.href = social_blaster_redirect_url;
+          });
+        }
+      }
+
+    });
+    $(document).trigger('UserStatusChanged');
+  }
+}
+//FINE DEALER BUTTON
+
+// Lazy Load
+function runLazyLoad(page) {
+  var imgLazy = Math.max($("img.lazy").length, 0);
+  if (imgLazy > 0) {
+    var threshold = isCategorySinglePage ? 2000 : 600;
+    var pageSuff = page ? "-p" + page : "";
+    $("#content-page" + pageSuff + " img.lazy:visible").lazyload({
+      failure_limit: imgLazy,
+      //event: "sporty",
+      threshold: threshold,
+      //skip_invisible: false,
+      effect: "fadeIn",
+      placeholder: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVQI12P4cgYAArcBwRCJOM8AAAAASUVORK5CYII="
+    });
+  }
+}
+
+$(document).ready(function () {
+  
+  //absolutizeHeader(); //only on android (check if-android)
+
+  if (device == 'Desktop') {
+    scrollBarWidth = window.innerWidth - $('body').innerWidth();
+    if (scrollBarWidth < 0) {
+      scrollBarWidth = 0;
+    }
+    scrollBarWidth_half = scrollBarWidth/2 + 'px';
+    scrollBarWidth = scrollBarWidth + 'px';
+  }
+
+  // controllo che la funzione esista 
+  // (blasting-generic viene richiamato in pagine dove non sempre blasting-modal-function è istanziato)
+  // 
+  // Disabilitato il 25 Novembre 2016 Mike
+  //if(typeof modalLoginExitUser === 'function') {
+    //modalLoginExitUser();
+  //}
+
+  var width = $(window).width();
+
+//  function slidedownmenu() {
+//    if (device == 'Desktop') {
+//      var _top = $(window).scrollTop();
+//      var _last_from_bottom_position = 0;
+//      var divname = "#content-menu";
+//      var diff_bottom_to_top = 130; //px
+//
+//      $(window).on("scroll", function () {
+//        if ($(document).height() - $(window).height() >= diff_bottom_to_top) {
+//          var _cur_top = $(window).scrollTop();
+//          if (_top < _cur_top && _cur_top > 0) {
+//            _last_from_bottom_position = _cur_top;
+//
+//            $(divname).addClass("slide-up-menu");
+//            if ($(divname).hasClass("slide-up-menu-return")) {
+//              $(divname).removeClass("slide-up-menu-return");
+//            }
+//          }
+//          else if ((_top > _cur_top
+//                  || $(window).scrollTop() <= diff_bottom_to_top)
+//                  && _cur_top > 0
+//                  ) {
+//
+//            if (($(divname).hasClass("slide-up-menu")
+//                    && _cur_top + diff_bottom_to_top < _last_from_bottom_position)
+//                    || $(window).scrollTop() <= diff_bottom_to_top) {
+//              _last_from_bottom_position = 0;
+//              $(divname).addClass("slide-up-menu-return");
+//            }
+//
+//          }
+//          _top = _cur_top;
+//        } else {
+//          _last_from_bottom_position = 0;
+//          $(divname).removeClass("slide-up-menu");
+//        }
+//      });
+//    }
+//  }
+//
+//  slidedownmenu()
+
+  var width = $(window).width()
+
+  function setSkinFlow() {
+    type_flow = 1;
+  }
+
+  function setPopupRightFlow() {
+    type_flow = 2;
+  }
+  function areTopNewsBoxesStyled() {
+    if ($(".row-1").css('font-weight') == 500 &&
+            $(".row-2").css('font-weight') == 500 &&
+            $(".correlated-row1-1").css('font-weight') == 500 &&
+            $(".correlated-row1-2").css('font-weight') == 500 &&
+            $(".correlated-row2-1").css('font-weight') == 500 &&
+            $(".correlated-row2-2").css('font-weight') == 500) {
+      return true;
+    }
+    else {
+      return false;
+    }
+  }
+
+  if (window.location.hash.substring("jc")) {
+    window.onload = function () {
+      goToCommentSection();
+    }
+  }
+
+//$(".content-image").click(function(){console.log($(".row-1").css('font-weight'))});
+
+  if (typeof setEquivHeight != "undefined" && typeof setEquivHeight == 'function') {
+    if (width >= 992) {
+//setEquivHeight();
+//setTimeout(function(){
+//if(areTopNewsBoxesStyled){
+      setEquivHeight();
+      //},2000)
+    }
+  }
+
+  $(document).on("click", "[data-dismiss-hide]", function () {
+    var alertobj = $(this).closest("." + $(this).attr("data-dismiss-hide"));
+    alertobj.hide();
+    alertobj.children("span").hide();
+  });
+
+  // tooltip vari
+  /*if (device == 'Desktop') {
+    $('.info-vote').tooltip();
+    $('.logged-box-tooltip').tooltip({placement: "bottom"})
+  }*/
+
+
+//  $(window).resize(function () {
+//    console.log("resized");
+//    deviceWith = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+//    if (deviceWith >= 992) {
+//      removeBodyFixed();
+//
+//      $('#menu-mobile-trigger').removeClass('active');
+//      $('#content-menu').show();
+//      $('#content-menu').css("opacity", "1");
+//      $('#content-menu').css("z-index", "1014");
+//      $('#content-menu').css("left", "0");
+//      $('.footer').css("opacity", "1");
+//      $('.element-to-active').removeClass('active');
+//      $('.element-to-show').hide();
+//
+//    } else {
+//
+//      $('#menu-mobile-trigger').removeClass('active');
+//      $('#content-menu').hide();
+//      $('#content-menu').css("opacity", "0");
+//      $('#content-menu').css("z-index", "-1");
+//      $('#content-menu').css("left", "-95%");
+//      $('#content-menu').removeClass("slide-up-menu");
+//      $('#content-menu').removeClass("slide-up-menu-return");
+//
+//      $('.tag').removeClass('active');
+//      $('#all-tag').removeClass('active');
+//      $('#box-tag').hide();
+//      $('#edition').removeClass('active');
+//      $('#edition-button').removeClass('active');
+//      $('#edition-content').hide();
+//      $('#global-edition').removeClass('active');
+//      $('#global-edition-button').removeClass('active');
+//      $('#global-edition-content').hide();
+//      $('#section').removeClass('active');
+//      $('#section-button').removeClass('active');
+//      $('#section-content').hide();
+//
+//    }
+//
+//
+//  });
+
+  $(document).on("click", "#campanella", function () {
+    if ($('#campanella').hasClass('active')) {
+      $('#campanella').removeClass('active');
+      $('#notify').removeClass('active');
+      $('#notify-box-content').hide();
+      if (device == "Mobile") {
+        removeBodyFixed();
+      }
+    } else {
+      $('#campanella').addClass('active');
+      showTopBarElement($(this));
+      if (device == "Mobile") {
+        BodyFixed();
+      }
+    }
+  });
+
+  $(document).on("click", "#campanella-no-logged", function () {
+//    if ($('#campanella-no-logged').hasClass('active')) {
+//      $('#campanella-no-logged').removeClass('active');
+//      $('#notify-no-logged').removeClass('active');
+//      $('#notify-box-content-no-logged').hide();
+//      if (device == "Mobile") {
+//        removeBodyFixed();
+//      }
+//    } else {
+//      $('#campanella-no-logged').addClass('active');
+    //showTopBarElement($(this));
+    $(".box-notify-alert").hide();
+    $(".notifify-count-no-logged").hide();
+//      if (device == "Mobile") {
+//        BodyFixed();
+//      }
+    setCookie('cnnl', 1, 1);//cookie notify no logged
+
+//    if(!trackedHeaderEvents.hasOwnProperty("bell")) {
+//      ga('send', 'event', 'Click', 'bell');
+//      trackedHeaderEvents.bell=true;
+//    }
+
+//    }
+  });
+
+  if (getCookie('cnnl') !== '1') {
+      
+    document.addEventListener('notify_fake_avail_update', function (e) {
+      return;// disabilitato il 5 aprile 2017 con i nuovi template a e b non vogliono il bannerino Mike
+      //Mostro le notifiche fake se...
+      var showFakeNotification = false;
+
+      //L'utente non ha accettato i cookie, quindi il compiled non è caricato
+      showFakeNotification = showFakeNotification || !window.Utils || !window.adv;
+
+      //L'utente è su desktop o tablet
+      showFakeNotification = showFakeNotification || device != 'Mobile';
+
+      //L'utente è mobile e non è android
+      showFakeNotification = showFakeNotification || (device == 'Mobile' && notify_fake_avail == true && window.Utils && !Utils.isAndroid());
+
+      //l'utente è su un sito non abilitato per lo sticky player
+      showFakeNotification = showFakeNotification || window.adv;
+
+      if (showFakeNotification) {
+        $(".box-notify-alert").fadeIn();
+      } else {
+        $(".box-notify-alert").fadeOut();
+      }
+    }, false);
+      
+    document.dispatchEvent(event_notify_fake_avail);
+
+    $(".notifify-count-no-logged").show();
+  }
+  
+  if(typeof modalLogin !== 'undefined'){
+    //modalLogin($('#notify-no-logged'), null, {slogan: message_84_notify_0} );
+    //modalLogin($('#notifica-no-logged-3'), null, {slogan: message_84_notify_3});
+    //modalLogin($('#box-get-started-div'), null, {slogan: message_84_notify_3});
+  }
+  $('#box-get-started-div').on('click', function(e){
+    e.stopPropagation();
+    redirect_url_login = $('#box-get-started-div').data('href');
+    if(loggedAuthor){
+      window.location.href = redirect_url_login;
+    }
+  });
+  
+
+//  $(document).on("click", "#notifica-no-logged-3", function () {
+//    if(!trackedHeaderEvents.hasOwnProperty("write")) {
+//      ga('send', 'event', 'Click', 'Write');
+//      trackedHeaderEvents.write=true;
+//    }
+//  });
+
+  $("#search-button-trigger").on("click", function () {
+    $('.container-search').addClass('swash-in-search');
+    $('.container-search').removeClass('swash-out-search');
+    $('.container-search').fadeIn();
+    $('#search-button-trigger').fadeOut();
+  });
+
+  $("#search-button-trigger-return").on("click", function () {
+    $('.container-search').addClass('swash-out-search');
+    $('.container-search').removeClass('swash-in-search');
+    $('#search-button-trigger').fadeIn();
+    $('.container-search').fadeOut();
+  });
+
+//  $("#login-button-mobile").click(function() {
+//    if ($(".pol-cookie-accept").length > 0) { /*to auto-accept cookie policy */ $('.pol-cookie-accept').trigger('click'); }
+//    getModalLogin();
+//    $('#login-register-breadcrumb-mobile').show();
+//    $('#login-content').show();
+//    //$('#login-mobile-breadcrumb').addClass('active');
+//    $('.tag').removeClass('active');
+//    $('#all-tag-mobile').removeClass('active');
+//    $('#box-tag-mobile').hide();
+//    $('#edition-mobile').removeClass('active');
+//    $('#edition-button-mobile').removeClass('active');
+//    $('#edition-content-mobile').hide();
+//    $('#section-mobile').removeClass('active');
+//    $('#section-button-mobile').removeClass('active');
+//    $('#section-content-mobile').hide();
+//    $('#login-mobile-breadcrumb').hide();
+//    $('#register-mobile-breadcrumb').show();
+//    $('body').removeClass("fixed")
+//  });
+
+
+    $(document).on("click", '#a-register-mobile', function (evt) {
+        $("#a-register").click();
+        event.stopPropagation();
+    });
+
+  $(document).on("click", "#a-register", function () {
+    return;
+    //getModalRegistration();
+    $('#login-register-breadcrumb-mobile').show();
+    $('#register-content').show();
+    //$('#register-mobile-breadcrumb').addClass('active');
+    $('.tag').removeClass('active');
+    $('#all-tag-mobile').removeClass('active');
+    $('#box-tag-mobile').hide();
+    $('#edition-mobile').removeClass('active');
+    $('#edition-button-mobile').removeClass('active');
+    $('#edition-content-mobile').hide();
+    $('#section-mobile').removeClass('active');
+    $('#section-button-mobile').removeClass('active');
+    $('#section-content-mobile').hide();
+    $('#register-mobile-breadcrumb').hide();
+    $('#login-mobile-breadcrumb').show();
+    $('body').removeClass("fixed");
+
+    //Inizializzo l'sdk a richiesta
+    Blasting.FacebookSDK.init();
+  });
+
+//  $("#torna-menu-mobile").click(function () {
+//    $('#login-register-breadcrumb-mobile').hide();
+//    $('#login-content').hide();
+//    $('#login-mobile-breadcrumb').removeClass('active');
+//    $('#register-content').hide();
+//    $('#register-mobile-breadcrumb').removeClass('active');
+//    $('body').addClass("fixed")
+//  });
+
+//  $("#login-mobile-breadcrumb").click(function () {
+////$('#login-mobile-breadcrumb').addClass('active');
+////$('#register-mobile-breadcrumb').removeClass('active');
+//    if ($(".pol-cookie-accept").length > 0) { /*to auto-accept cookie policy */
+//      $('.pol-cookie-accept').trigger('click');
+//    }
+//    getModalLogin();
+//    $('#login-content').show();
+//    $('#register-content').hide();
+//    $('#register-mobile-breadcrumb').show();
+//    $('#login-mobile-breadcrumb').hide();
+//  });
+//
+//  $("#register-mobile-breadcrumb").click(function () {
+////$('#register-mobile-breadcrumb').addClass('active');
+////$('#login-mobile-breadcrumb').removeClass('active');
+//    $('#register-content').show();
+//    $('#login-content').hide();
+//    $('#register-mobile-breadcrumb').hide();
+//    $('#login-mobile-breadcrumb').show();
+//  });
+
+//  $('#all-tag-mobile').click(function() {
+//    if ($('#all-tag-mobile').hasClass('active')) {
+//      $('#all-tag-mobile').removeClass('active');
+//      $('.tag').removeClass('active');
+//      $('#box-tag-mobile').hide();
+//    } else {
+//      $('#all-tag-mobile').addClass('active');
+//      $('.tag').addClass('active');
+//      //$('.tag-icon').addClass('active');
+//      $('#box-tag-mobile').show();
+//      $('#login-content').hide();
+//      $('#register-content').hide();
+//      $('#breaking-news-content').hide();
+//      $('#edition-content').hide();
+//      $('#edition-content-mobile').hide();
+//      $('#section-content').hide();
+//      $('#section-content-mobile').hide();
+//      $('#login').removeClass('active');
+//      $('#login-button').removeClass('active');
+//      $('#register').removeClass('active');
+//      $('#register-button').removeClass('active');
+//      $('#breaking-news').removeClass('active');
+//      $('#edition').removeClass('active');
+//      $('#edition-mobile').removeClass('active');
+//      $('#edition-bottom').removeClass('active');
+//      $('#edition-button-mobile').removeClass('active');
+//      $('#section').removeClass('active');
+//      $('#section-mobile').removeClass('active');
+//      $('#section-bottom').removeClass('active');
+//      $('#section-button-mobile').removeClass('active');
+//    }
+//  });
+
+//  $('#edition-button-mobile').click(function() {
+//
+//    if ($('#edition-button-mobile').hasClass('active')) {
+//      $('#edition-mobile').removeClass('active');
+//      $('#edition-button-mobile').removeClass('active');
+//      $('#edition-content-mobile').hide();
+//    } else {
+//      $('#edition-mobile').addClass('active');
+//      $('#edition-button-mobile').addClass('active');
+//      $('#edition-content-mobile').show();
+//      $('#login-content').hide();
+//      $('#register-content').hide();
+//      $('#breaking-news-content').hide();
+//      $('#box-tag').hide();
+//      $('#box-tag-mobile').hide();
+//      $('#section-content').hide();
+//      $('#section-content-mobile').hide();
+//      $('#login').removeClass('active');
+//      $('#login-button').removeClass('active');
+//      $('#register').removeClass('active');
+//      $('#register-button').removeClass('active');
+//      $('#breaking-news').removeClass('active');
+//      $('#all-tag').removeClass('active');
+//      $('.tag').removeClass('active');
+//      $('.tag-icon').removeClass('active');
+//      $('#all-tag-mobile').removeClass('active');
+//      $('.tag').removeClass('active');
+//      $('#section').removeClass('active');
+//      $('#section-mobile').removeClass('active');
+//      $('#section-bottom').removeClass('active');
+//      $('#section-button-mobile').removeClass('active');
+//    }
+//  });
+//
+//  $("#section-content").clone().attr('id', 'section-content-copy').appendTo($("#section-content-mobile"));
+//  $("#edition-content").clone().attr('id', 'edition-content-copy').appendTo($("#edition-content-mobile"));
+
+//  $('#section-button-mobile').click(function() {
+//
+//    if ($('#section-button-mobile').hasClass('active')) {
+//      $('#section-mobile').removeClass('active');
+//      $('#section-button-mobile').removeClass('active');
+//      $('#section-content-mobile').hide();
+//    } else {
+//      $('#section-mobile').addClass('active');
+//      $('#section-button-mobile').addClass('active');
+//      $('#section-content-mobile').show();
+//      $('#login-content').hide();
+//      $('#register-content').hide();
+//      $('#breaking-news-content').hide();
+//      $('#box-tag').hide();
+//      $('#box-tag-mobile').hide();
+//      $('#edition-content').hide();
+//      $('#edition-content-mobile').hide();
+//      $('#logged-content').hide();
+//      $('#login').removeClass('active');
+//      $('#login-button').removeClass('active');
+//      $('#register').removeClass('active');
+//      $('#register-button').removeClass('active');
+//      $('#breaking-news').removeClass('active');
+//      $('#all-tag').removeClass('active');
+//      $('#all-tag-mobile').removeClass('active');
+//      $('.tag').removeClass('active');
+//      $('.tag-icon').removeClass('active');
+//      $('#edition').removeClass('active');
+//      $('#edition-mobile').removeClass('active');
+//      $('#edition-bottom').removeClass('active');
+//      $('#edition-button-mobile').removeClass('active');
+//      $('#logged').removeClass('active');
+//    }
+//  });
+//var copy = $('#box-tag-mobile').clone();
+//$('#box-tag-mobile').remove(); // rimuove l'elemento originale
+//$(copy).appendTo('body');
+
+// estraggo elemento
+//elem = $('#box-tag-mobile').html();
+
+//clono elemento
+//e = elem.clone(true);
+
+//inserisco l'elemento nel blocco B
+//$('#box-tag-mobile').appendTo('body');
+
+// elimino l'originale che si trova nel blocco A
+//elem.remove();
+
+
+//$("#jPanelMenu-style-master ").append( $("#box-tag-mobile") );
+//$( "#jPanelMenu-style-master" ).append( $( "#box-tag-mobile" ) );
+
+  // menù mobile end
+
+  $("#close-europe").click(function (e) {
+    $(".box-europe").hide();
+  });
+
+  $('#calcola').click(function () {
+    if ($('#calcola').hasClass('active')) {
+      $('#calcola').removeClass('active');
+      $("#tbnCount").hide();
+    } else {
+      $('#calcola').addClass('active');
+      $("#tbnCount").show();
+    }
+  });
+
+  $('#calcola-chiudi').click(function () {
+    $("#tbnCount").hide();
+    $("#calcola").removeClass('active');
+  });
+
+  $(document).on("click", ".comments-anchor", function() {
+    goToCommentSection( $(this).data('page') );
+  });
+
+//  if ($('#social-floating').length > 0) {
+//    $("#social-floating").fixTo('#content-article');
+//  }
+
+// handles the carousel thumbnails
+  $('[id^=carousel-selector-]').click(function () {
+    var id_selector = $(this).attr("id");
+    var id = id_selector.substr(id_selector.length - 1);
+    id = parseInt(id);
+    $('#myCarousel').carousel(id);
+    $('[id^=carousel-selector-]').removeClass('selected');
+    $(this).addClass('selected');
+  });
+// when the carousel slides, auto update
+  $('#myCarousel').on('slid', function (e) {
+    var id = $('.item.active').data('slide-number');
+    id = parseInt(id);
+    $('[id^=carousel-selector-]').removeClass('selected');
+    $('[id^=carousel-selector-' + id + ']').addClass('selected');
+  });
+  if (typeof device != "undefined") {
+    if (device == 'Mobile') {
+      $(".layer-popup-login").remove();
+    }
+  }
+
+//link no follow delle adv 4wnet
+  $('a[href*="http://www.4wmarketplace.com/en/page/read/contact"]').prop('rel', 'nofollow');
+  //gestione audio con pubblicità video
+  if ($("#playeraudio_audiojs").length > 0) {
+    audiojs_init();
+  }
+
+  /*$("#play-finto").click(function() {
+   //console.log('ciao');
+   callSC_RUN();
+   });
+   
+   $("#play-finto").mouseenter(function() {
+   $('.listen').addClass('listen-hover');
+   });
+   
+   $("#play-finto").mouseleave(function() {
+   $('.listen').removeClass('listen-hover');
+   });*/
+
+// toltip
+  //$('.info-tooltip').tooltip();
+// slider-home
+  $('#myCarousel').carousel({
+    interval: false
+  });
+// breaking-news
+
+//showBreakingNews();
+
+// mostra e nascondi i pulsanti dell'header
+  $('#login-button').click(function () {
+    return;
+    if ($('#login-button').hasClass('active')) {
+      $('#login-button').removeClass('active');
+      $('#login').removeClass('active');
+      $('#login-content').hide();
+    } else {
+      if ($(".pol-cookie-accept").length > 0) { /*to auto-accept cookie policy */
+        $('.pol-cookie-accept').trigger('click');
+      }
+      getModalLogin();
+      showTopBarElement($(this));
+//      if(!trackedHeaderEvents.hasOwnProperty("login")) {
+//        ga('send', 'event', 'Click', 'Login');
+//        trackedHeaderEvents.login=true;
+//      }
+
+      window.Blasting.FacebookSDK.init();
+    }
+
+    if ($('#menu-mobile-trigger').hasClass('active')) {
+      $('#menu-mobile-trigger').removeClass('active');
+      $('#content-page').css("position", "relative");
+      $('#menu-mobile').hide();
+      $('#menu-mobile').css("opacity", "0");
+      $('#menu-mobile').css("z-index", "-1");
+      $('#menu-mobile').css("left", "-95%");
+      $('.footer').css("opacity", "1");
+    }
+  });
+
+  $(document).on("click", '#a-register', function () {
+    return;
+
+//    if ($('#social-js').length === 0) {
+//      var s = document.createElement('script');
+//      s.setAttribute('type', 'text/javascript');
+//      s.setAttribute('src', social_js_with_version);
+//      s.setAttribute('id', 'social-js');
+//      document.body.appendChild(s);
+//    }
+
+    //getModalRegistration();
+    if ($('#register').hasClass('active')) {
+      $('#a-register').removeClass('active');
+      $('#register').removeClass('active');
+      $('#register-content').hide();
+    } else {
+      showTopBarElement($(this));
+//      if(!trackedHeaderEvents.hasOwnProperty("join")) {
+//        ga('send', 'event', 'Click', 'Join');
+//        trackedHeaderEvents.join=true;
+//      }
+    }
+
+    if ($('#menu-mobile-trigger').hasClass('active')) {
+      $('#menu-mobile-trigger').removeClass('active');
+      $('#content-page').css("position", "relative");
+      $('#menu-mobile').hide();
+      $('#menu-mobile').css("opacity", "0");
+      $('#menu-mobile').css("z-index", "-1");
+      $('#menu-mobile').css("left", "-95%");
+      $('.footer').css("opacity", "1");
+    }
+  });
+
+  // package normal
+  $(document).on("click", "#figure-top-news", function () {
+    window.open($("#link-title-top-news").attr('href'));
+  });
+  // package full screen quando le abbiamo messe in pop l'id non potevamo usarlo più perchè era duplicato
+  $(document).on("click", ".figure-top-news", function () {
+    window.open($(this).parent().parent().find(".link-title-top-news").attr('href'));
+  });
+  
+  $(document).on("click", "#package-subtitle", function () {
+    window.open($("#link-title-top-news").attr('href'));
+  });
+  $(document).on("click", "#title-video", function () {
+    window.open($("#link-title-top-video").attr('href'));
+  });
+
+  //trigger click sul video piccolo della pagina del tag esploso
+  $(document).on("click", "#figure-video-last", function () {
+    window.open($("#link-title-video-last").attr('href'));
+  });
+
+
+  $(document).on("click", "#register-privacy-link", function (e) {
+    e.preventDefault();
+    $("#register-box").hide();
+    $("#privacy-box").fadeIn(10);
+  });
+
+  $(document).on("click", "#aPrivacyBack", function (e) {
+    e.preventDefault();
+    $("#register-box").fadeIn();
+    $("#privacy-box").hide();
+  });
+
+  $("#register-privacy-link-2").click(function (e) {
+    e.preventDefault();
+    $("#register-box-2").hide();
+    $("#privacy-box-2").fadeIn(10);
+  });
+
+  $("#aPrivacyBack-2").click(function (e) {
+    e.preventDefault();
+    $("#register-box-2").fadeIn();
+    $("#privacy-box-2").hide();
+  });
+
+  //mostra e nascondi i pulsanti del menu
+  $("#all-tag").click(function () {
+
+    if ($('#all-tag').hasClass('active')) {
+      $('#all-tag').removeClass('active');
+      $('.tag').removeClass('active');
+      $('.tag-icon').removeClass('active');
+      $('#box-tag').hide();
+    } else {
+      $('#all-tag').addClass('active');
+      $('.tag').addClass('active');
+      $('.tag-icon').addClass('active');
+      $('#box-tag').show();
+      $('#login-content').hide();
+      $('#register-content').hide();
+      $('#breaking-news-content').hide();
+      $('#edition-content').hide();
+      $('#global-edition-content').hide();
+      $('#section-content').hide();
+      $('#login').removeClass('active');
+      $('#login-button').removeClass('active');
+      $('#register').removeClass('active');
+      $('#register-button').removeClass('active');
+      $('#breaking-news').removeClass('active');
+      $('#edition').removeClass('active');
+      $('#edition-bottom').removeClass('active');
+      $('#global-edition').removeClass('active');
+      $('#global-edition-bottom').removeClass('active');
+      $('#section').removeClass('active');
+      $('#section-bottom').removeClass('active');
+    }
+  });
+
+  $('#edition-bottom').click(function () {
+
+    if ($('#edition-bottom').hasClass('active')) {
+      $('#edition').removeClass('active');
+      $('#edition-bottom').removeClass('active');
+      $('#edition-content').hide();
+    } else {
+      showTopBarElement($(this));
+    }
+  });
+
+  $('#global-edition-bottom').click(function () {
+
+    if ($('#global-edition-bottom').hasClass('active')) {
+      $('#global-edition').removeClass('active');
+      $('#global-edition-bottom').removeClass('active');
+      $('#global-edition-content').hide();
+    } else {
+      showTopBarElement($(this));
+    }
+  });
+
+  $('.city').click(function (e) {
+    e.preventDefault();
+    var element = $(this).attr('id');
+    $('.news-local-edition').hide();
+    $('.' + element).show();
+  });
+
+  $(document).on("click", ".close", function (event) {
+    $('#edition-content').hide();
+    $('#global-edition-content').hide();
+    $('#section-content').hide();
+    $('#login-content').hide();
+    $('#register-content').hide();
+
+    $('#edition').removeClass('active');
+    $('#edition-bottom').removeClass('active');
+    $('#global-edition').removeClass('active');
+    $('#global-edition-bottom').removeClass('active');
+    $('#section').removeClass('active');
+    $('#section-bottom').removeClass('active');
+
+    $('#register').removeClass('active');
+    $('#a-register').removeClass('active');
+    $('#login').removeClass('active');
+    $('#login-button').removeClass('active');
+  });
+
+  $('#section-bottom').click(function () {
+    if ($('#section-bottom').hasClass('active')) {
+      $('#section').removeClass('active');
+      $('#section-bottom').removeClass('active');
+      $('#section-content').hide();
+    } else {
+      showTopBarElement($(this));
+    }
+  });
+
+
+  $(document).click(function (event) {
+    if ($('#menu-mobile-trigger').hasClass('active')) {
+      $('#menu-mobile-trigger').trigger('click');
+    }
+
+    $('#login-content').hide();
+    $('#register-content').hide();
+    $('#breaking-news-content').hide();
+    $('#box-tag').hide();
+    $('#edition-content').hide();
+    $('#global-edition-content').hide();
+    $('#section-content').hide();
+    $('#edit_info_form').hide();
+    $('#notify-box-content').hide();
+    $('#notify-box-content-no-logged').hide();
+
+    if (($("#gs_tti50 > input").val() == "") || ($("#gs_tti50 > input").val() == undefined)) {
+      $('#search-content').hide();
+    } else {
+// TODO other
+    }
+
+    $('#login').removeClass('active');
+    $('#login-button').removeClass('active');
+    $('#logged').removeClass('active');
+    $('#logged-bottom').removeClass('active');
+    $('#search').removeClass('active');
+    $('#search-bottom').removeClass('active');
+    $('#register').removeClass('active');
+    $('#register-button').removeClass('active');
+    $('#breaking-news-button').removeClass('active');
+    $('#campanella, #notify').removeClass('active');
+    $('#campanella-no-logged, #notify-no-logged').removeClass('active');
+    $('#breaking-news-button-close').hide();
+    $('#breaking-news-button').show();
+    $('#breaking-news-list').show();
+    $('#overlay-breaking').remove();
+    $('body').removeClass('fixed-breaking');
+    $('#header').removeClass('modal-aperta-fixed-breaking');
+    $('#breaking-news').removeClass('modal-aperta-fixed-breaking');
+
+    $('#all-tag').removeClass('active');
+    $('.tag').removeClass('active');
+    $('.tag-icon').removeClass('active');
+    $('#edition').removeClass('active');
+    $('#edition-bottom').removeClass('active');
+    $('#global-edition').removeClass('active');
+    $('#global-edition-bottom').removeClass('active');
+    $('#section').removeClass('active');
+    $('#section-bottom').removeClass('active');
+
+    //mobile
+    $('#edition-mobile').removeClass('active');
+    $('#edition-mobile-mobile').removeClass('active');
+    $('#edition-content-mobile').hide();
+    $('#section-mobile').removeClass('active');
+    $('#section-button-mobile').removeClass('active');
+    $('#section-content-mobile').hide();
+    $('#login-register-breadcrumb-mobile').hide();
+    $('#login-mobile-breadcrumb').removeClass('active');
+    $('#register-mobile-breadcrumb').removeClass('active');
+
+    if (device == "Mobile") {
+      removeBodyFixed();
+    }
+  });
+
+  $(document).on("click", "#menu-mobile-trigger", function (event) {
+    event.stopPropagation();
+  });
+  $(document).on("click", "#menu-mobile", function (event) {
+    event.stopPropagation();
+  });
+  $(document).on("click", "#login-button-mobile", function (event) {
+    event.stopPropagation();
+  });
+  $(document).on("click", "#register-button-mobile", function (event) {
+    event.stopPropagation();
+  });
+  $(document).on("click", "#login-register-breadcrumb-mobile", function (event) {
+    event.stopPropagation();
+  });
+  $(document).on("click", "#torna-menu-mobile", function (event) {
+    event.stopPropagation();
+  });
+  $(document).on("click", "#login-mobile-breadcrumb", function (event) {
+    event.stopPropagation();
+  });
+  $(document).on("click", "#register-mobile-breadcrumb", function (event) {
+    event.stopPropagation();
+  });
+  $(document).on("click", "#all-tag-mobile", function (event) {
+    event.stopPropagation();
+  });
+  $(document).on("click", "#edition-content-mobile", function (event) {
+    event.stopPropagation();
+  });
+  $(document).on("click", "#section-content-mobile", function (event) {
+    event.stopPropagation();
+  });
+  $(document).on("click", "#login-button", function (event) {
+    event.stopPropagation();
+  });
+  $(document).on("click", "#login-content", function (event) {
+    event.stopPropagation();
+  });
+  $(document).on("click", "#a-register", function (event) {
+    event.stopPropagation();
+  });
+  $(document).on("click", "#register-content", function (event) {
+    event.stopPropagation();
+  });
+  $(document).on("click", "#campanella", function (event) {
+    event.stopPropagation();
+  });
+  $(document).on("click", "#campanella-no-logged", function (event) {
+    event.stopPropagation();
+  });
+  $(document).on("click", "#logged-content", function (event) {
+    event.stopPropagation();
+  });
+  $(document).on("click", "#search-bottom", function (event) {
+    event.stopPropagation();
+  });
+  $(document).on("click", "#search-content", function (event) {
+    event.stopPropagation();
+  });
+  $(document).on("click", "#breaking-news-button", function (event) {
+    event.stopPropagation();
+  });
+  $(document).on("click", "#all-tag", function (event) {
+    event.stopPropagation();
+  });
+  $(document).on("click", "#edition-bottom", function (event) {
+    event.stopPropagation();
+  });
+  $(document).on("click", "#edition-content", function (event) {
+    event.stopPropagation();
+  });
+  $(document).on("click", "#global-edition-bottom", function (event) {
+    event.stopPropagation();
+  });
+  $(document).on("click", "#global-edition-content", function (event) {
+    event.stopPropagation();
+  });
+  $(document).on("click", "#section-bottom", function (event) {
+    event.stopPropagation();
+  });
+  $(document).on("click", ".gs-title", function (event) {
+    event.stopPropagation();
+  });
+  $(document).on("click", ".login-camera-pencil", function (event) {
+    event.stopPropagation();
+  });
+  $(document).on("click", "#bio_edit", function (event) {
+    event.stopPropagation();
+  });
+  $(document).on("click", ".close", function (event) {
+    event.stopPropagation();
+  });
+  
+  
+  
+  //tolgo il parametro in get degli errori
+  $(".social-modal-error").click(function (e) {
+    e.preventDefault();
+    history.replaceState(null, null, "/");
+  });
+  $(".close-social-modal-error").click(function (e) {
+    e.preventDefault();
+    history.replaceState(null, null, "/");
+  });
+  //$('.layer-popup-login').delay(10000).fadeOut('slow');
+
+  /*
+   window.fbAsyncInit = function() {
+   FB.init({
+   appId: '218322618328950',
+   status: true,
+   cookie: true,
+   xfbml: true,
+   oauth: true
+   });
+   };
+   */
+
+  setTimeout(
+          function () {
+            /*(function (d, s, id) {
+              var js, fjs = d.getElementsByTagName(s)[0];
+              if (d.getElementById(id))
+                return;
+              js = d.createElement(s);
+              js.id = id;
+              //js.async=true;
+              if (typeof blfbsdk_config !== 'undefined') //fbsdk share init
+              {
+                js.src = "https://connect.facebook.net/" + currentLang + "/all.js#status=1&cookie=1&xfbml=1&oauth=1&appId=" + appId;
+              }
+              else
+              {
+                js.src = "https://connect.facebook.net/" + currentLang + "/all.js#xfbml=1&appId=" + appId;
+              }
+              fjs.parentNode.insertBefore(js, fjs);
+            }(document, 'script', 'facebook-jssdk'));*/
+//            (function (d, s, id) {
+//              var js, fjs = d.getElementsByTagName(s)[0];
+//              if (!d.getElementById(id)) {
+//                js = d.createElement(s);
+//                js.id = id;
+//                js.async = true;
+//                js.src = "//platform.twitter.com/widgets.js";
+//                fjs.parentNode.insertBefore(js, fjs);
+//              }
+//            }(document, "script", "twitter-wjs"));
+//            window.___gcfg = {lang: langCode};
+//            (function () {
+//              var po = document.createElement('script');
+//              po.type = 'text/javascript';
+//              po.async = true;
+//              po.src = 'https://apis.google.com/js/plusone.js';
+//              var s = document.getElementsByTagName('script')[0];
+//              s.parentNode.insertBefore(po, s);
+//            })();
+            setTimeout(function () {
+              $(".button-fb").css("background", "none");
+            }, 8000);
+          }, 100);
+  if (typeof performVideoMatched != 'undefined') {
+    if (performVideoMatched) {
+      $.getScript("http://static.eplayer.performgroup.com/flash/js/swfobject.js", function (data, textStatus, jqxhr) {
+        console.log(jqxhr.status); // 200
+        console.log("Load was performed.");
+        if (jqxhr.status = "200") {
+          $.getScript("http://static.eplayer.performgroup.com/flash/js/performgroup.js", function (data, textStatus, jqxhr) {
+            console.log(jqxhr.status); // 200
+            console.log("Load was performed.");
+            if (jqxhr.status = "200") {
+              $("#eplayerHolder").show();
+              performVideoPlayer();
+            }
+          });
+        }
+      });
+    }
+  }
+
+//Template video
+
+  $("#data-slide-next").click(function (event) {
+    event.preventDefault();
+    if (pagesRelated > actualPage) {
+      actualPage++;
+    } else {
+      actualPage = 1;
+    }
+    n1 = (actualPage * numVideoInRelatedPage) - 3;
+    if ((actualPage * numVideoInRelatedPage) > relatedBottom) {
+      n2 = ((actualPage - 1) * numVideoInRelatedPage) + (relatedBottom % numVideoInRelatedPage);
+    } else {
+      n2 = (actualPage * numVideoInRelatedPage);
+    }
+    $("#pageRelated").html(n1 + "-" + n2);
+  });
+  $("#data-slide-prev").click(function (event) {
+    event.preventDefault();
+    if (actualPage < 2) {
+      actualPage = pagesRelated;
+    } else {
+      actualPage--;
+    }
+    n1 = (actualPage * numVideoInRelatedPage) - 3;
+    if ((actualPage * numVideoInRelatedPage) > relatedBottom) {
+      n2 = ((actualPage - 1) * numVideoInRelatedPage) + (relatedBottom % numVideoInRelatedPage);
+    } else {
+      n2 = (actualPage * numVideoInRelatedPage);
+    }
+    $("#pageRelated").html(n1 + "-" + n2);
+  });
+  $(".close").click(function (e) {
+    $(".country-modal-error").modal("hide");
+    $(".bs-example-modal-lg").modal("hide");
+  });
+  $(document).on("click", ".close-social-modal-error", function () {
+    $(".country-modal-error").modal("hide");
+  });
+  //showfanpage
+  if (semaforo_popupfanpage && typeof showOverlay == 'function') {
+    var lastX = 0, lastY = 0;
+    $(document).mousemove(function (e) {
+      var $win = $(window);
+      var offX = $win.scrollLeft(), offY = $win.scrollTop();
+      var w = $win.width(), h = $win.height(), x = e.pageX - offX, y = e.pageY - offY;
+      lastX = x;
+      lastY = y;
+    });
+    if (device == 'Desktop') {
+      $(document).mouseleave(function (e) {
+        if (!$("#loggin-follow-modal").is(":hidden")) {
+          shown_popupfanpage = true;
+          return;
+        }
+        if (shown_popupfanpage)
+          return;
+        var $win = $(window);
+        var offX = $win.scrollLeft(), offY = $win.scrollTop();
+        var w = $win.width(), h = $win.height(), x = e.pageX - offX, y = e.pageY - offY;
+        var bad = y >= 0;
+        if (x < 0 || y < 0) {
+          if (e.target && (e.target.tagName == 'SELECT' || e.target.tagName == 'OPTION')) {
+            bad = true;
+          } else if (y < 0 && lastY / h > 0.1) {
+            bad = true;
+          }
+        }
+        if (bad)
+          return;
+        showOverlay();
+        shown_popupfanpage = true;
+      });
+    }
+  }
+  /* richiedo, solo  al login, la modale trova/invita amici */
+//  if (flagLogged && typeof getAdvice != "undefined") {
+//    getModalAdvice();
+//  }
+
+//  $('.navbar-nav  li  a').click(function (e) {
+//    var category = "navbar"
+//    var action = $(this).data("position")
+//    var label = $(this).attr("href");
+//    if (action == undefined) {
+//      action = 0
+//    }
+//    ga('send', 'event', category, action, label);
+//  });
+  /*Popup right tracking su fb */
+  $('.registration-right').click(function () {
+    var category = "registrationBottomRight"
+    var action = "click"
+    var label = "button";
+    ga('send', 'event', category, action, label);
+    setPopupRightFlow();
+    //$("#login-facebook-follow").trigger("click");
+    if ($(".pol-cookie-accept").length > 0) { /*to auto-accept cookie policy */
+      $('.pol-cookie-accept').trigger('click');
+    }
+
+    ShowGenericLoader();
+    FB.login(function (response) {
+      if (response.status === 'connected') {
+        var access_token = response.authResponse.accessToken;
+        var id_following = $("#id_following").val();
+        var invitation = $("#follow-invitation").val();
+        var param_type = false;
+        if (typeof type_flow !== "undefined" && type_flow !== false) {
+          param_type = type_flow;
+        }
+
+        var data_fb = {access_token: access_token, id_following: id_following, invitation: invitation, persistentSignin: true, typeFlow: param_type, verificationdebug: '__#blastingGeneric'};
+
+        $.ajax({
+          type: 'POST',
+          url: '/app/facebook_login/',
+          data: data_fb,
+          dataType: "json",
+          success: function (data) {
+            var jsonObj = eval(data);
+            if (jsonObj.status == "Ok") {
+              HideGenericLoader();
+              init_login(data);
+              closeOverlay_follow();
+
+              if (data.animation === 1) {
+                //$('#logged-bottom').trigger('click');
+                $('#logged-content').show();
+                $('#follow-content').show();
+              }
+            } else if (jsonObj.status == "fb_error") {
+              $("#follow-first").hide();
+              $("#social-error-facebook-error").show();
+            } else if (jsonObj.status == "no-email-given" && jsonObj.user_not_confirmed != 'true') {
+              show_modal($(document), "NoEmail", jsonObj);
+            } else if (jsonObj.status == "need-polling") {
+              polling.params.url = '/app/chkRegProp/';
+              polling.params.method = 'get';
+              polling.params.data = {'ufi': jsonObj.ufi};
+              polling.success = function (data) {
+                //alert('polling andato a buon fine ' + JSON.stringify(data) + '. quindi chiamo nuovamente conferma iscrizione col parametro p per finire le operazioni e loggare');
+                $.ajax({
+                  type: 'POST',
+                  url: '/app/facebook_login/',
+                  data: data_fb,
+                  dataType: "json",
+                  success: function (data) {
+                    init_login(data);
+                    closeOverlay_follow();
+
+                    if (data.animation === 1) {
+                      //$('#logged-bottom').trigger('click');
+                      $('#logged-content').show();
+                      $('#follow-content').show();
+                    }
+                  }
+                });
+              }
+              polling.doPolling();
+            } else if (jsonObj.status == "duplicate-fb-user-id") {
+              console.log("activationStatus: il tuo account è in fase di attivazione (senza polling)");//il tuo account è in fase di attivazione senza polling
+            } else if (jsonObj.user_not_confirmed == 'true') {
+              unconfirmed_fb_user = true;
+              show_modal($(document), "NoEmail", jsonObj);
+            }
+          }
+        });
+      } else {
+        //togglePleaseWait();
+      }
+
+    }, {scope: blfbsdk_config.config.scope});
+  });
+  $('#popup-right .close').click(function () {
+    ga('send', 'event', 'registrationBottomRight', 'click', 'chiudi');
+  });
+
+  $('#link-adv-sponsorship').click(function () {
+    if ($(this).hasClass("ben_assicura")) {
+      ga('send', 'event', 'advertising', 'click', 'benAssicurazioni');
+    }
+    if ($(this).hasClass("prestito_pensionati")) {
+      ga('send', 'event', 'advertising', 'click', 'prestitiPensionati');
+    }
+  });
+
+  $('#video-blasting-tv-esplosa').click(function () {
+    ga('send', 'event', 'video', 'click', 'news-tpl_bottom');
+  })
+
+  $(".fb_share_mobile").click(function () {
+    if ($(".pol-cookie-accept").length > 0) { /*to auto-accept cookie policy */
+      $('.pol-cookie-accept').trigger('click');
+    }
+    var w;
+    var h;
+    var path = "https://m.facebook.com/dialog/feed/?"
+    if (screen.availWidth <= 728) {
+      w = 300;
+      h = 349;
+    } else if (screen.availWidth < 992) {
+      w = 600;
+      h = 538;
+    } else {
+      w = 1000;
+      h = 592;
+      path = "https://facebook.com/dialog/feed/?"
+    }
+
+    var l = Math.floor((screen.width - w) / 2);
+    var t = Math.floor((screen.height - h) / 2);
+    var element = $(this);
+    var picture = element.attr("data-picture");
+    var description = element.attr("data-description");
+    var title = element.attr("data-name");
+    var link = element.attr("data-url");
+    var url_path = path + "title=" + encodeURIComponent(title) + "&description=" + encodeURIComponent(description) + "&picture=" + encodeURIComponent(picture) + "&link=" + encodeURIComponent(link) + "&app_id=" + encodeURIComponent(appId) + "&redirect_uri=" + encodeURIComponent(link) + "";
+    var myWin = window.open(url_path, "_blank", "width=" + w + ",height=" + h + ",top=" + t + ",left=" + l);
+  });
+
+  $(".wa_share_mobile").click(function () {
+    var path = "whatsapp://send?"
+    var element = $(this);
+
+    var text = element.attr("data-name");
+    var url_path = path + "text=" + text + "";
+    window.location.href = url_path;
+  });
+
+
+  //Lazy load
+  var imgLazy = Math.max($("img.lazy").length, 0);
+  if (imgLazy > 0) {
+
+    runLazyLoad();
+ 
+    $("#city").children().on('click', function () {
+      $(".content-edition .lazy").lazyload();
+    });
+
+    $(".content-blasting-tv-channel").on('click', function () {
+      $(".content-blasting-tv-channel .lazy").lazyload();
+    });
+    $(".content-blasting-tv-channel").on('click', function () {//mi serve da desktop: su browser veloci l'immagine vien servita prima
+      setTimeout(function () {//per evitare che sul click delle freccette non si piglia l'immagine
+        $(".content-blasting-tv-channel .lazy").lazyload();
+      }, 10);
+    });
+    $(".content-blasting-tv-channel").on('slid.bs.carousel', function () {
+      //setTimeout(function () {//per evitare che sul click delle freccette non si piglia l'immagine
+      $(".content-blasting-tv-channel .lazy").lazyload();
+      //}, 50);
+    });
+
+    $(document).on('click', ".content-blasting-tv", function () {
+      $(".content-blasting-tv .lazy").lazyload();
+    });
+
+    //CODICE che attivava il lazy load allo scrol (prima di avere lo swipe)
+    var start = false;
+    $(".content-blasting-tv .video-small").on('mouseenter', function () {
+      start = true;
+      laziRefresh();
+    });
+    $(".content-blasting-tv .video-small").on('mouseleave', function () {
+      start = false;
+    });
+
+    laziRefresh = function () {
+      $(".content-blasting-tv .lazy").lazyload();
+      if (start) {
+        setTimeout(function () {
+          laziRefresh();
+        }, 400);
+      }
+    }
+  }
+
+  //FINE - Lazy load
+
+  //Blasting TV, js generico
+  $('.channels').on('click', function (e) {
+    e.preventDefault();
+    $('.box-video').removeClass('active');
+    $('.channels').removeClass('active');
+    $("." + $(this).attr('data-slugchannel')).addClass('active');//attiva sia se stesso che il box-video
+  });
+  if (device !== 'Mobile') {
+    $('.carousel-blasting-tv-channel > .carousel-inner > .item-0').remove();
+    $('.carousel-blasting-tv-channel > .carousel-inner > .item-1').addClass('active');
+  }
+  //FINE - Blasting TV
+  
+  //dealer button init (successivi bottoni richiamati in infinite js)
+  dealer_button_init(1);
+});
+
+//$(window).bind("load", function () {
+//  var timeout = setTimeout(function () {
+//    $("img.lazy").trigger("sporty")
+//  }, 1500);
+//});
+
+/**
+ * 
+ * @param {type} cname
+ * @param {type} cvalue
+ * @param {type} exdays if false we save a session cookie
+ * @returns {undefined}
+ */
+function setCookie(cname, cvalue, exdays) {
+  expires = "";
+  if(exdays){
+    var d = new Date();
+    d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+    var expires = "expires=" + d.toGMTString();
+  }
+  document.cookie = cname + "=" + cvalue + "; " + expires + ";domain=.blastingnews.com;path=/";
+}
+
+function setCookieInSeconds(cname, cvalue, exseconds) {
+  var d = new Date();
+  d.setTime(d.getTime() + (exseconds * 1000));
+  var expires = "expires=" + d.toGMTString();
+  document.cookie = cname + "=" + cvalue + "; " + expires + ";domain=.blastingnews.com;path=/";
+}
+
+function getCookie(cname) {
+  var name = cname + "=";
+  var ca = document.cookie.split(';');
+  for (var i = 0; i < ca.length; i++) {
+    var c = ca[i];
+    while (c.charAt(0) == ' ')
+      c = c.substring(1);
+    if (c.indexOf(name) == 0) {
+      return c.substring(name.length, c.length);
+    }
+  }
+  return false;
+}
+
+function delete_cookie(name) {
+  if (getCookie(name)) {
+    document.cookie = name + "=" + "0" + "; "
+            + "expires=Thu, 01 Jan 1970 00:00:01 GMT"
+            + ";domain=.blastingnews.com;path=/";
+  }
+}
+
+
+
+
+
+/**
+ * Supemoney Modal
+ * @param {string} t: prestiti | pensionati | energia
+ * @returns no
+ */
+function supermoney_modal(t) {
+
+  var sm1row = '';
+  var sm2row = '';
+  var sm3row = '';
+  var smbutton = '';
+
+  switch (t) {
+    case 'pensionati':
+      sm1row = 'Sei un pensionato e vuoi un prestito?';
+      sm2row = 'Inserisci il tuo numero e ti richiamiamo noi';
+      sm3row = 'Gratis e senza impegno';
+      smbutton = 'RICHIEDI >>';
+      ga_label = 'prestitipensionati_1';
+      break;
+    case 'pubblici':
+      sm1row = 'Lavori nel pubblico e vuoi richiedere un prestito?';
+      sm2row = 'Inserisci il tuo numero e ti richiamiamo noi';
+      sm3row = 'Gratis e senza impegno';
+      smbutton = 'RICHIEDI >>';
+      ga_label = 'prestitipubblici_2';
+      break;
+    case 'energia':
+      sm1row = 'Spendi troppo per luce e gas?';
+      sm2row = 'Ti chiamiamo noi e risparmi da subito';
+      sm3row = 'Gratis e senza impegno';
+      smbutton = 'RISPARMIA >>';
+      ga_label = 'bollettaluce_3';
+      break;
+  }
+
+  ga('send', 'event', 'clicktocall_sm', 'click', ga_label);
+
+  var modalname = $('#modal-supermoney');
+  var buttonname = $('#btn_sm_clicktocall');
+  var inputtelname = $('#number-tel');
+  inputtelname.numericInput({allowFloat: false, allowNegative: false});
+
+  ////
+  $('body').addClass('fixed');
+  $('#header').addClass('modal-aperta-fixed');
+  $('#content-menu').addClass('fixed');
+
+  $('#smcall-1row').html(sm1row);
+  $('#smcall-2row').html(sm2row);
+  $('#smcall-3row').html(sm3row);
+  buttonname.html(smbutton);
+
+  modalname.modal();
+
+  modalname.on('hidden.bs.modal', function () {
+    $('body').removeClass('fixed');
+    $('#header').removeClass('modal-aperta-fixed');
+    $('#content-menu').removeClass('fixed');
+  });
+
+  buttonname.on("click", function () {
+    var tel = inputtelname.val();
+    tel = tel.replace('-', '');
+    tel = tel.replace('/\D+/g', '');
+    $.ajax('/app/clicktocall_sm/?tel='
+            + encodeURIComponent(tel) + '&smtype='
+            + encodeURIComponent(t))
+            .always(function () {
+              modalname.modal('hide');
+            });
+  });
+}
+
+function ShowGenericLoader() {
+
+  var html = "<div class='modal fade loader-generic' id='generic-loader' tabindex='-1' role='dialog' aria-labelledby='generic-loader' aria-hidden='false'>" +
+          "<div class='modal-dialog'>" +
+          "<div class='modal-content'>" +
+          "<div class='modal-body'>" +
+          "<div class='content-box-loader'>" +
+          "<div class='container-loader'>" +
+          "<i class='fa fa-circle-o-notch fa-spin'></i>" +
+          "</div>" +
+          "</div>" +
+          "</div>" +
+          "</div>" +
+          "</div>" +
+          "</div>";
+
+  if ($("#generic-loader").length === 0) {
+    $("body").append(html);
+  }
+
+  $("body").addClass("fixed");
+  $("#generic-loader").modal({backdrop: 'static', keyboard: false});
+  setTimeout(function () {
+    HideGenericLoader();
+  }, 12000); //after 12s, hide the loader
+
+}
+
+
+function HideGenericLoader() {
+  $("body").removeClass("fixed");
+  $("#generic-loader").modal('hide');
+}
+
+// gestione show e hide elementi del menù
+function showTopBarElement(element) {
+  $('.element-to-active').removeClass('active');
+  $('.element-to-show').hide();
+  element.addClass('active');
+  element.parent().addClass('active');
+  element.nextAll('.element-to-show').show();
+
+}
+
+
+
+/**
+ * Description: Allows only numeric input in an element.
+ *
+ * @example $("#anyNumber").numericInput({ allowFloat: true, allowNegative: true });
+ */
+(function (b) {
+  var c = {allowFloat: false, allowNegative: false};
+  b.fn.numericInput = function (e) {
+    var f = b.extend({}, c, e);
+    var d = f.allowFloat;
+    var g = f.allowNegative;
+    this.keypress(function (j) {
+      var i = j.which;
+      var h = b(this).val();
+      if (i > 0 && (i < 48 || i > 57)) {
+        if (d == true && i == 46) {
+          if (g == true && a(this) == 0 && h.charAt(0) == "-") {
+            return false
+          }
+          if (h.match(/[.]/)) {
+            return false
+          }
+        } else {
+          if (g == true && i == 45) {
+            if (h.charAt(0) == "-") {
+              return false
+            }
+            if (a(this) != 0) {
+              return false
+            }
+          } else {
+            if (i == 8) {
+              return true
+            } else {
+              return false
+            }
+          }
+        }
+      } else {
+        if (i > 0 && (i >= 48 && i <= 57)) {
+          if (g == true && h.charAt(0) == "-" && a(this) == 0) {
+            return false
+          }
+        }
+      }
+    });
+    return this
+  };
+  function a(d) {
+    if (d.selectionStart) {
+      return d.selectionStart
+    } else {
+      if (document.selection) {
+        d.focus();
+        var f = document.selection.createRange();
+        if (f == null) {
+          return 0
+        }
+        var e = d.createTextRange(), g = e.duplicate();
+        e.moveToBookmark(f.getBookmark());
+        g.setEndPoint("EndToStart", e);
+        return g.text.length
+      }
+    }
+    return 0
+  }}
+(jQuery));
+
+
+/**
+ * Get Params /jquery plugin
+ * @param {type} $
+ * @returns {undefined}
+ * 
+ * <usage> $.QueryString["param"]
+ */
+(function($) {
+ $.QueryString = (function(a) {
+  if (a == "") return {};
+  var b = {};
+  for (var i = 0; i < a.length; ++i)
+  {
+      var p=a[i].split('=');
+      if (p.length != 2) continue;
+      b[p[0]] = decodeURIComponent(p[1].replace(/\+/g, " "));
+  }
+  return b;
+})(window.location.search.substr(1).split('&'))
+})(jQuery);

@@ -1,0 +1,29 @@
+_entfLoaderJsCallback({
+  "locations" : {
+    "8"  : "https://r.r10s.jp/com/entf/asset/js/entf-3.2.1.min.js",
+    "11" : "https://r.r10s.jp/com/entf/asset/js/entf-3.2.1.min.js",
+    "12" : "https://r.r10s.jp/com/entf/asset/js/entf-3.2.1.min.js",
+    "14" : "https://r.r10s.jp/com/entf/asset/js/entf-3.2.1.min.js",
+    "16" : "https://r.r10s.jp/com/entf/asset/js/entf-3.2.1.min.js",
+    "17" : "https://r.r10s.jp/com/entf/asset/js/entf-3.2.1.min.js",
+    "18" : "https://r.r10s.jp/com/entf/asset/js/entf-3.2.1.min.js",
+    "20" : "https://r.r10s.jp/com/entf/asset/js/entf-3.2.1.min.js",
+    "21" : "https://r.r10s.jp/com/entf/asset/js/entf-5.1.1.min.js",
+    "23" : "https://r.r10s.jp/com/entf/asset/js/entf-5.1.1.min.js",
+    "25" : "https://r.r10s.jp/com/entf/asset/js/entf-5.1.1.min.js",
+    "99" : "https://r.r10s.jp/com/entf/asset/js/entf-3.2.1.min.js",
+
+    "2"  : "https://r.r10s.jp/com/entf/asset/js/entf-sp-3.0.4.min.js",
+    "5"  : "https://r.r10s.jp/com/entf/asset/js/entf-sp-3.0.4.min.js",
+    "6"  : "https://r.r10s.jp/com/entf/asset/js/entf-sp-3.0.4.min.js",
+    "13" : "https://r.r10s.jp/com/entf/asset/js/entf-sp-3.0.4.min.js",
+    "19" : "https://r.r10s.jp/com/entf/asset/js/entf-sp-3.0.4.min.js",
+    "22" : "https://r.r10s.jp/com/entf/asset/js/entf-sp-3.0.4.min.js",
+    "24" : "https://r.r10s.jp/com/entf/asset/js/entf-sp-4.1.1.min.js",
+    "26" : "https://r.r10s.jp/com/entf/asset/js/entf-sp-4.1.1.min.js",
+    "98" : "https://r.r10s.jp/com/entf/asset/js/entf-sp-3.0.4.min.js",
+
+    "7"  : "https://r.r10s.jp/com/entf/asset/js/entf-tb-2.1.1.min.js",
+    "15" : "https://r.r10s.jp/com/entf/asset/js/entf-tb-2.1.1.min.js"
+  }
+});

@@ -1,0 +1,476 @@
+//global
+var unconfirmed_fb_user = false;
+var Blasting = Blasting || {};
+Blasting.FacebookSDK = {
+  _config: null,
+  _scope: null,
+  _locale: null,
+  _initAlreadyCalled: 0,
+  _isInitialized: 0,
+  _fbSdkLoaded: null,
+  _init_without_loading: null,
+  _isLogged: false,
+  _havePermission: false,
+  _dataToPostAfterLogin: null,
+  _postWallConfig: null,
+  onLoadUserCallback: null,
+  onLoadComplete: false,
+  _callbackAfterPost: null,
+  _userCallbackLogin: null,
+  _onFbAsyncInit: function () {
+    this._isInitialized = !0;
+
+    if (typeof FB != 'undefined')
+    {
+      this._fbSdkLoaded = true;
+      FB.Event.subscribe('auth.statusChange', this._statusChangedCallback.bind(this));
+
+      if (!this._init_without_loading)
+      {
+        FB.init({
+          appId: this._config.appId,
+          status: true, // check login status
+          cookie: true, // enable cookies to allow the server to access the session
+          xfbml: true, // parse XFBML
+          oauth: true
+        });
+      }
+   
+      //callback creazione commento:
+      if (typeof NCE !== 'undefined') {
+        if(NCE === true) {
+          FB.Event.subscribe('comment.create', function(event_response) {
+            FB.getLoginStatus(function(user_entity_response) {
+              if (user_entity_response.status === 'connected') {
+                actkn = user_entity_response.authResponse.accessToken;
+                uid = user_entity_response.authResponse.userID;
+                var n_fbcomments = parseInt( $(".fb-comments-count-"+comment_nid).text(),10);
+                $('.fb-comments-count-'+comment_nid).html( n_fbcomments + 1);
+                $.ajax({
+                  type: "POST",
+                  url: "/app/comment_event/",
+                  data: { 
+                    cmid: event_response.commentID, 
+                    nid: comment_nid, 
+                    actkn: actkn, 
+                    uid: uid,
+                  }
+                });
+              }
+            });
+          });
+        }
+      }
+    } else {
+      console.log('fbsdk-share: FB not loaded');
+    }
+  },
+  facebookWasLoaded: function() {
+    for (var i = 0; i < Blasting.facebookInitCallbacks.length; i++) {
+      //console.info(Blasting.facebookInitCallbacks[i]);
+      Blasting.facebookInitCallbacks[i]();
+    }
+
+    Blasting.facebookInitCallbacks.old_push = Blasting.facebookInitCallbacks.push;
+    Blasting.facebookInitCallbacks.push = function(value) {
+      value();
+    };
+  },
+  init: function () {
+    if (this._initAlreadyCalled) {
+      return;
+    }
+
+    this._initAlreadyCalled = true;
+    this._config = blfbsdk_config.config;
+    this._scope = this._config.scope;
+    this._locale = this._config.locale;
+    this.onLoadUserCallback = this._config.onLoadUserCallback;
+
+    //Aggiungo il callback all'inizio dell'array
+    Blasting.facebookInitCallbacks = Blasting.facebookInitCallbacks || [];
+    Blasting.facebookInitCallbacks.unshift( this._onFbAsyncInit.bind(this) );
+
+    //Init da non sovrascrivere
+    window.fbAsyncInit = this.facebookWasLoaded.bind(this);
+
+    if (!window.FB) {
+      var sdkurl = "https://connect.facebook.net/" + this._locale + "/all.js#appId=" + appId;
+      $.ajax({
+        url: sdkurl,
+        dataType: "script",
+        cache: true
+      });
+
+      //Pixel di facebook
+      !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+        n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+        n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+        t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+        document,'script','//connect.facebook.net/'+this._locale+'/fbevents.js');
+      fbq('init', '861258807290282');
+      fbq('track', 'PageView');
+    }
+  },
+  _statusChangedCallback: function (response) {
+    if (response.status === "connected") {
+      this._isLogged = true;
+      this._checkPermission();
+    } else {
+      this._isLogged = false;
+    }
+  },
+//commentato 8/11/17
+//  _checkConnection: function () {
+//    var responseVal = false;
+//    FB.getLoginStatus(function (response) {
+//      if (response.status === "connected") {
+//        this._checkPermission();
+//        responseVal = true;
+//      } else {
+//        this._shareNews = true;
+//        this._login();
+//        responseVal = false;
+//      }
+//    }.bind(this));
+//    return responseVal;
+//  },
+//  _loginCallback: function (response)
+//  {
+//    if (response.status === "connected") {
+//      this._isLogged = true;
+//
+//      //check permission
+//      var granted_scopes = response.authResponse.grantedScopes;
+//      if (granted_scopes)
+//      {
+////  non è più necessario da frontend il permesso per la pubblicazione automatica
+////        if ($.inArray('publish_actions', granted_scopes.split(',')) > -1) {
+////          this._havePermission = true;
+////        }
+//      }
+//
+//    } else {
+//      this._isLogged = false;
+//    }
+//
+//    if (this._userCallbackLogin)
+//    {
+//      var callback_function = this._userCallbackLogin.callback;
+//      var callback_scope = this._userCallbackLogin.scope;
+//      var callback_args = new Array(response);
+//      callback_args = callback_args.concat(this._userCallbackLogin.arguments);
+//
+//      if (typeof callback_function == "function") {
+//        callback_function.apply(callback_scope, callback_args);
+//      }
+//    }
+//
+//    if (this.isLoggedAndAllowed() && this._dataToPostAfterLogin)
+//    {
+//      this._executeShare(this._dataToPostAfterLogin);
+//      this._dataToPostAfterLogin = null;
+//    }
+//
+//  },
+//  _login: function (_userCallbackLogin, dataToPostAfterLogin, _callback) {
+//    if (_userCallbackLogin) {
+//      this._userCallbackLogin = _userCallbackLogin;
+//    }
+//
+//    if (dataToPostAfterLogin) {
+//      this._dataToPostAfterLogin = dataToPostAfterLogin;
+//    }
+//
+//    if (_callback) {
+//      this._callbackAfterPost = _callback;
+//    }
+//
+//    if (this._fbSdkLoaded) {
+//      FB.login(this._loginCallback.bind(this), {
+//        scope: this._config.scope,
+//        return_scopes: true
+//      });
+//    }
+//  },
+//  _postOnWallCallback: function (response) {
+//    if (this._callbackAfterPost)
+//    {
+//      callback_function = this._callbackAfterPost.callback;
+//      callback_scope = this._callbackAfterPost.scope;
+//      callback_args = new Array(response);
+//      callback_args = callback_args.concat(this._callbackAfterPost.arguments);
+//
+//      if (typeof callback_function == "function") {
+//        callback_function.apply(callback_scope, callback_args);
+//      }
+//    }
+//  },
+//  _postOnWall: function () {
+//    if (this._postWallConfig < 0) {
+//      throw Error("No Value in _postOnWall::_postWallConfig");
+//    }
+//    var params = {};
+//    params['message'] = this._postWallConfig.message;
+//    params['name'] = this._postWallConfig.name;
+//    params['link'] = this._postWallConfig.link;
+//    params['picture'] = this._postWallConfig.picture;
+//    params['description'] = this._postWallConfig.description;
+//    FB.api('/me/feed', 'post', params, this._postOnWallCallback.bind(this));
+//  },
+//  _executeShare: function (b, c) {
+//    try {
+//      if (b < 0) {
+//        throw Error("No value in _executeShare");
+//      }
+//
+//      if (c) {
+//        this._callbackAfterPost = c;
+//      }
+//
+//      this._postWallConfig = b;
+//      if (this._fbSdkLoaded) {
+//        this._postOnWall();
+//      }
+//    } catch (err) {
+//      console.log(err.message);
+//    }
+//  },
+  _checkPermissionCallback: function (response)
+  {
+    if (typeof response.data != 'undefined') {
+      if (response.data[0].publish_actions == 1) {
+        this._havePermission = true;
+
+        if (!this.onLoadComplete)
+        {
+          if (this.onLoadUserCallback)
+          {
+            callback_function = this.onLoadUserCallback.callback;
+            callback_scope = this.onLoadUserCallback.scope;
+            callback_args = new Array(response);
+            callback_args = callback_args.concat(this.onLoadUserCallback.arguments);
+
+            if (typeof callback_function == "function") {
+              callback_function.apply(callback_scope, callback_args);
+            }
+          }
+          this.onLoadComplete = true;
+        }
+      }
+    }
+  },
+  _checkPermission: function () {
+    FB.api('/me/permissions', this._checkPermissionCallback.bind(this), { fields: 'permission,status' })
+  },
+  isLoggedAndAllowed: function () {
+    return this._isLogged && this._havePermission;
+  },
+  parseXfbml: function () {
+    if (this._fbSdkLoaded) {
+      FB.XFBML.parse(document);
+    }
+  },
+  
+  //Carico il box dei commenti e il like box quando l'utente scrolla 
+  //fino all'elemento
+//commentato 8/11/17
+//  loadWidgetsOnScroll: function() {
+//    var closure = this.checkIfVisibleClosure(this);
+//
+//    //Controllo allo scroll
+//    $(document).on("scroll.facebook", closure);
+//
+//    //Controllo al window.load (se la pagina cambia altezza)
+//    $(window).one("load.facebook", closure);
+//
+//    //Controllo subito se l'utente ha scrollato abbastanza
+//    closure();
+//  },
+//  checkIfVisibleClosure: function(self) {
+//    var fb_like_url = $("#fb-likebox").data("url");
+//    var fb_comments_url = $("#nofbx").data("url");
+//    var fb_like_shown = false;
+//    var fb_comments_shown = false;
+//    
+//    return function() {
+//      //Ottengo ogni volta l'offset del box dei commenti e del likebox,
+//      //perchè la pagina può cambiare altezza durante il caricamento della pagina
+//      var fb_comments_offset = $("#nofbx").offset();
+//      var fb_like_offset = $("#fb-likebox").offset();
+//      var fb_comments_offset_top = fb_comments_offset ? fb_comments_offset.top : 0;
+//      var fb_like_offset_top = fb_like_offset ? fb_like_offset.top : 0;
+//
+//      var scroll_top = $(window).scrollTop();
+//      var window_height = $(window).height();
+//      if (fb_like_offset && fb_like_offset.top && fb_like_url && !fb_like_shown && scroll_top + window_height > fb_like_offset_top) {
+//        fb_like_shown = true;
+//
+//        var fb_like_layout = $("#fb-likebox").data("layout") || "button";
+//        var element = $('<fb:like href="' + fb_like_url + '" layout="' + fb_like_layout + '" action="recommend" show_faces="false" share="false"></fb:like>');
+//        $("#fb-likebox").append(element);
+//
+//        Blasting.facebookInitCallbacks = Blasting.facebookInitCallbacks || [];
+//        Blasting.facebookInitCallbacks.push(function() {
+//          self.parseXfbml();
+//        });
+//
+//        self.init();
+//      }
+//
+//      if (fb_comments_offset && fb_comments_url && !fb_comments_shown && scroll_top + window_height > fb_comments_offset_top) {
+//        fb_comments_shown = true;
+//
+//        Blasting.facebookInitCallbacks = Blasting.facebookInitCallbacks || [];
+//        Blasting.facebookInitCallbacks.push(function() {
+//          if(flagLogged == false) {
+//            self.deleteFBComments();
+//          } else {
+//            self.createFBComments();
+//          }
+//
+//          self.parseXfbml();
+//        });
+//
+//        self.init();
+//      }
+//    }
+//  },
+  reloadElements: function(page) {
+    var self = this;
+    var fb_like_url = $("#fb-likebox-p"+page).data("url");
+    var fb_like_layout = $("#fb-likebox-p"+page).data("layout") || "button";
+
+    Blasting.facebookInitCallbacks = Blasting.facebookInitCallbacks || [];
+    Blasting.facebookInitCallbacks.push(function() {
+      if ($('#fb-likebox-p'+page).find("fb\\:like").length == 0) {
+        var element = $('<fb:like class="fb-like-'+page+'" href="' + fb_like_url + '" layout="' + fb_like_layout + '" action="recommend" show_faces="false" share="false"></fb:like>');
+        $("#fb-likebox-p"+page).append(element);
+      }
+
+      if (flagLogged == false) {
+        self.deleteFBComments();
+      } else {
+        var open_facebook_comments = $('.commenti-facebook.infinity-logged-open');
+        if (open_facebook_comments.length) {
+          self.bindFBComments();
+        } else {
+          self.createFBComments();
+        }
+      }
+      self.parseXfbml();
+    });
+
+    self.init();
+  },
+  bindFBComments : function() {
+    //use this function to rebind click on facebook comment buttons
+
+    var self = this;
+
+    var noreparse = false;
+
+    $(document).off("click.load-comments");
+    $(document).on("click.load-comments", ".infinity-logged", function () {
+      var page = $(this).data("page");
+
+      self.unloadOtherFBComments(page);
+      self.loadFBComments(noreparse, page);
+    });
+  },
+  createFBComments: function(noreparse) {
+    var self = this;
+
+    if ($('#nofbx').length != 0) {
+      var all_facebook_comments = $('.commenti-facebook');
+      if (all_facebook_comments.hasClass("infinity")) {
+        all_facebook_comments.removeClass("infinity-no-logged");
+        //all_facebook_comments.removeClass("infinity-logged-open");
+        all_facebook_comments.addClass("infinity-logged");
+
+        self.unloadOtherFBComments(0);
+
+        $(document).off("click.load-comments");
+        $(document).on("click.load-comments", ".infinity-logged", function () {
+          var page = $(this).data("page");
+
+          self.unloadOtherFBComments(page);
+          self.loadFBComments(noreparse, page);
+        });
+      } else {
+        self.loadFBComments(noreparse);
+      }
+    }
+  },
+  unloadOtherFBComments: function(page) {
+    $('.commenti-facebook').each(function() {
+      var other_page = $(this).data("page");
+      if (other_page != page) {
+        $(this).find(".nofbx").html("");
+        $(this).removeClass("infinity-logged-open");
+        $(this).addClass("infinity-logged");
+      }
+    });
+  },
+  loadFBComments: function(noreparse, page) {
+    if (typeof noreparse == 'undefined')  {
+      noreparse = false;
+    }
+
+    var commenti_container = $("#commenti-facebook");
+    var commenti_element = $("#nofbx");
+    if (page) {
+      commenti_container = $("#commenti-facebook-p"+page);
+
+      var other_page_commenti_element = $("#nofbx-p"+page);
+      commenti_element = other_page_commenti_element.length ? other_page_commenti_element : commenti_element;
+    }
+
+    commenti_container.removeClass("infinity-logged");
+    commenti_container.addClass("infinity-logged-open");
+
+    var live_data_mobile = '';
+    if (device == 'Mobile') {
+      live_data_mobile = 'data-mobile="true"';
+    }
+    var live_fb_comments_url = commenti_element.data("url");
+
+    commenti_element.html("");
+    commenti_element.append('<div class="fb-comments" data-href="' + live_fb_comments_url + '" data-width="100%" data-num-posts="100" ' + live_data_mobile + '></div>');
+
+    if(noreparse === false) {
+      FB.XFBML.parse(document);
+    }
+  },
+  deleteFBComments: function() {
+    if ($('#nofbx').length == 0) {
+      return;
+    }
+
+    //html_no_fb_comment_saved è definita in javascript-required.php
+    $(".nofbx").html(html_no_fb_comment_saved);
+
+    var all_facebook_comments = $('.commenti-facebook');
+    if (all_facebook_comments.hasClass("infinity")) {
+      all_facebook_comments.removeClass("infinity-logged-open");
+      all_facebook_comments.removeClass("infinity-logged");
+      all_facebook_comments.addClass("infinity-no-logged");
+    }
+
+    $(document).on("click", "#login-facebook-comments", function (event) {
+      event.stopPropagation();
+      if (typeof togglePleaseWait == 'function') {
+        togglePleaseWait();
+      }
+      FBBNLOGIN(false);
+    });
+
+    $(document).on("click", "#login-email-comments", function() {
+      show_modal($(document), "FB-COMMENTS-REG");
+    });
+
+    $(document).on("click", "#login-email-comments-mobile", function() {
+      show_modal($(document), "FB-COMMENTS-REG-mobile");
+    });
+  }
+};

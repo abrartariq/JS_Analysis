@@ -1,0 +1,89 @@
+var polling = polling || {
+  params: {
+    data: null,
+    nPoll: 20,
+    frequence: 1000,
+    success: 'ok',
+    method: 'post',
+    url: '/api/polling/',
+    startModalWait: true,
+  },
+  success: function (data) {
+  },
+  timeout: function () {
+    $(".text-wait").toggleClass('hide');
+    $(".container-loader").toggleClass('hide');
+    if (polling.params.startModalWait) {
+      setTimeout(polling.stopModalWaitPolling, 3000);
+    }
+  },
+  error: function () {
+    $(".text-wait").toggleClass('hide');
+    $(".container-loader").toggleClass('hide');
+    if (polling.params.startModalWait) {
+      setTimeout(polling.stopModalWaitPolling, 3000);
+    }
+  },
+  doPolling: function () {
+    if (polling.params.startModalWait) {
+      polling.startModalWaitPolling();
+    }
+    if (polling.params.nPoll <= 0) {
+      polling.timeout();
+    } else {
+      polling.params.nPoll--;
+      $.ajax({
+        method: polling.params.method,
+        data: polling.params.data,
+        url: polling.params.url,
+        success: function (data) {
+          if (data.success == polling.params.success) {
+            polling.success(data);
+            if (polling.params.startModalWait) {
+              polling.stopModalWaitPolling();
+            }
+          } else {
+            setTimeout(polling.doPolling, polling.params.frequence);
+          }
+        },
+        error: function () {
+          polling.error();
+        }
+      });
+    }
+  },
+  startModalWaitPolling: function () {
+    if ($('#modal-wait-propagation').length > 0) {
+      if(!$('#modal-wait-propagation').is(":visible")){
+        $('#modal-wait-propagation').modal({backdrop: 'static', keyboard: false});
+      }
+      return;
+    }
+    welcome = typeof welcomeWaitPropagation == 'undefined' ? "Welcome to BlastingNews! We are logging you in." : welcomeWaitPropagation;
+    error = typeof errorWaitPropagation == 'undefined' ? "Ops... we have some problems. Try to log-in in a few minutes. We are sorry." : errorWaitPropagation;
+    html = '<div class="modal fade wait-propagation" id="modal-wait-propagation" tabindex="-1" role="dialog" aria-labelledby="modal-wait-propagation">' +
+            ' <div class="modal-dialog" role="document">' +
+            '  <div class="modal-content">' +
+            '   <div class="modal-header">' +
+            '   </div>' +
+            '   <div class="modal-body">' +
+            '    <div class="content-text-wait">' +
+            '     <p class="text-wait">' + welcome + '</p>' +
+            '     <p class="text-wait hide">' + error + '</p>' +
+            '     <div class="container-loader">' +
+            '      <i class="fa fa-circle-o-notch fa-spin"></i>' +
+            '     </div>' +
+            '    </div>' +
+            '   </div>' +
+            '   <div class="modal-footer">' +
+            '   </div>' +
+            '  </div>' +
+            ' </div>' +
+            '</div>';
+    $("body").append(html);
+    $('#modal-wait-propagation').modal({backdrop: 'static', keyboard: false});
+  },
+  stopModalWaitPolling: function () {
+    $('#modal-wait-propagation').modal('hide');
+  },
+};

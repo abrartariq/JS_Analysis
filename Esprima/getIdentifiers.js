@@ -1,20 +1,29 @@
 const esprima = require('esprima');
 const fs = require('fs');
-
+const path = require('path')
 
 const readFile = f => new Promise((resolve,reject) =>
     fs.readFile(f,'utf-8', (e,d) => e ? reject(e) : resolve(d) ) )
 
 const getTree = data => new Promise((resolve, reject) => {
     try {
-        ans = {}
+        ans = {}    
         ans = esprima.parseScript(data, { comment: true });
         resolve(ans)
     } catch(err) {
         reject(err)
     }
 })
-
+const isURL = (str) => {
+  var pattern = new RegExp('^((ft|htt)ps?:\\/\\/)?'+ // protocol
+                          '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|'+ // domain name and extension
+                          '((\\d{1,3}\\.){3}\\d{1,3}))'+ // OR ip (v4) address
+                          '(\\:\\d+)?'+ // port
+                          '(\\/[-a-z\\d%@_.~+&:]*)*'+ // path
+                          '(\\?[;&a-z\\d%@_.,~+&:=-]*)?'+ // query string
+                          '(\\#[-a-z\\d_]*)?$','i'); // fragment locator
+  return pattern.test(str);
+}
 const variableDec = []
 const functionExp = []
 const identifiers = {}
@@ -59,6 +68,49 @@ const findObj = (tokens, obj, num) => {
         })
     })
 }
+
+const sepLinks = allLinks => {
+    types = 
+        {
+          Image: {
+            png: [],
+            jpg: [],
+            jpeg: [],
+            exif: [],
+            bmp:  [],
+            gif:  [],
+            ico:  []
+          },
+          Script: {
+            js: [],
+            php:[]
+          },
+          CSS: {
+            css: []
+          },
+          HTML: {
+            html: []
+          },
+          Others: {
+            other: []
+          }
+        }
+    allLinks.forEach(a => {
+        done = false
+        Object.keys(types).forEach(type => {
+            Object.keys(types[type]).forEach(ext => {
+                if (a.includes("."+ext)){
+                    types[type][ext].push(a)
+                    done = true
+                }
+            })
+        })
+        if (done === false) {
+            types.Others.other.push(a)
+        }
+    })
+    return types;
+}
 const main = async () => {
     try{   
         const args = process.argv;
@@ -85,20 +137,50 @@ const main = async () => {
                 })
             })
         })
-        substr = [".png",".jpeg",".jpg",".html",".json",".js",".css",".gif","http","www.",".com",".org"]
+        allLinks = []
         literals.forEach(a => {
-            if ( (typeof a === 'string' || a instanceof String)){
-                substr.forEach(b => {
-                    if (a.includes(b) && a.length > 10 && a.length < 100){
-                        console.log(a)
+            
+            try{
+                if (true || (typeof a === 'string' || a instanceof String)){
+                    if (isURL(a)){
+                        allLinks.push(a);
                     }
-                })
+                }
+            } catch(_){
             }
         })
+        console.log(sepLinks(allLinks));
     } catch (err){
         console.log(err)
     }
 }
 
 
-main()
+
+var readDir = (dir, filelist) => {
+    files = fs.readdirSync(dir)
+    files.forEach(file => {
+        if (fs.statSync(path.join(dir, file)).isDirectory()) {
+            filelist = readDir(path.join(dir, file), filelist)
+        }
+        else {
+            filelist.push(path.join(dir, file))
+        }
+    })
+    return filelist
+}
+
+
+const main2 = async () => {
+    try{
+        list = []
+        readDir("./SameOrigin/", list)
+        list.forEach((a) => {
+            console.log(a);
+        })
+    } catch(err) {
+        console.log(err)
+    }
+}
+
+main2();

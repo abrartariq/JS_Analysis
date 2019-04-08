@@ -1,0 +1,4 @@
+{
+    "google":[ "http://www.google.com","http://www.pdc.lums.edu.pk"],
+    "Zakir": ["abdul","manan"]
+}

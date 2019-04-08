@@ -1,0 +1,525 @@
+{
+  "www.craigslist.org": [],
+  "www.wikipedia.org": [
+    "https://www.wikipedia.org/portal/wikipedia.org/assets/js/index-66c9b3efbd.js",
+    "https://www.wikipedia.org/portal/wikipedia.org/assets/js/gt-ie9-a2995951ca.js"
+  ],
+  "www.4chan.org": [
+    "https://www.google-analytics.com/analytics.js"
+  ],
+  "www.onclkds.com": [
+    "https://www.google.com/recaptcha/api.js",
+    "https://www.gstatic.com/recaptcha/api2/v1554100419869/recaptcha__en.js"
+  ],
+  "www.ask.com": [
+    "https://www.googletagmanager.com/gtm.js?id=GTM-T3KVMC&l=dataLayer",
+    "https://www.google-analytics.com/analytics.js"
+  ],
+  "www.youtube.com": [],
+  "www.fc2.com": [
+    "https://www.google-analytics.com/analytics.js"
+  ],
+  "www.live.com": [],
+  "www.soundcloud.com": [],
+  "www.stackoverflow.com": [
+    "https://www.google-analytics.com/analytics.js"
+  ],
+  "www.thepiratebay.org": [
+    "https://www.google-analytics.com/analytics.js",
+    "https://www.facebook.com/rsrc.php/v3iEpO4/yJ/l/en_US/A1QcUQIX6S4.js"
+  ],
+  "www.linkedin.com": [],
+  "www.bing.com": [
+    "https://www.bing.com/rb/5p/cj,nj/3e6a7d75/9a358300.js?bu=EvQekx-8Hr8e3gTNHs8enx_RHtge4B6LH4kf_R7vHfoc_RzyHQ",
+    "https://www.bing.com/rs/5p/XM/cj,nj/c9ce19fd/92e3c570.js",
+    "https://www.bing.com/rs/5p/XP/cj,nj/8c497c38/f92a50a7.js",
+    "https://www.bing.com/rb/16/cj,nj/1b7dfb88/cc8437ad.js?bu=DikuXGxwdGhgZKwBsAEuoAEu",
+    "https://www.bing.com/rs/6n/kv/cj,nj/54603a84/41886d99.js",
+    "https://www.bing.com/rs/30/2x/cj,nj/d9d4493a/ac151446.js",
+    "https://www.bing.com/rb/G/cj,nj/724ba06b/778522c1.js?bu=Gb0BlAWXBZoFLCwsLCydBZkELCws5wP2A_kDLCwskgQsLKcF_AM",
+    "https://www.bing.com/rs/30/2e/cj,nj/8d784342/dbeb434c.js"
+  ],
+  "www.onlinesbi.com": [],
+  "www.popads.net": [],
+  "www.facebook.com": [],
+  "www.google.com": [
+    "https://www.gstatic.com/og/_/js/k=og.mob.en_US.FCMKVXAyb3A.O/rt=j/m=md/exm=mih,mab,meb/d=1/ed=1/rs=AA2YrTsJcKg6ADm3TX_U_T-3jljsojqDWg",
+    "https://www.google.com/xjs/_/js/k=xjs.qs.en.H1ZaNLkWQY8.O/m=sx,ByqdBd,CiVnBc,Fkg7bd,HcFEGb,OF7gzc,QfiAub,RMhBfe,T4BAC,Uox2uf,bct,cdos,czrJpf,hsm,if1iFc,jsa,kopZwe,lXXCK,qim,uz938c,vWNDde,ws9Tlc,xPR7tc,xpltpb,yQ43ff,d,csi/am=GAAAi4ifmdGhiAHqAqAIp4G9FwBwAgnpEA/rt=j/d=1/dg=2/rs=ACT90oFhwzN9n4SyPSrFi0u92I1X6lxFfg",
+    "https://www.google.com/xjs/_/js/k=xjs.qs.en.H1ZaNLkWQY8.O/am=GAAAi4ifmdGhiAHqAqAIp4G9FwBwAgnpEA/rt=j/d=1/exm=sx,ByqdBd,CiVnBc,Fkg7bd,HcFEGb,OF7gzc,QfiAub,RMhBfe,T4BAC,Uox2uf,bct,cdos,czrJpf,hsm,if1iFc,jsa,kopZwe,lXXCK,qim,uz938c,vWNDde,ws9Tlc,xPR7tc,xpltpb,yQ43ff,d,csi/ed=1/dg=2/rs=ACT90oFhwzN9n4SyPSrFi0u92I1X6lxFfg/m=sb_wiz,aa,abd,async,dvl,foot,mUpTid,mu,sf,sonic,spch,rQSi2,xz7cCd,fEVMic,WgDvvc?xjs=s1"
+  ],
+  "www.mozilla.org": [
+    "https://www.mozilla.org/media/js/BUNDLES/site.ec263d31b78e.js",
+    "https://www.mozilla.org/media/js/BUNDLES/gtm-snippet.9f9cf2026c5f.js",
+    "https://www.mozilla.org/media/js/BUNDLES/common-protocol.2332accb427b.js",
+    "https://www.mozilla.org/media/js/BUNDLES/stub-attribution.157168bbb235.js",
+    "https://www.mozilla.org/media/js/BUNDLES/home.f311aeba7bc1.js",
+    "https://www.googletagmanager.com/gtm.js?id=GTM-MW3R8V&l=dataLayer",
+    "https://www.youtube.com/iframe_api",
+    "https://www.google-analytics.com/analytics.js",
+    "https://www.google-analytics.com/plugins/ua/linkid.js"
+  ],
+  "www.openload.co": [],
+  "www.twitter.com": [
+    "https://www.google-analytics.com/analytics.js"
+  ],
+  "github.io": [
+    "https://pages.github.com/js/jquery.js",
+    "https://pages.github.com/js/application.js"
+  ],
+  "roblox.com": [],
+  "www.babytree.com": [],
+  "www.quora.com": [
+    "https://www.google-analytics.com/analytics.js"
+  ],
+  "slideshare.net": [],
+  "www.apple.com": [
+    "https://www.apple.com/metrics/ac-analytics/2.2/scripts/gpu.js",
+    "https://www.apple.com/v/home/ed/built/scripts/head.built.js",
+    "https://www.apple.com/ac/globalnav/4/en_US/scripts/ac-globalnav.built.js",
+    "https://www.apple.com/metrics/ac-analytics/2.6.0/scripts/ac-analytics.js",
+    "https://www.apple.com/ac/globalfooter/4/en_US/scripts/ac-globalfooter.built.js",
+    "https://www.apple.com/ac/localeswitcher/2/en_US/scripts/localeswitcher.built.js",
+    "https://www.apple.com/v/home/ed/built/scripts/main.built.js",
+    "https://www.apple.com/ac/ac-films/6.0.0/scripts/autofilms.built.js"
+  ],
+  "www.msn.com": [],
+  "www.office.com": [],
+  "www.blogger.com": [
+    "https://www.blogger.com/about/js/main.min.js?v=1476060773",
+    "https://www.google-analytics.com/analytics.js"
+  ],
+  "www.blogspot.com": [
+    "https://www.blogger.com/about/js/main.min.js?v=1476060773",
+    "https://www.google-analytics.com/analytics.js"
+  ],
+  "www.github.com": [],
+  "www.sogou.com": [],
+  "www.diply.com": [
+    "https://www.youtube.com/player_api",
+    "https://www.instagram.com/static/bundles/es6/EmbedSDK.js/ab2c02b063ac.js"
+  ],
+  "www.yandex.ru": [
+    "https://www.yandex.ru/suggest/suggest-endings?srv=morda_ru_touch&wiz=TrWth&uil=ru&fact=1&v=4&icon=1&mob=1&tpah=1&sn=7&full_text_count=5&bemjson=0&platform=touch&verified_nav=1&rich_phone=1&history=1&yu=9992519401554469230&lr=10616&svg=1&part=&pos=0&suggest_reqid=999251940155446923092324530798636&hs=0&callback=onSuggestResponse90505"
+  ],
+  "www.nih.gov": [
+    "https://www.google-analytics.com/analytics.js",
+    "https://www.youtube.com/iframe_api"
+  ],
+  "www.360.cn": [],
+  "www.mercadolivre.com.br": [
+    "https://www.googletagservices.com/tag/js/gpt.js"
+  ],
+  "www.indeed.com": [
+    "https://www.indeed.com.pk/m/basecamp/analytics.js?model=eyJhIjp0cnVlLCJiIjp0cnVlLCJjIjp0cnVlLCJkIjpmYWxzZSwiZSI6ZmFsc2UsImciOiJodHRwOi8vd3d3LmluZGVlZC5jb20ucGsvbS8_cj11cyJ9",
+    "https://www.google-analytics.com/analytics.js",
+    "https://www.google-analytics.com/plugins/ua/linkid.js",
+    "https://www.gstatic.com/_/mss/boq-identity/_/js/k=boq-identity.IdentityYoloWebModuleset.en_US.h8vz5gpQEyI.O/am=AQ/rt=j/d=1/rs=AOaEmlGgN3RQwpqmXJ10PHPkCT1zTwwGXg/m=yolo_frame_library"
+  ],
+  "www.tumblr.com": [
+    "https://www.google-analytics.com/analytics.js"
+  ],
+  "www.stackexchange.com": [],
+  "www.savefrom.net": [
+    "https://www.google-analytics.com/analytics.js",
+    "https://www.google.com/recaptcha/api.js?onload=_atk7a&render=6LfIR3gUAAAAAGeE13xVxPflyUKLHzsL8gEXcJDU",
+    "https://www.gstatic.com/recaptcha/api2/v1554100419869/recaptcha__en.js",
+    "https://www.google.com/js/bg/RjYubEPmBDTEmvSSKCKT7-2v2grB457riIOuZWfNnxs.js",
+    "https://www.google.com/recaptcha/api2/webworker.js?hl=en&v=v1554100419869"
+  ],
+  "www.csdn.net": [
+    "https://www.csdn.net/js/tingyun-rum-feed-wap.js?v=20180509",
+    "https://www.csdn.net/js/csdn_feed_m.min.js?1553483398"
+  ],
+  "www.sina.com.cn": [],
+  "www.qq.com": [],
+  "www.weibo.com": [],
+  "www.taobao.com": [],
+  "www.naver.com": [],
+  "www.flipkart.com": [],
+  "www.netflix.com": [
+    "https://www.googleadservices.com/pagead/conversion.js",
+    "https://www.googleadservices.com/pagead/conversion/981179826/?random=1554471400557&cv=9&fst=1554471400557&num=1&label=40zWCLqP1XUQsrvu0wM&bg=ffffff&hl=en&guid=ON&resp=GooglemKTybQhCsO&u_h=640&u_w=360&u_ah=640&u_aw=360&u_cd=24&u_his=3&u_tz=300&u_java=false&u_nplug=0&u_nmime=0&sendb=1&frm=2&url=https%3A%2F%2Fae.nflximg.net%2Fmonet%2Fscripts%2Fnetflix_tag_03.html%3Fdata%3D%257B%2522membership_status%2522%253A%2522ANONYMOUS%2522%252C%2522country%2522%253A%2522PK%2522%252C%2522fbaId%2522%253A%2522cea8c2a1-a76f-45ae-87f3-753ead057ef6%2522%252C%2522is_member%2522%253A%2522anonymous%2522%252C%2522wasFormerMember%2522%253Afalse%252C%2522referrer%2522%253A%2522nmLanding%2522%257D&rfmt=3&fmt=4",
+    "https://www.googleadservices.com/pagead/conversion/955040534/?random=1554471400659&cv=9&fst=1554471400557&num=2&label=Qa7nCPzN0V8QloazxwM&bg=ffffff&hl=en&guid=ON&resp=GooglemKTybQhCsO&u_h=640&u_w=360&u_ah=640&u_aw=360&u_cd=24&u_his=3&u_tz=300&u_java=false&u_nplug=0&u_nmime=0&sendb=1&frm=2&url=https%3A%2F%2Fae.nflximg.net%2Fmonet%2Fscripts%2Fnetflix_tag_03.html%3Fdata%3D%257B%2522membership_status%2522%253A%2522ANONYMOUS%2522%252C%2522country%2522%253A%2522PK%2522%252C%2522fbaId%2522%253A%2522cea8c2a1-a76f-45ae-87f3-753ead057ef6%2522%252C%2522is_member%2522%253A%2522anonymous%2522%252C%2522wasFormerMember%2522%253Afalse%252C%2522referrer%2522%253A%2522nmLanding%2522%257D&rfmt=3&fmt=4"
+  ],
+  "www.paypal.com": [
+    "https://www.paypalobjects.com/eboxapps/js/67/8ce700307d4d0bebd91ab07558493707737ee4.js",
+    "https://www.paypalobjects.com/tagmgmt/bs-chunk.js",
+    "https://www.paypalobjects.com/pa/js/min/pa.js",
+    "https://www.paypalobjects.com/tagmgmt/codefiles/cffaea1b2db4c4dfd16ab463e26c3a3b.js?conditionId0=379384",
+    "https://www.paypalobjects.com/tagmgmt/codefiles/216d51cd24142a2be5ed41acecb90911.js?conditionId0=381750",
+    "https://www.paypalobjects.com/tagmgmt/codefiles/90b8daefb64dde150bf54bfc42597a28.js?conditionId0=380088",
+    "https://www.paypalobjects.com/tagmgmt/codefiles/cdf91e80bb22cc955b6283dafc8e88e6.js?conditionId0=422975",
+    "https://www.paypalobjects.com/tagmgmt/codefiles/921d60fd5643c5ec3d085069fa6e76b7.js?conditionId0=597156",
+    "https://www.paypalobjects.com/tagmgmt/codefiles/f0d50272979f74c3bf7afbed40fcf7d1.js?conditionId0=378623",
+    "https://www.paypalobjects.com/tagmgmt/codefiles/61c42910d5b1ecce8473230765a4a37b.js?conditionId0=474093",
+    "https://www.paypalobjects.com/tagmgmt/codefiles/d82fd2650afbd7ca5c6fd4fb4600b178.js",
+    "https://www.paypalobjects.com/tagmgmt/codefiles/802b93f0fe41b41869a2e449e704709d.js?conditionId0=378623",
+    "https://www.paypalobjects.com/gajs/analytics.js",
+    "https://www.paypalobjects.com/pa/mi/miconfig.js",
+    "https://www.paypalobjects.com/pa/tl/patleaf.js",
+    "https://www.paypalobjects.com/gajs/gtag.js",
+    "https://www.paypalobjects.com/pa/tl/patlcfg.js"
+  ],
+  "www.imdb.com": [
+    "https://www.zergnet.com/zerg.js?id=50277",
+    "https://www.zergnet.com/output.js?id=50277&time=1554469707422&sc=1&callback=json8273960"
+  ],
+  "douyu.com": [
+    "https://sta-op.douyucdn.cn/front-publish/shark-apm-master/shark-apm.c46871b.min.js",
+    "https://sta-op.douyucdn.cn/front-publish/sdk-file-master/psDevice_f4c5c90.js",
+    "https://sta-op.douyucdn.cn/front-publish/live-master/lib/runtime-room_ae652a4.js",
+    "https://sta-op.douyucdn.cn/front-publish/live-master/lib/shark-file-loader_9b06df1.js",
+    "https://shark.douyucdn.cn/shark/lib/js/lib/jquery.js?v=1.3.19",
+    "https://shark.douyucdn.cn/stream/dist/dys-douyutv.js?v=1.3.19",
+    "https://shark.douyucdn.cn/app/douyu-mobile/m-douyu-v3/build/bundle.min.js?v=1.3.19",
+    "https://shark.douyucdn.cn/app/douyu-mobile/m-public-vendor/hack.js?v=1.3.19",
+    "https://shark.douyucdn.cn/app/douyu-mobile/m-douyu-v3/build/app.min.js?v=1.3.19"
+  ],
+  "www.whatsapp.com": [
+    "https://www.whatsapp.com/richard_smells_funny/animation/edge_includes/edge.6.0.0.min.js",
+    "https://www.whatsapp.com/richard_smells_funny/animation/security_edge.js",
+    "https://www.whatsapp.com/ajax/bz"
+  ],
+  "www.aliexpress.com": [],
+  "www.adf.ly": [
+    "https://www.google-analytics.com/ga.js",
+    "https://www.linkedin.com/pages-extensions/FollowCompany.js?version=0.1.149",
+    "https://www.facebook.com/rsrc.php/v3iEpO4/yJ/l/en_US/A1QcUQIX6S4.js"
+  ],
+  "www.china.com": [],
+  "www.blastingnews.com": [
+    "https://www.google-analytics.com/analytics.js"
+  ],
+  "www.mail.ru": [],
+  "www.pinterest.com": [
+    "https://www.gstatic.com/_/mss/boq-identity/_/js/k=boq-identity.IdentityYoloWebModuleset.en_US.h8vz5gpQEyI.O/am=AQ/rt=j/d=1/rs=AOaEmlGgN3RQwpqmXJ10PHPkCT1zTwwGXg/m=yolo_frame_library",
+    "https://www.facebook.com/rsrc.php/v3i7M54/yz/l/en_US/ZR_MI5FkZzn.js"
+  ],
+  "www.twitch.tv": [],
+  "www.wikia.com": [
+    "https://www.google-analytics.com/analytics.js",
+    "https://www.googletagservices.com/tag/js/gpt.js",
+    "https://www.fandom.com/wp-content/themes/upstream/dist/scripts/main.js?ver=1553878096",
+    "https://www.fandom.com/wp-includes/js/wp-embed.min.js?ver=4.9.6"
+  ],
+  "www.etsy.com": [
+    "https://www.googletagmanager.com/gtm.js?id=GTM-KWW5SS",
+    "https://www.google-analytics.com/analytics.js",
+    "https://www.dwin1.com/6220.js"
+  ],
+  "www.steamcommunity.com": [
+    "https://www.google-analytics.com/analytics.js"
+  ],
+  "www.ok.ru": [],
+  "www.reddit.com": [
+    "https://www.redditstatic.com/mweb2x/ProductionClient.54902fa4ba4df11f1b8d.js",
+    "https://www.googletagservices.com/tag/js/gpt.js",
+    "https://www.redditstatic.com/gtm-jail.jTMwZME_TT8.js",
+    "https://www.redditstatic.com/gtm.aX_QHhLRPyo.js",
+    "https://www.googletagmanager.com/gtm.js?id=GTM-W7RKT4&l=googleTagManager",
+    "https://www.google-analytics.com/analytics.js"
+  ],
+  "www.tianya.cn": [],
+  "www.tmall.com": [],
+  "www.uptodown.com": [
+    "https://www.googletagservices.com/tag/js/gpt.js",
+    "https://www.google-analytics.com/analytics.js"
+  ],
+  "www.booking.com": [
+    "https://www.google-analytics.com/analytics.js",
+    "https://www.googletagmanager.com/gtag/js?id=DC-4228414",
+    "https://www.googleadservices.com/pagead/conversion_async.js",
+    "https://www.googleadservices.com/pagead/conversion.js",
+    "https://www.googleadservices.com/pagead/conversion/988382855/?random=1554469602947&cv=9&fst=1554469602947&num=1&label=Ruh8COWOqn0Qh42m1wM&guid=ON&resp=GooglemKTybQhCsO&u_h=640&u_w=360&u_ah=640&u_aw=360&u_cd=24&u_his=3&u_tz=300&u_java=false&u_nplug=0&u_nmime=0&sendb=1&frm=2&url=https%3A%2F%2F4228414.fls.doubleclick.net%2Factivityi%3Bsrc%3D4228414%3Btype%3Dfunne910%3Bcat%3Dcross%3Bu1%3D-1%3Bu3%3D3%3Bu4%3D304142%3Bu5%3DPKR%3Bu6%3D-1%3Bu7%3D-1%3Bu9%3D-1%3Bu10%3D-1%3Bu11%3D-1%3Bu12%3D-1%3Bu14%3D-1%3Bu15%3Den-us%3Bu16%3D-1%3Bu17%3DAFynUtgS6SLBFUEL41TGK%252BM%253D%3Bu18%3D-1%3Bu19%3D0%3Bu20%3Dindex%3Bu26%3DGA1.2.888215762.1554469594%3Bu27%3D0%3Bu28%3D2%3Bu35%3D-1%3Bu36%3D-1%3Bord%3D639b6142675bf0dfc8f584bfbd15a648%3F&ref=https%3A%2F%2Fwww.booking.com%2F&rfmt=3&fmt=4",
+    "https://www.googleadservices.com/pagead/conversion/879757069/?random=1554469602974&cv=9&fst=1554469602947&num=2&label=h2AuCJP9wGgQjY7AowM&bg=ffffff&hl=en&guid=ON&resp=GooglemKTybQhCsO&u_h=640&u_w=360&u_ah=640&u_aw=360&u_cd=24&u_his=3&u_tz=300&u_java=false&u_nplug=0&u_nmime=0&sendb=1&frm=2&url=https%3A%2F%2F4228414.fls.doubleclick.net%2Factivityi%3Bsrc%3D4228414%3Btype%3Dfunne910%3Bcat%3Dcross%3Bu1%3D-1%3Bu3%3D3%3Bu4%3D304142%3Bu5%3DPKR%3Bu6%3D-1%3Bu7%3D-1%3Bu9%3D-1%3Bu10%3D-1%3Bu11%3D-1%3Bu12%3D-1%3Bu14%3D-1%3Bu15%3Den-us%3Bu16%3D-1%3Bu17%3DAFynUtgS6SLBFUEL41TGK%252BM%253D%3Bu18%3D-1%3Bu19%3D0%3Bu20%3Dindex%3Bu26%3DGA1.2.888215762.1554469594%3Bu27%3D0%3Bu28%3D2%3Bu35%3D-1%3Bu36%3D-1%3Bord%3D639b6142675bf0dfc8f584bfbd15a648%3F&ref=https%3A%2F%2Fwww.booking.com%2F&rfmt=3&fmt=4"
+  ],
+  "www.baidu.com": [],
+  "www.coccoc.com": [
+    "https://www.google.com/recaptcha/api.js?hl=vi",
+    "https://www.googletagmanager.com/gtm.js?id=GTM-KKML7SR",
+    "https://www.google-analytics.com/analytics.js",
+    "https://www.gstatic.com/recaptcha/api2/v1554100419869/recaptcha__vi.js"
+  ],
+  "www.steampowered.com": [
+    "https://www.google-analytics.com/analytics.js"
+  ],
+  "www.alibaba.com": [
+    "https://www.google-analytics.com/ga.js"
+  ],
+  "www.microsoft.com": [
+    "https://www.microsoft.com/onerfstatics/marketingsites-neu-prod/_h/46c44584/coreui.statics/externalscripts/jquery/jquery-3.3.1.min.js",
+    "https://www.microsoft.com/onerfstatics/marketingsites-neu-prod/mscomhp/_scrf/js/themes=default/d3-e6b21f/2f-63ce8f/45-f9a0d4/aa-dc1460/2d-7a9063/dc-7e9864/4f-5115f8/7d-266f10/4a-abd94b/78-4c7d22/9f-d154ca/e4-8302f6/cd-23d3b0/6d-1e7ed0/b7-cadaa7/ca-40b7b0/4e-ee3a55/3e-f5c39b/c3-6454d7/f9-7592d3/92-10345d/f8-73a5f2/79-499886/7e-cda2d3/32-6dafa3/93-283c2d/91-97a04f/1f-100dea/33-abe4df/18-d72213/e3-082b89?ver=2.0",
+    "https://www.microsoft.com/onerfstatics/marketingsites-neu-prod/mscomhp/_scrf/js/themes=default/78-6f121b/86-1c0237?ver=2.0",
+    "https://www.microsoft.com/mwf/js/MWF_20190102_13628700/alert/autosuggest/contentplacement/contentplacementitem/glyph/heading/hero/heroitem/hyperlinkgroup/image/list/pagebehaviors/skiptomain/social?apiVersion=1.0",
+    "https://www.microsoft.com/library/svy/broker.js",
+    "https://www.microsoft.com/onerfstatics/marketingsites-neu-prod/_h/9ae23327/mscom.statics/externalscripts/mscomhp/audiencemanager.js",
+    "https://www.microsoft.com/library/svy/broker-config.js?1554468819082"
+  ],
+  "www.rambler.ru": [
+    "https://www.rambler.ru/assets/mobileVendor.0867c4bc.chunk.js",
+    "https://www.rambler.ru/assets/mobile.b0ee8657.js",
+    "https://www.googletagmanager.com/gtm.js?id=GTM-KJBSQR",
+    "https://www.google-analytics.com/analytics.js",
+    "https://www.googletagservices.com/tag/js/gpt.js"
+  ],
+  "www.chase.com": [],
+  "www.slack.com": [
+    "https://www.googletagmanager.com/gtm.js?id=GTM-KH2LPK",
+    "https://www.youtube.com/iframe_api",
+    "https://www.google-analytics.com/analytics.js",
+    "https://www.googleadservices.com/pagead/conversion_async.js"
+  ],
+  "www.avito.ru": [
+    "https://www.avito.st/mstatic/build/runtime.58363ebef1cc.js",
+    "https://www.avito.st/mstatic/build/1.d10de0905cb0.js",
+    "https://www.avito.st/mstatic/build/3.0219164697f6.js",
+    "https://www.avito.st/mstatic/build/0.26ed446abdb5.js",
+    "https://www.avito.st/mstatic/build/15.7607fce60bd3.js",
+    "https://www.avito.ru/stat/fe_metric.min.js",
+    "https://www.avito.st/mstatic/js/fingerprint.js",
+    "https://www.googletagmanager.com/gtm.js?id=GTM-TC7P6C",
+    "https://www.googletagservices.com/tag/js/gpt.js",
+    "https://www.google-analytics.com/analytics.js",
+    "https://www.google-analytics.com/plugins/ua/ec.js",
+    "https://www.googleadservices.com/pagead/conversion_async.js"
+  ],
+  "www.amazon.com": [],
+  "www.spotify.com": [
+    "https://www.google-analytics.com/analytics.js",
+    "https://www.googletagmanager.com/gtm.js?id=GTM-7BJJ",
+    "https://www.googletagmanager.com/gtag/js?id=DC-8872062",
+    "https://www.google-analytics.com/plugins/ua/linkid.js",
+    "https://www.google-analytics.com/plugins/ua/ec.js",
+    "https://www.google-analytics.com/gtm/js?id=GTM-P9JKJ53&cid=477640880.1554470637",
+    "https://www.googleadservices.com/pagead/conversion.js"
+  ],
+  "www.globo.com": [
+    "https://www.googletagservices.com/tag/js/gpt.js",
+    "https://www.google-analytics.com/analytics.js",
+    "https://www.googletagservices.com/activeview/js/current/osd.js?cb=%2Fr20100101",
+    "https://www.googletagservices.com/activeview/js/current/osd_listener.js?cache=r20110914"
+  ],
+  "www.ladbible.com": [
+    "https://www.google-analytics.com/analytics.js",
+    "https://www.google-analytics.com/gtm/js?id=GTM-K6GF87B&t=gtm1&cid=1948425823.1554471765"
+  ],
+  "www.softonic.com": [
+    "https://www.googletagservices.com/tag/js/gpt.js",
+    "https://www.googletagmanager.com/gtm.js?id=GTM-5LWWHP",
+    "https://www.google-analytics.com/analytics.js",
+    "https://www.googletagservices.com/activeview/js/current/osd_listener.js?cache=r20110914",
+    "https://www.googletagservices.com/activeview/js/current/osd.js?cb=%2Fr20100101",
+    "https://www.google-analytics.com/gtm/js?id=GTM-TV6X2J3&cid=2101154522.1554470029"
+  ],
+  "www.espn.com": [
+    "https://www.googletagservices.com/tag/js/gpt.js"
+  ],
+  "www.salesforce.com": [
+    "https://www.googletagmanager.com/gtm.js?id=GTM-WRXS6TH",
+    "https://www.googletagmanager.com/gtm.js?id=GTM-W374NLK&l=dataLayer",
+    "https://www.googletagmanager.com/gtag/js?id=AW-1040019177",
+    "https://www.googleadservices.com/pagead/conversion_async.js"
+  ],
+  "www.adobe.com": [
+    "https://www.adobe.com/etc.titan.dexterlibs/dexter/clientlibs/base/polyfills.fp-a5254643cca4c5c1f5abdc8df849dbb0.js",
+    "https://www.adobe.com/etc.titan.dexterlibs/dexter/clientlibs/base/head.fp-28068c772b5f5f4c91ec38bdd6bb7e97.js",
+    "https://www.adobe.com/etc.titan.dexterlibs/homepage/clientlibs/base/head.fp-733770013592ba72f82623883ec8c70a.js",
+    "https://www.adobe.com/marketingtech/main.min.js",
+    "https://www.adobe.com/etc/beagle/public/globalnav/adobe-globalnav/latest/adobe-globalnav.min.js",
+    "https://www.adobe.com/etc.titan.dexterlibs/dexter/clientlibs/base/publish.fp-3cafbd4106dc69402cec88df045b08ff.js",
+    "https://www.adobe.com/etc.titan.dexterlibs/dexter/clientlibs/base/react.fp-5bb12e8eae424e78fd9b03154de92a53.js",
+    "https://www.adobe.com/etc.titan.dexterlibs/dexter/clientlibs/base/theme.fp-61ed59a8243e246a74e5408237150bbd.js",
+    "https://www.adobe.com/etc.titan.dexterlibs/homepage/clientlibs/base/publish.fp-6c4595556de99f78399c796bb6cf118f.js",
+    "https://www.adobe.com/etc/beagle/public/globalnav/privacy-files/sitenotice/evidon-sitenotice-tag.js",
+    "https://www.adobe.com/etc/beagle/public/globalnav/privacy-files/sitenotice/414/snthemes.js",
+    "https://www.adobe.com/etc/beagle/public/globalnav/privacy-files/sitenotice/414/adobe/settings.js",
+    "https://www.adobe.com/etc/beagle/public/globalnav/privacy-files/sitenotice/414/translations/en.js"
+  ],
+  "www.pixnet.net": [
+    "https://www.pixfs.net/mobile/static/js/runtime.0b30ba2d.js",
+    "https://www.pixfs.net/mobile/static/js/vendors.e1392ab8.js",
+    "https://www.pixfs.net/mobile/static/js/0.0353ff73.js",
+    "https://www.pixfs.net/mobile/static/js/1.54a2ee58.js",
+    "https://www.googletagmanager.com/gtm.js?id=GTM-K6RPB3Q",
+    "https://www.google-analytics.com/analytics.js",
+    "https://www.pixfs.net/mobile/static/js/Home.0f12df6b.chunk.js"
+  ],
+  "www.bbc.co.uk": [
+    "https://www.bbc.com/wwscripts/flag",
+    "https://www.googletagservices.com/tag/js/gpt.js",
+    "https://www.googletagservices.com/activeview/js/current/osd_listener.js?cache=r20110914",
+    "https://www.googletagservices.com/activeview/js/current/osd.js?cb=%2Fr20100101",
+    "https://www.googletagservices.com/activeview/js/current/osd_listener.js?cache=r20110914",
+    "https://www.googletagservices.com/activeview/js/current/osd_listener.js?cache=r20110914"
+  ],
+  "www.dailymotion.com": [
+    "https://www.google.com/recaptcha/api.js",
+    "https://www.googletagmanager.com/gtm.js?id=GTM-P8L2J6G&gtm_auth=-_fJL9BsWrxKWr76EuFTEA&gtm_preview=env-5&gtm_cookies_win=x",
+    "https://www.google-analytics.com/analytics.js",
+    "https://www.gstatic.com/recaptcha/api2/v1554100419869/recaptcha__en.js",
+    "https://www.gstatic.com/cv/js/sender/v1/cast_sender.js",
+    "https://www.gstatic.com/eureka/clank/73/cast_sender.js"
+  ],
+  "www.amazonaws.com": [],
+  "www.bankofamerica.com": [
+    "https://www2.bac-assets.com/homepage/spa-assets/components/utilities/platform/babel-polyfill.js",
+    "https://www2.bac-assets.com/homepage/spa-assets/components/utilities/vendor/require/2.2.0/js/require.js",
+    "https://www2.bac-assets.com/homepage/spa-assets/bundles/acc3c24b.js",
+    "https://www2.bac-assets.com/homepage/spa-assets/bundles/34286204.js"
+  ],
+  "www.sohu.com": [],
+  "www.theguardian.com": [
+    "https://www.google-analytics.com/analytics.js",
+    "https://www.googleadservices.com/pagead/conversion_async.js",
+    "https://www.googletagservices.com/tag/js/gpt.js",
+    "https://www.theguardian.com/2015-06-24-manifest.json",
+    "https://www.googletagservices.com/activeview/js/current/osd.js?cb=%2Fr20100101",
+    "https://www.googletagservices.com/activeview/js/current/osd_listener.js?cache=r20110914"
+  ],
+  "walmart.com": [
+    "https://i5.walmartimages.com/dfw/4ff9c6c9-e052/k2-_c03da9e6-5786-4e97-a031-6d8ef8af50bc.v83.js"
+  ],
+  "www.yahoo.com": [
+    "https://www.yahoo.com/lib/metro/g/myy/rapidworker_1_2_0.0.31.js",
+    "https://www.googletagservices.com/activeview/js/current/osd.js?cb=%2Fr20100101"
+  ],
+  "www.vimeo.com": [
+    "https://www.googletagmanager.com/gtm.js?id=GTM-RBKK&l=_gtm",
+    "https://www.googletagservices.com/tag/js/gpt.js",
+    "https://www.google-analytics.com/analytics.js",
+    "https://www.googleadservices.com/pagead/conversion_async.js",
+    "https://www.google-analytics.com/plugins/ua/ec.js"
+  ],
+  "www.nytimes.com": [
+    "https://www.googletagservices.com/tag/js/gpt.js",
+    "https://www.nytimes.com/vi-assets/static-assets/adslot-7b691ab7d6702fd84cd5.js",
+    "https://www.nytimes.com/vi-assets/static-assets/vendor-6aefe665dd572d8b7b1f.js",
+    "https://www.nytimes.com/vi-assets/static-assets/home-fcaab411cf788639b8d8.js",
+    "https://www.nytimes.com/vi-assets/static-assets/main-fb647602658984329acb.js",
+    "https://www.googletagmanager.com/gtm.js?id=GTM-P528B3&gtm_auth=tfAzqo1rYDLgYhmTnSjPqw&gtm_preview=env-130&gtm_cookies_win=x",
+    "https://www.gstatic.com/_/mss/boq-payments-consumer/_/js/k=boq-payments-consumer.InstantbuyFrontendBuyflowPayframeUi.en_US.tqTPQGbIDho.O/rt=j/d=1/excm=payframeview,_b,_tp/ed=1/dg=0/rs=AMitfriNrTbTgpExkVhOpsqxea9HPQ3fcA/m=_b,_tp",
+    "https://www.nytimes.com/vi-assets/static-assets/vendors~answerpage~audio~byline~collections~home~hubpage~paidpost~reviews~search~slideshow~story~tim~23412e0e-2aaa369d4daa7689b8b6.js",
+    "https://www.nytimes.com/vi-assets/static-assets/vendors~audio~home~paidpost~story~trending-ad28408ffcfe728262f1.js",
+    "https://www.nytimes.com/vi-assets/static-assets/vendors~audio~home~paidpost~story-77fbe546c6da54307bd2.js",
+    "https://www.gstatic.com/_/billing/_/js/k=billing.ims.en_US.BIOh8ICA7cM.O/am=FZA/rt=j/d=1/rs=AChpKPD0Dol8gXMM-EsXBrDkP34vuEvlFQ/m=b2,aist,ist,qst",
+    "https://www.gstatic.com/_/mss/boq-payments-consumer/_/js/k=boq-payments-consumer.InstantbuyFrontendBuyflowPayframeUi.en_US.tqTPQGbIDho.O/ck=boq-payments-consumer.InstantbuyFrontendBuyflowPayframeUi.mgDBuYm8ba8.L.W.O/rt=j/d=1/exm=_b,_tp/excm=payframeview,_b,_tp/ed=1/rs=AMitfrhUPZWFy-9p61LvJQOFcgJPina7mg/m=wmwg8b",
+    "https://www.gstatic.com/_/mss/boq-payments-consumer/_/js/k=boq-payments-consumer.InstantbuyFrontendBuyflowPayframeUi.en_US.tqTPQGbIDho.O/ck=boq-payments-consumer.InstantbuyFrontendBuyflowPayframeUi.mgDBuYm8ba8.L.W.O/rt=j/d=1/exm=_b,_tp,wmwg8b/excm=payframeview,_b,_tp/ed=1/rs=AMitfrhUPZWFy-9p61LvJQOFcgJPina7mg/m=Das5Le,IZT63,PrPYRd,Ru0Pgb,Y2UGcc,ZyYHPb,hc6Ubd,p8L0ob,wI7Sfc,ws9Tlc",
+    "https://www.google-analytics.com/analytics.js",
+    "https://www.gstatic.com/_/mss/boq-payments-consumer/_/js/k=boq-payments-consumer.InstantbuyFrontendBuyflowPayframeUi.en_US.tqTPQGbIDho.O/ck=boq-payments-consumer.InstantbuyFrontendBuyflowPayframeUi.mgDBuYm8ba8.L.W.O/rt=j/d=1/exm=Das5Le,IZT63,PrPYRd,Ru0Pgb,Y2UGcc,ZyYHPb,_b,_tp,hc6Ubd,p8L0ob,wI7Sfc,wmwg8b,ws9Tlc/excm=payframeview,_b,_tp/ed=1/rs=AMitfrhUPZWFy-9p61LvJQOFcgJPina7mg/m=EFQ78c,FCpbqb,OJUrvb,WhJNk,_latency",
+    "https://www.gstatic.com/_/mss/boq-payments-consumer/_/js/k=boq-payments-consumer.InstantbuyFrontendBuyflowPayframeUi.en_US.tqTPQGbIDho.O/ck=boq-payments-consumer.InstantbuyFrontendBuyflowPayframeUi.mgDBuYm8ba8.L.W.O/rt=j/d=1/exm=Das5Le,EFQ78c,FCpbqb,IZT63,OJUrvb,PrPYRd,Ru0Pgb,WhJNk,Y2UGcc,ZyYHPb,_b,_latency,_tp,hc6Ubd,p8L0ob,wI7Sfc,wmwg8b,ws9Tlc/excm=payframeview,_b,_tp/ed=1/rs=AMitfrhUPZWFy-9p61LvJQOFcgJPina7mg/m=lwddkf"
+  ],
+  "www.ettoday.net": [
+    "https://www.google-analytics.com/analytics.js",
+    "https://www.googletagservices.com/tag/js/gpt.js",
+    "https://www.googletagservices.com/activeview/js/current/osd.js?cb=%2Fr20100101",
+    "https://www.googletagservices.com/activeview/js/current/osd_listener.js?cache=r20110914"
+  ],
+  "www.vice.com": [
+    "https://www.vice.com/static/vendor.9af3821a7190d52b29d0.js",
+    "https://www.vice.com/static/assets.1ffbd07342562c4e20bc.js",
+    "https://www.vice.com/static/common.ad94cab474d7e3cf5586.js",
+    "https://www.vice.com/static/vice.a0cc9599332b95f9d922.js",
+    "https://www.vice.com/static/font-loader.31a304b9e1b103ddf98e.js",
+    "https://www.vice.com/static/d-c-p.a9f005c7ca1916d0c586.js",
+    "https://www.vice.com/static/vice-grid-xs-m.7783de3a3b1922a7d488.js",
+    "https://www.vice.com/static/vice-grid-l-hd.2769dcc169c142a4fae1.js",
+    "https://www.vice.com/static/vice-spacing-xs-m.24a561231ad4b51a42c2.js",
+    "https://www.vice.com/static/vice-spacing-l-hd.7d03bb80a5bb17e03ae0.js",
+    "https://www.vice.com/static/vice-helpers-xs-m.8df02961bd5336c90dd2.js",
+    "https://www.vice.com/static/vice-helpers-l-hd.ac68570ba4a62123f644.js",
+    "https://www.googletagmanager.com/gtm.js?id=GTM-MSM4HQ4",
+    "https://www.google-analytics.com/analytics.js",
+    "https://www.googletagservices.com/tag/js/gpt.js",
+    "https://www.google-analytics.com/gtm/js?id=GTM-P46HZGR&t=optimizeTracker&cid=1111230939.1554469897&aip=true"
+  ],
+  "www.w3schools.com": [
+    "https://www.w3schools.com/lib/w3codecolor.js",
+    "https://www.google-analytics.com/analytics.js",
+    "https://www.googletagservices.com/tag/js/gpt.js",
+    "https://www.google.com/cse/static/element/af400e744a60d2b3/cse_element__en.js?usqp=CAI%3D"
+  ],
+  "www.washingtonpost.com": [
+    "https://www.washingtonpost.com/wp-stat/ad/zeus/wp-ad.min.js",
+    "https://www.washingtonpost.com/pb/gr/ro/mobile-homepage/r0dTk6HUW2WLmr/load_immediately/a5a29d0f77.js?_=7cd7a",
+    "https://www.washingtonpost.com/wp-stat/pwapi/prod/wpPwapi2-min.js",
+    "https://www.washingtonpost.com/pb/gr/f/mobile-homepage/podcast/flex-player/render.js?_=9371a",
+    "https://www.washingtonpost.com/pb/resources/js/podcast/flex-podcast.js?_=201901280949PST",
+    "https://www.googletagservices.com/tag/js/gpt.js",
+    "https://www.googletagmanager.com/gtm.js?id=GTM-N78DPKH",
+    "https://www.washingtonpost.com/wp-stat/analytics/latest/main.js?token=201901280949PST",
+    "https://www.washingtonpost.com/pb/gr/c/mobile-homepage/r0dTk6HUW2WLmr/conf-production/b5411285f6.js?_=f7342",
+    "https://www.washingtonpost.com/pb/gr/c/mobile-homepage/r0dTk6HUW2WLmr/identity-management-core/2595e79995.js?_=3fbb4",
+    "https://www.washingtonpost.com/pb/gr/c/mobile-homepage/r0dTk6HUW2WLmr/identity-management-anon/2abcb5f7c0.js?_=4b218",
+    "https://www.washingtonpost.com/pb/gr/c/mobile-homepage/r0dTk6HUW2WLmr/identity-management-osn/32792e74a4.js?_=d950e",
+    "https://www.washingtonpost.com/pb/gr/ro/mobile-homepage/r0dTk6HUW2WLmr/headjs/70b9918770.js?_=64058",
+    "https://www.washingtonpost.com/pb/gr/p/mobile-homepage/r0dTk6HUW2WLmr/head.js?_=6b994",
+    "https://www.washingtonpost.com/pb/gr/ro/mobile-homepage/r0dTk6HUW2WLmr/hi-pri-js/e7f066f51e.js?_=7bd87",
+    "https://www.washingtonpost.com/pb/gr/p/mobile-homepage/r0dTk6HUW2WLmr/hi-pri-render.js?_=6b994",
+    "https://www.washingtonpost.com/pb/gr/ro/mobile-homepage/r0dTk6HUW2WLmr/js/06e16444b7.js?_=4b427",
+    "https://www.washingtonpost.com/wp-stat/visitorsegment/shared/resources/build/latest.js",
+    "https://www.washingtonpost.com/pb/gr/ro/mobile-homepage/r0dTk6HUW2WLmr/js/62b230e3e3.js?_=4b427",
+    "https://www.washingtonpost.com/player/_vendor/underscore/1.8.3/underscore-min.js",
+    "https://www.washingtonpost.com/video/resources/env/WapoVideo/dist/WapoVideoEmbed.min.js",
+    "https://www.washingtonpost.com/pb/gr/p/mobile-homepage/r0dTk6HUW2WLmr/render.js?_=6b994",
+    "https://www.washingtonpost.com/pb/gr/p/mobile-homepage/r0dTk6HUW2WLmr/instance.js?_=6b994",
+    "https://www.washingtonpost.com/pb/gr/ro/mobile-homepage/r0dTk6HUW2WLmr/after_features/924bfb4f1e.js?_=d7e3c",
+    "https://www.gstatic.com/_/mss/boq-payments-consumer/_/js/k=boq-payments-consumer.InstantbuyFrontendBuyflowPayframeUi.en_US.tqTPQGbIDho.O/rt=j/d=1/excm=payframeview,_b,_tp/ed=1/dg=0/rs=AMitfriNrTbTgpExkVhOpsqxea9HPQ3fcA/m=_b,_tp",
+    "https://www.gstatic.com/_/billing/_/js/k=billing.ims.en_US.BIOh8ICA7cM.O/am=FZA/rt=j/d=1/rs=AChpKPD0Dol8gXMM-EsXBrDkP34vuEvlFQ/m=b2,aist,ist,qst",
+    "https://www.googletagservices.com/activeview/js/current/osd_listener.js?cache=r20110914",
+    "https://www.googletagservices.com/activeview/js/current/osd.js?cb=%2Fr20100101",
+    "https://www.gstatic.com/_/mss/boq-payments-consumer/_/js/k=boq-payments-consumer.InstantbuyFrontendBuyflowPayframeUi.en_US.tqTPQGbIDho.O/ck=boq-payments-consumer.InstantbuyFrontendBuyflowPayframeUi.mgDBuYm8ba8.L.W.O/rt=j/d=1/exm=_b,_tp/excm=payframeview,_b,_tp/ed=1/rs=AMitfrhUPZWFy-9p61LvJQOFcgJPina7mg/m=wmwg8b",
+    "https://www.gstatic.com/_/mss/boq-payments-consumer/_/js/k=boq-payments-consumer.InstantbuyFrontendBuyflowPayframeUi.en_US.tqTPQGbIDho.O/ck=boq-payments-consumer.InstantbuyFrontendBuyflowPayframeUi.mgDBuYm8ba8.L.W.O/rt=j/d=1/exm=_b,_tp,wmwg8b/excm=payframeview,_b,_tp/ed=1/rs=AMitfrhUPZWFy-9p61LvJQOFcgJPina7mg/m=Das5Le,IZT63,PrPYRd,Ru0Pgb,Y2UGcc,ZyYHPb,hc6Ubd,p8L0ob,wI7Sfc,ws9Tlc",
+    "https://www.google-analytics.com/analytics.js",
+    "https://www.gstatic.com/_/mss/boq-payments-consumer/_/js/k=boq-payments-consumer.InstantbuyFrontendBuyflowPayframeUi.en_US.tqTPQGbIDho.O/ck=boq-payments-consumer.InstantbuyFrontendBuyflowPayframeUi.mgDBuYm8ba8.L.W.O/rt=j/d=1/exm=Das5Le,IZT63,PrPYRd,Ru0Pgb,Y2UGcc,ZyYHPb,_b,_tp,hc6Ubd,p8L0ob,wI7Sfc,wmwg8b,ws9Tlc/excm=payframeview,_b,_tp/ed=1/rs=AMitfrhUPZWFy-9p61LvJQOFcgJPina7mg/m=EFQ78c,FCpbqb,OJUrvb,WhJNk,_latency",
+    "https://www.gstatic.com/_/mss/boq-payments-consumer/_/js/k=boq-payments-consumer.InstantbuyFrontendBuyflowPayframeUi.en_US.tqTPQGbIDho.O/ck=boq-payments-consumer.InstantbuyFrontendBuyflowPayframeUi.mgDBuYm8ba8.L.W.O/rt=j/d=1/exm=Das5Le,EFQ78c,FCpbqb,IZT63,OJUrvb,PrPYRd,Ru0Pgb,WhJNk,Y2UGcc,ZyYHPb,_b,_latency,_tp,hc6Ubd,p8L0ob,wI7Sfc,wmwg8b,ws9Tlc/excm=payframeview,_b,_tp/ed=1/rs=AMitfrhUPZWFy-9p61LvJQOFcgJPina7mg/m=lwddkf"
+  ],
+  "www.nicovideo.jp": [
+    "https://www.googletagmanager.com/gtm.js?id=GTM-P8DMDF8&l=NicoGoogleTagManagerDataLayer",
+    "https://www.google-analytics.com/analytics.js",
+    "https://www.google-analytics.com/plugins/ua/linkid.js"
+  ],
+  "www.rakuten.co.jp": [
+    "https://www.googletagservices.com/tag/js/gpt.js",
+    "https://www.googletagservices.com/activeview/js/current/osd.js?cb=%2Fr20100101",
+    "https://www.googletagservices.com/activeview/js/current/osd_listener.js?cache=r20110914",
+    "https://www.googletagmanager.com/gtm.js?id=GTM-56M8N2T",
+    "https://www.googleadservices.com/pagead/conversion.js",
+    "https://www.googleadservices.com/pagead/conversion.js",
+    "https://www.googleadservices.com/pagead/conversion.js",
+    "https://www.googleadservices.com/pagead/conversion.js",
+    "https://www.googleadservices.com/pagead/conversion.js",
+    "https://www.googletagmanager.com/gtag/js?id=AW-833883167",
+    "https://www.googleadservices.com/pagead/conversion.js",
+    "https://www.googleadservices.com/pagead/conversion/877029429/?random=1554471607520&cv=9&fst=1554471607520&num=1&label=F7baCOSr5GgQtdCZogM&bg=ffffff&hl=en&guid=ON&resp=GooglemKTybQhCsO&u_h=640&u_w=360&u_ah=640&u_aw=360&u_cd=24&u_his=3&u_tz=300&u_java=false&u_nplug=0&u_nmime=0&sendb=1&frm=2&url=https%3A%2F%2Fgrp15.ias.rakuten.co.jp%2Fgw.js%3Fv%3D2&rfmt=3&fmt=4",
+    "https://www.googleadservices.com/pagead/conversion_async.js",
+    "https://www.googleadservices.com/pagead/conversion/976680299/?random=1554471608332&cv=9&fst=1554471608332&num=1&value=0&label=SlocCNmh4JYBEOvq29ED&guid=ON&resp=GooglemKTybQhCsO&u_h=640&u_w=360&u_ah=640&u_aw=360&u_cd=24&u_his=3&u_tz=300&u_java=false&u_nplug=0&u_nmime=0&gtm=2wg3r3&sendb=1&frm=2&url=https%3A%2F%2Fgrp15.ias.rakuten.co.jp%2Fgw.js%3Fv%3D2&bttype=purchase&async=1&rfmt=3&fmt=4"
+  ],
+  "www.tribunnews.com": [
+    "https://www.googletagmanager.com/gtm.js?id=GTM-NNJ5M3B",
+    "https://www.google-analytics.com/analytics.js",
+    "https://www.google-analytics.com/plugins/ua/linkid.js",
+    "https://www.googletagservices.com/activeview/js/current/osd_listener.js?cache=r20110914",
+    "https://www.googletagservices.com/activeview/js/current/osd_listener.js?cache=r20110914",
+    "https://www.googletagservices.com/activeview/js/current/osd_listener.js?cache=r20110914",
+    "https://www.googletagservices.com/activeview/js/current/osd_listener.js?cache=r20110914",
+    "https://www.googletagservices.com/activeview/js/current/osd_listener.js?cache=r20110914",
+    "https://www.googletagservices.com/activeview/js/current/osd_listener.js?cache=r20110914",
+    "https://www.googletagservices.com/activeview/js/current/osd_listener.js?cache=r20110914",
+    "https://www.googletagservices.com/activeview/js/current/osd_listener.js?cache=r20110914"
+  ],
+  "www.9gag.com": [
+    "https://www.google-analytics.com/analytics.js",
+    "https://www.googletagservices.com/tag/js/gpt.js",
+    "https://www.googletagservices.com/activeview/js/current/osd.js?cb=%2Fr20100101",
+    "https://www.googletagservices.com/activeview/js/current/osd_listener.js?cache=r20110914"
+  ],
+  "www.deviantart.com": [
+    "https://www.google-analytics.com/analytics.js",
+    "https://www.googletagservices.com/tag/js/gpt.js",
+    "https://www.da-ads.com/ads.js?adzone=top&adsize=300x250&advid=1554471858270",
+    "https://www.googletagservices.com/tag/js/gpt_mobile.js",
+    "https://www.googletagservices.com/activeview/js/current/osd.js?cb=%2Fr20100101",
+    "https://www.googletagservices.com/activeview/js/current/osd_listener.js?cache=r20110914",
+    "https://www.googletagservices.com/activeview/js/current/osd_listener.js?cache=r20110914"
+  ]
+}

@@ -1,0 +1,714 @@
+
+
+function modalLoginChannel(onclickelement, unbind, options,tag_id) {
+
+    if(flagLogged){
+        return;
+    }
+
+    var options = options ||  {};
+
+    if (typeof unbind == 'undefined')
+        unbind = false;
+
+    if (unbind) {
+        onclickelement.blastingModal({}, 'unbind');
+        return {};
+    }
+
+
+    if (typeof onclickelement == 'undefined')
+        return false;
+    if (typeof modal_type == 'undefined' || modal_type.length == ''){
+        var modal_type = 'all';
+    }
+
+
+    var override_email_conf_sent = false;
+
+    if( typeof options['override_email_conf_sent'] !== 'undefined' ){
+        override_email_conf_sent = true;
+    }
+
+    if(  ( (typeof email_conf_sent == 'undefined' || email_conf_sent === false) && unconfirmed_fb_user === false ) || override_email_conf_sent ) {
+
+        Blasting.FacebookSDK.init();
+
+        var footer_html_login = options['footer_html_login'] ||   '' +
+            '<div class="accedi-sx accedi-desk">'+sc_bl_message_92+' <a href="javascript:void(0)">'+sc_bl_message_93+' &gt;&gt;</a></div>' +
+            '<div class="back-follow"><a href="javascript:void(0)">&lt;&lt; '+sc_bl_message_94+'</a></div>' +
+            '<div class="cancel-follow" data-dismiss="modal"><a href="javascript:void(0)">'+sc_bl_message_95+'</a></div>' +
+            '<div id="accedi-mobile" class="accedi-mobile accedi "><a href="javascript:void(0)">'+sc_bl_message_96+' &gt;&gt;</a></div>';
+
+        //Settings default params for blastingmodal
+        var slogan   = options['slogan']      || message_88;
+        var titlebar = '';//( typeof options['titlebar'] !== 'undefined' ) ? options['titlebar'] : message_33;
+        var close    = ( typeof options['close'] !== 'undefined' ) ? options['close'] : true;
+        var b_logo   = ( typeof options['b_logo'] !== 'undefined' ) ? options['b_logo'] : true;
+        var swashin  = ( typeof options['swashin'] !== 'undefined' ) ? options['swashin'] : false;
+        var fade     = ( typeof options['fade'] !== 'undefined' ) ? options['fade'] : true;
+        var id       = options['id']          || 'login';
+        var onclose_callback = ($.isFunction(options['onclose_callback'])) ? options['onclose_callback'] : function(){};
+        var hide_reg_mail = ( typeof options['hide_reg_mail'] !== 'undefined' ) ? options['hide_reg_mail'] : false;
+        //var fnc        = options['fnc']     || false;
+
+
+
+        var _callbackAfterRendering = function(options){
+
+            var hide_reg_mail = ( typeof options['hide_reg_mail'] !== 'undefined' ) ? options['hide_reg_mail'] : false;
+
+            if(hide_reg_mail === true){
+                $("#login-your-mail-follow").remove();
+                $("#login-your-mail-follow-mobile").remove();
+            }
+
+            $('#modal-content-top-login').addClass('hide');
+            $('#modal-footer-').addClass('hide');
+            FacebookCustomizeLoginButton('#login-facebook');
+        }
+        onclickelement.blastingModal({
+                id: id, //ex: follow, rating, etc..
+                titlebar: titlebar,
+                b_logo: b_logo,
+                fade: fade,
+                swashin: swashin,
+                close: close,
+                footer_html: footer_html_login,
+                slogan: slogan,
+                ajax_content: true,
+                ajax_type: 'post',
+                ajax_url: '/app/get_modal_login_follow/',
+                ajax_post_data: {type: 'channel-login',tag_id: tag_id},
+                on_close_remove: true,
+                destroy_var_on_close: ['redirect_url_login'],
+                params_callback: {hide_reg_mail: hide_reg_mail}
+            }, '', function () {
+
+                $(document).on('UserStatusChanged', function() {
+                    if(flagLogged == true) {
+                        closeLatestModal();
+                    }
+                });
+
+                $(".blasting-follow-overlay div, .accedi-sx, #login-your-mail-follow, #login-your-mail-follow-mobile, .modal-footer div").removeAttr('style');
+                $('body').addClass('fixed');
+                $('body').css('padding-right', scrollBarWidth);
+                $('#header').addClass('modal-aperta-fixed');
+                $('#header').css('padding-right', scrollBarWidth);
+                $('#breaking-news').addClass('modal-aperta-fixed');
+                //$('#menu-mobile-trigger').css("opacity", "0");
+
+                $(".accedi-desk a").on("click", function() {
+                    if(typeof message_33 !== 'undefined' && message_33.length > 0)
+                        $("#login-box-follow .h3").html(message_33);
+                    else
+                        $("#login-box-follow .h3").html('');
+                });
+
+
+                $("#accedi-mobile").on("click", function () {
+                    $(".register-follow").hide();
+                    $(".back-follow").show();
+                    $(".accedi-mobile").hide();
+                    $(".cancel-follow").show();
+                    $(".cancel-follow").addClass("pull-right");
+                    $("#login-content-follow").show();
+                    $("#blasting-modal-login").addClass("overlay-follow-mobile");
+                    $("#form-login-follow").show();
+                    $("#form-recover-password-follow").hide();
+                    $(".modal-backdrop").addClass("background-none");
+                });
+
+                $(".back-follow").on("click", function () {
+                    $("#login-content-follow").hide();
+                    $(".register-follow").show();
+                    $("#login-facebook-follow").show();
+                    //$("#login-google-plus-follow").show();
+                    $("#login-your-mail-follow-mobile").show();
+                    $(".cancel-follow").show();
+                    $("#form-register-follow").hide();
+                    $(".back-follow").hide();
+                    $(".accedi-mobile").show();
+                    $(".cancel-follow").removeClass("pull-right");
+                    $('body').addClass('fixed');
+                    $("#blasting-modal-login").removeClass("overlay-follow-mobile");
+                    $(".modal-backdrop").removeClass("background-none");
+                });
+            },
+            onclose_callback/* on close function (4° parametro di blastingModal) */,_callbackAfterRendering
+        )
+
+    } else {
+
+        onclickelement.blastingModal({
+            id: 'login-no-active', //ex: follow, rating, etc..
+            titlebar: message_33,
+            close: true,
+            slogan: registration_error_01,
+            on_close_remove: true,
+            footer_html: '<br/>',
+        });
+    }
+}
+
+function modalLogin(onclickelement, unbind, options) {
+  
+  if(flagLogged){
+    return;
+  }
+
+  var options = options ||  {};
+
+  if (typeof unbind == 'undefined')
+    unbind = false;
+
+  if (unbind) {
+    onclickelement.blastingModal({}, 'unbind');
+    return {};
+  }
+    
+
+  if (typeof onclickelement == 'undefined')
+    return false;
+  if (typeof modal_type == 'undefined' || modal_type.length == ''){
+    var modal_type = 'all';
+  }
+      
+  
+  var override_email_conf_sent = false;
+
+  if( typeof options['override_email_conf_sent'] !== 'undefined' ){
+    override_email_conf_sent = true;
+  }
+
+  if(  ( (typeof email_conf_sent == 'undefined' || email_conf_sent === false) && unconfirmed_fb_user === false ) || override_email_conf_sent ) {
+
+    Blasting.FacebookSDK.init();
+
+    var footer_html_login = options['footer_html_login'] ||   '' +
+          '<div class="accedi-sx accedi-desk">'+sc_bl_message_92+' <a href="javascript:void(0)">'+sc_bl_message_93+' &gt;&gt;</a></div>' +
+          '<div class="back-follow"><a href="javascript:void(0)">&lt;&lt; '+sc_bl_message_94+'</a></div>' +
+          '<div class="cancel-follow" data-dismiss="modal"><a href="javascript:void(0)">'+sc_bl_message_95+'</a></div>' +
+          '<div id="accedi-mobile" class="accedi-mobile accedi "><a href="javascript:void(0)">'+sc_bl_message_96+' &gt;&gt;</a></div>';
+
+    //Settings default params for blastingmodal
+    var slogan   = options['slogan']      || message_88;    
+    var titlebar = ( typeof options['titlebar'] !== 'undefined' ) ? options['titlebar'] : message_33;
+    var close    = ( typeof options['close'] !== 'undefined' ) ? options['close'] : true;
+    var b_logo   = ( typeof options['b_logo'] !== 'undefined' ) ? options['b_logo'] : true;
+    var swashin  = ( typeof options['swashin'] !== 'undefined' ) ? options['swashin'] : false;
+    var fade     = ( typeof options['fade'] !== 'undefined' ) ? options['fade'] : true;
+    var id       = options['id']          || 'login';
+    var onclose_callback = ($.isFunction(options['onclose_callback'])) ? options['onclose_callback'] : function(){};
+    var hide_reg_mail = ( typeof options['hide_reg_mail'] !== 'undefined' ) ? options['hide_reg_mail'] : false;
+    //var fnc        = options['fnc']     || false;
+   
+   
+
+    var _callbackAfterRendering = function(options){
+        var hide_reg_mail = ( typeof options['hide_reg_mail'] !== 'undefined' ) ? options['hide_reg_mail'] : false;
+
+        if(hide_reg_mail === true){
+            $("#login-your-mail-follow").remove();
+            $("#login-your-mail-follow-mobile").remove();
+        }
+    }
+    onclickelement.blastingModal({
+      id: id, //ex: follow, rating, etc..
+      titlebar: titlebar,
+      b_logo: b_logo,
+      fade: fade,
+      swashin: swashin,
+      close: close,
+      footer_html: footer_html_login,
+      slogan: slogan,
+      ajax_content: true,
+      ajax_type: 'post',
+      ajax_url: '/app/get_modal_login_follow/',
+      ajax_post_data: {type: 'generic'},
+      on_close_remove: true,
+      destroy_var_on_close: ['redirect_url_login'],
+      params_callback: {hide_reg_mail: hide_reg_mail}
+    }, '', function () {
+
+      $(document).on('UserStatusChanged', function() {
+        if(flagLogged == true) {
+          closeLatestModal();
+        }
+      });
+
+      $(".blasting-follow-overlay div, .accedi-sx, #login-your-mail-follow, #login-your-mail-follow-mobile, .modal-footer div").removeAttr('style');
+      $('body').addClass('fixed');
+      $('body').css('padding-right', scrollBarWidth);
+      $('#header').addClass('modal-aperta-fixed');
+      $('#header').css('padding-right', scrollBarWidth);
+      $('#breaking-news').addClass('modal-aperta-fixed');
+      //$('#menu-mobile-trigger').css("opacity", "0");
+      
+      $(".accedi-desk a").on("click", function() {
+        if(typeof message_33 !== 'undefined' && message_33.length > 0)
+          $("#login-box-follow .h3").html(message_33);
+        else
+          $("#login-box-follow .h3").html('');
+      });
+      
+      $(document).on("click", "#login-facebook.generic", function (event) {
+        event.stopPropagation();
+        togglePleaseWait();
+        FBBNLOGIN(false);
+      });
+  
+      $("#accedi-mobile").on("click", function () {
+        $(".register-follow").hide();
+        $(".back-follow").show();
+        $(".accedi-mobile").hide();
+        $(".cancel-follow").show();
+        $(".cancel-follow").addClass("pull-right");
+        $("#login-content-follow").show();
+        $("#blasting-modal-login").addClass("overlay-follow-mobile");
+        $("#form-login-follow").show();
+        $("#form-recover-password-follow").hide();
+        $(".modal-backdrop").addClass("background-none");
+      });
+
+      $(".back-follow").on("click", function () {
+        $("#login-content-follow").hide();
+        $(".register-follow").show();
+        $("#login-facebook-follow").show();
+        //$("#login-google-plus-follow").show();
+        $("#login-your-mail-follow-mobile").show();
+        $(".cancel-follow").show();
+        $("#form-register-follow").hide();
+        $(".back-follow").hide();
+        $(".accedi-mobile").show();
+        $(".cancel-follow").removeClass("pull-right");
+        $('body').addClass('fixed');
+        $("#blasting-modal-login").removeClass("overlay-follow-mobile");
+        $(".modal-backdrop").removeClass("background-none");
+      });
+    },
+    onclose_callback/* on close function (4° parametro di blastingModal) */,_callbackAfterRendering
+    )
+
+  } else {
+
+    onclickelement.blastingModal({
+      id: 'login-no-active', //ex: follow, rating, etc..
+      titlebar: message_33,
+      close: true,
+      slogan: registration_error_01,
+      on_close_remove: true,
+      footer_html: '<br/>',
+    });
+  }
+}
+
+
+
+
+
+
+
+
+/**
+ * 
+ * @param {type} onclickelement
+ * @param {type} redirect_url
+ * @returns {Boolean}
+ */
+function modalDealerLogin(onclickelement, redirect_url, unbind) {
+  
+  if (typeof unbind == 'undefined')
+    unbind = false;
+
+  if (unbind) {
+    onclickelement.blastingModal({}, 'unbind');
+    return {};
+  }
+
+  if (typeof onclickelement == 'undefined')
+    return false;
+  if (typeof modal_type == 'undefined' || modal_type.length == '')
+    var modal_type = 'all';
+
+  footer_html_login = '' +
+          '<div class="accedi-sx accedi-desk">'+sc_bl_message_92+' <a href="javascript:void(0)">'+sc_bl_message_93+' &gt;&gt;</a></div>' +
+          '<div class="back-follow"><a href="javascript:void(0)">&lt;&lt; '+sc_bl_message_94+'</a></div>' +
+          '<div class="cancel-follow" data-dismiss="modal"><a href="javascript:void(0)">'+sc_bl_message_95+'</a></div>' +
+          '<div id="accedi-mobile" class="accedi-mobile accedi "><a href="javascript:void(0)">'+sc_bl_message_96+' &gt;&gt;</a></div>';
+
+  if ((typeof email_conf_sent == 'undefined' || email_conf_sent === false) && unconfirmed_fb_user === false) {
+
+    onclickelement.blastingModal({
+      id: 'login', //ex: follow, rating, etc..
+      titlebar: message_89,
+      close: true,
+      footer_html: footer_html_login,
+      slogan: message_90,
+      ajax_content: true,
+      ajax_type: 'post',
+      ajax_url: '/app/get_modal_login_follow/',
+      ajax_post_data: {type: 'generic'},
+      on_close_remove: true,
+      destroy_var_on_close: ['redirect_url_login']
+    }, '', function () {
+
+      $(document).on('UserStatusChanged', function() {
+        if(flagLogged == true) {
+          closeLatestModal();
+        }
+      });
+      
+      window.Blasting.FacebookSDK.init();
+
+      redirect_url_login = redirect_url;
+
+      $(".blasting-follow-overlay div, .accedi-sx, #login-your-mail-follow, #login-your-mail-follow-mobile, .modal-footer div").removeAttr('style');
+      $('#loggin-follow-modal').show();
+      $('body').addClass('fixed');
+      $('body').css('padding-right', scrollBarWidth);
+      $('#header').addClass('modal-aperta-fixed');
+      $('#header').css('padding-right', scrollBarWidth);
+      $('#breaking-news').addClass('modal-aperta-fixed');
+      //$('#menu-mobile-trigger').css("opacity", "0");
+      
+      $(".accedi-desk a").on("click", function() {
+        $("#login-box-follow .h3").html(message_91);
+      });
+      
+      
+      /*
+       * Quando si registra con l'intenzione di diventare social blaster gli associamo il channel di registrazione n:
+       * - email => 6
+       * - facebook (normal) => 7
+       * - facebook (no email) => 8
+       */
+      
+      $(document).on("click", "#login-facebook.generic", function (event) {
+        event.stopPropagation();
+        togglePleaseWait();
+        subscription_channel = 7;
+        FBBNLOGIN(false);
+      });
+
+      $(document).on("click", "a#login-your-mail-follow", function () {
+        $("#form-register-follow").append('<input type="hidden" id="subscription_channel" name="subscription_channel" value="6" />');
+      });
+
+      $("#accedi-mobile").on("click", function () {
+        $(".register-follow").hide();
+        $(".back-follow").show();
+        $(".accedi-mobile").hide();
+        $(".cancel-follow").show();
+        $(".cancel-follow").addClass("pull-right");
+        $("#login-content-follow").show();
+        $("#blasting-modal-login").addClass("overlay-follow-mobile");
+        $("#form-login-follow").show();
+        $("#form-recover-password-follow").hide();
+        $(".modal-backdrop").addClass("background-none");
+      });
+
+      $(".back-follow").on("click", function () {
+        $("#login-content-follow").hide();
+        $(".register-follow").show();
+        $("#login-facebook-follow").show();
+        //$("#login-google-plus-follow").show();
+        $("#login-your-mail-follow-mobile").show();
+        $(".cancel-follow").show();
+        $("#form-register-follow").hide();
+        $(".back-follow").hide();
+        $(".accedi-mobile").show();
+        $(".cancel-follow").removeClass("pull-right");
+        $('body').addClass('fixed');
+        $("#blasting-modal-login").removeClass("overlay-follow-mobile");
+        $(".modal-backdrop").removeClass("background-none");
+      });
+
+
+    }, function() {/* on close function (4° parametro di blastingModal) */   });
+
+  } else {
+
+    onclickelement.blastingModal({
+      id: 'login-no-active', //ex: follow, rating, etc..
+      titlebar: message_33,
+      close: true,
+      slogan: registration_error_01,
+      on_close_remove: true,
+      footer_html: '<br/>',
+    });
+  }
+}
+
+
+
+
+/**
+ * 
+ * @returns {undefined}
+ */
+function modalDealerLink(onclickelement, unbind) {
+  if (typeof unbind == 'undefined')
+    unbind = false;
+
+  if (unbind) {
+    onclickelement.blastingModal({}, 'unbind');
+    return {};
+  }
+  
+  new Clipboard('.btn-copy');
+  
+  onclickelement.blastingModal({
+    id: 'dealer', //ex: follow, rating, etc..
+    titlebar: dealer_share_02,
+    close: true,
+    b_logo: false,
+    slogan: dealer_share_01,
+    footer_html: false,
+    ajax_content: true,
+    ajax_url: '/app/get-dealer-link/?nid=' + onclickelement.data('nid'),
+    on_close_remove: true
+  });
+}
+
+function modalPopupAlreadySubscribed(onclickelement, unbind,msg) {
+
+    var options = options ||  {};
+
+    if (typeof unbind == 'undefined')
+        unbind = false;
+
+    if (unbind) {
+        onclickelement.blastingModal({}, 'unbind');
+        return {};
+    }
+
+    onclickelement.blastingModal({
+        id: 'subscribed-popup', //ex: follow, rating, etc..
+        titlebar: '',
+        close: true,
+        b_logo: true,
+        slogan: msg,
+        footer_html: false,
+        on_close_remove: true
+    });
+}
+
+
+//function modalLoginWelcomeCv(onclickelement, unbind) {
+//
+//
+//  if (typeof unbind == 'undefined')
+//    unbind = false;
+//
+//  if (unbind) {
+//    onclickelement.blastingModal({}, 'unbind');
+//    return {};
+//  }
+//
+//  if (typeof onclickelement == 'undefined')
+//    return false;
+//  if (typeof modal_type == 'undefined' || modal_type.length == '')
+//    var modal_type = 'all';
+//
+//  footer_html_login = '' +
+//      '<div class="accedi-sx accedi-desk">'+sc_bl_message_92+' <a href="javascript:void(0)">'+sc_bl_message_93+' &gt;&gt;</a></div>' +
+//      '<div class="back-follow"><a href="javascript:void(0)">&lt;&lt; '+sc_bl_message_94+'</a></div>' +
+//      '<div class="cancel-follow" data-dismiss="modal"><a href="javascript:void(0)">'+sc_bl_message_95+'</a></div>' +
+//      '<div id="accedi-mobile" class="accedi-mobile accedi "><a href="javascript:void(0)">'+sc_bl_message_96+' &gt;&gt;</a></div>';
+//
+//  if ((typeof email_conf_sent == 'undefined' || email_conf_sent === false) && unconfirmed_fb_user === false) {
+//
+//    onclickelement.blastingModal({
+//      id: 'welcom-cv', //ex: follow, rating, etc..
+//      titlebar: message_33,
+//      close: true,
+//      footer_html: footer_html_login,
+//      slogan: message_88,
+//      ajax_content: true,
+//      ajax_type: 'post',
+//      ajax_url: '/app/get_modal_login_follow/',
+//      ajax_post_data: {type: 'generic'},
+//      on_close_remove: true,
+//      show_if_false: 'flagLogged',
+//      destroy_var_on_close: ['redirect_url_login']
+//    }, '', function () {
+//
+//      if(flagLogged == true) {
+//        closeLatestModal();
+//        $('#modal-social-blaster').modal('show');
+//        return;
+//      } else {
+//        $('#modal-social-blaster').modal('hide');
+//      }
+//
+//      $(document).on("click", "a#login-your-mail-follow", function () {
+//        $("#form-register-follow").append('<input type="hidden" id="subscription_channel" name="subscription_channel" value="9" />');
+//      });
+//      $(".blasting-follow-overlay div, .accedi-sx, #login-your-mail-follow, #login-your-mail-follow-mobile, .modal-footer div").removeAttr('style');
+//      $('#loggin-follow-modal').show();
+//      $('body').addClass('fixed');
+//      $('body').css('padding-right', scrollBarWidth);
+//      $('#header').addClass('modal-aperta-fixed');
+//      $('#header').css('padding-right', scrollBarWidth);
+//      $('#breaking-news').addClass('modal-aperta-fixed');
+//      $('#menu-mobile-trigger').css("opacity", "0");
+//
+//      $(document).on('UserStatusChanged', function() {
+//        if(flagLogged == true) {
+//          closeLatestModal();
+//          $('#modal-social-blaster').modal('show');
+//        }else{
+//          $('#modal-social-blaster').modal('hide');
+//        }
+//      });
+//
+//
+//      $(".accedi-desk a").on("click", function() {
+//        $("#login-box-follow .h3").html(message_91);
+//      });
+//
+//      $(document).on("click", "#login-facebook.generic", function (event) {
+//        event.stopPropagation();
+//        togglePleaseWait();
+//        FBBNLOGIN(false);
+//      });
+//
+//      $("#accedi-mobile").on("click", function () {
+//        $(".register-follow").hide();
+//        $(".back-follow").show();
+//        $(".accedi-mobile").hide();
+//        $(".cancel-follow").show();
+//        $(".cancel-follow").addClass("pull-right");
+//        $("#login-content-follow").show();
+//        $("#blasting-modal-login").addClass("overlay-follow-mobile");
+//        $("#form-login-follow").show();
+//        $("#form-recover-password-follow").hide();
+//        $(".modal-backdrop").addClass("background-none");
+//      });
+//
+//      $(".back-follow").on("click", function () {
+//        $("#login-content-follow").hide();
+//        $(".register-follow").show();
+//        $("#login-facebook-follow").show();
+//        //$("#login-google-plus-follow").show();
+//        $("#login-your-mail-follow-mobile").show();
+//        $(".cancel-follow").show();
+//        $("#form-register-follow").hide();
+//        $(".back-follow").hide();
+//        $(".accedi-mobile").show();
+//        $(".cancel-follow").removeClass("pull-right");
+//        $('body').addClass('fixed');
+//        $("#blasting-modal-login").removeClass("overlay-follow-mobile");
+//        $(".modal-backdrop").removeClass("background-none");
+//      });
+//
+//    }, function() {/* on close function (4° parametro di blastingModal) */   });
+//
+//  } else {
+//
+//    onclickelement.blastingModal({
+//      id: 'login-no-active', //ex: follow, rating, etc..
+//      titlebar: message_33,
+//      close: true,
+//      slogan: registration_error_01,
+//      on_close_remove: true,
+//      footer_html: '<br/>',
+//    });
+//  }
+//}
+
+
+
+
+// Disabilitato il 26 Novembre
+
+//function modalLoginExitUser() { 
+//  
+//  if( $("#landing-login-page").length > 0 || (typeof hiddenExitModal !== 'undefined' && hiddenExitModal === true)) {
+//    return {};
+//  }
+//  
+//  var flag_exit_popup_open = false;
+//  var cexusername = 'cex2';
+//  var cexuser = getCookie(cexusername);
+//  
+//
+//  //on desktop
+//  $(document).mouseleave(function () {
+//    if(flag_exit_popup_open == false && flagLogged == false && cexuser == false 
+//      ) {
+//        flag_exit_popup_open = true;
+//        modalLoginExitUser_ext(cexusername);
+//      }
+//  });
+//  
+//  //else if mobile
+//  if(device !== 'Desktop' && readytoexitmodal_mobile == 1 )  {
+//    modalLoginExitUser_ext(cexusername);
+//  }
+//  
+//}
+//
+//function modalLoginExitUser_ext(cookiename) {
+//  var tag1 = '';
+//  var tag2 = '';
+//  if(typeof tagsname !== 'undefined') {
+//    tag1 = tagsname[0];
+//    tag2 = tagsname[1];
+//  } 
+//  setCookie(cookiename, 1, 1);
+//  d = new Date();
+//  s = d.getSeconds();
+//  //var modNum = (s < 30) ? "" : "-2";
+//  var modNum = "";
+//  $(document).blastingModal({
+//      id: 'exit-popup' + modNum, 
+//      close: true,
+//      swashin: true,
+//      on_close_remove: true,
+//      no_default_layout: true,
+//      ajax_content: true,
+//      ajax_type: 'post',
+//      ajax_url: '/app/get_modal_login_follow/',
+//      ajax_post_data: {
+//        type: 'exit-popup' + modNum,
+//        tag1: tag1,
+//        tag2: tag2
+//      },
+//    }, '', function() {
+//      
+//      window.Blasting.FacebookSDK.init();
+//      
+//      ga('send', 'event', 'NoLogPopup', 'Show' + modNum);
+//
+//      $(document).on("click", "#sign-up-mail-click", function() {
+//        $("#box-exit-facebook").fadeOut(400, function() {
+//          $("#box-exit-mail").fadeIn(400, function() {
+//            $("#form-register-follow").append('<input type="hidden" id="subscription_channel" name="subscription_channel" value="13" />');
+//          });
+//        });
+//      });
+//
+//      $(document).on("click", "#sign-up-face-click", function() {
+//        $("#box-exit-mail").fadeOut(400, function() {
+//          $("#box-exit-facebook").fadeIn(400);
+//        });
+//      });
+//      
+//     
+//      $(document).on("click", "#login-registration-follow",function() {
+//        ga('send', 'event', 'NoLogPopup', 'Click-Email' + modNum);
+//      });
+//
+//      $(document).on("click", '#login-exitusr-facebook, #login-exitusr-facebook-slogan', function (event) {
+//        ga('send', 'event', 'NoLogPopup', 'Click-Button' + modNum);
+//        event.stopPropagation();
+//        togglePleaseWait();
+//        subscription_channel = 14;
+//        FBBNLOGIN(true, ["NoLogPopup","Signup-FB" + modNum]);
+//      });
+//
+//    });
+//}

@@ -1,0 +1,1 @@
+googletag.cmd.push(function() { googletag.display('div-gpt-ad-1532919499888-0'); });

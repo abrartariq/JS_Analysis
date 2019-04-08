@@ -1,0 +1,368 @@
+var modal_idn = 0;
+/**
+ * 
+ * blastingModal 
+ * a jQuery Plugin 
+ *    
+ * @author Ottavio Fogliata 
+ * <ottavio.fogliata@webhub.it>   
+ *    
+ * @param {type} $
+ * @returns {undefined}
+ * 
+ * <usage>
+ * $(document).blastingModal();   // to open modal immediately 
+ * $("#element").blastingModal()  // to open modal on #element click 
+ *  
+ * <options> example:
+ * $("#element").blastingModal({
+ *    id: 'default', //ex: follow, rating, etc..
+ *    fade: true,
+ *    titlebar: 'Blasting Modal',
+ *    close: true,
+ *    inner_html: 'Hello World!',
+ *    footer_html: false,
+ *    ajax_content: false,
+ *    ajax_content_width: '100%',
+      ajax_content_height: '35px',
+ *    ajax_url: ''
+ *    });
+ * 
+ * <actions>
+ * $("#element").blastingModal({}, 'open'); //to open, but immediately - ignore element
+ * $("#element").blastingModal({}, 'close'); //to close
+ * 
+ * <passthrufunction>
+ * $("#element").blastingModal({*options*}, '', function() {
+ *  console.log("this is a console log in a function");
+ * });
+ *    
+ */
+(function ($) {
+
+  $.fn.blastingModal = function (options, action, _function, _onclosefunction, _callbackAfterRendering) {
+
+    /**
+     * Html
+     * @type Array|@call;join
+     */
+    var modal_structure = [
+      '<div id="blasting-modal-%id%" class="modal-id-%incr% blasting-modal modal blasting-animation fade" tabindex="-1" role="dialog" aria-labelledby="BlastingModal" aria-hidden="true">',
+      '  <div class="modal-dialog">',
+      '    <div id="modal-content-%id%" class="modal-content">',
+      '      <button type="button" id="modal-close-%id%" class="close close-rating-overlay" data-dismiss="modal">',
+      '         <span class="fa-stack fa-lg">',
+      '           <i class="fa fa-circle fa-stack-2x"></i>',
+      '           <i class="fa fa-times fa-stack-1x fa-inverse"></i>',
+      '         </span>',
+      '      </button>',      
+      '      <div id="modal-header-%id%" class="modal-header">',
+      '        <div id="modal-title-%id%" class="modal-title"></div>', //-->
+      '      </div>',
+      '      <div class="modal-body">',
+      '          <div id="modal-content-top-%id%" class="modal-content-top">',
+      '            <div id="modal-logo-%id%" class="modal-logo"></div>',
+      '            <div id="modal-slogan-%id%" class="modal-slogan"></div>', //--> 
+      '          </div>',
+      '       <div id="modal-inner-html-%id%" class="modal-inner-html"></div>', //-->
+      '      </div>',
+      '    </div>',
+      '  </div>',
+      '</div>',
+      '',
+      ''
+    ].join('');
+
+    /*
+     * @vars
+     */
+    var __return = {};
+    var __initf = {};
+    var blastingmodal = {};
+
+    /*
+     * Bootstrap Modal Options
+     * @type type
+     */
+    var bootstrap_options = {};
+    var body = $("body");
+
+    /*
+     * Settings
+     */
+    var settings = $.extend({
+      id: 'default',
+      fade: true,
+      swashin: false,
+      titlebar: 'Blasting Modal',
+      close: true,
+      slogan: '',
+      b_logo: true,
+      inner_html: '',
+      footer_html: false,
+      no_default_layout: false,
+      //--
+      ajax_content: false,
+      ajax_content_width: '100%',
+      ajax_content_height: '35px',
+      ajax_url: '',
+      ajax_type: 'get',
+      ajax_post_data: {},
+      //--
+      on_close_remove: true,
+      show_if_true : true,
+      show_if_false: false, //string
+      destroy_var_on_close: [], //variables to destroy on finish/close
+    }, options);
+
+
+    if(typeof this == 'undefined' || this.length == 0)
+      return __return;
+
+    /*
+     * init
+     * @returns {undefined}
+     */
+    var init = function () {
+
+      if (!(settings.id in __initf)) __initf[settings.id] = false;
+
+      if (__initf[settings.id] == false) {
+        if ($("#blasting-modal-" + settings.id + ".modal-id-"+modal_idn).length > 0) {
+          if (typeof scrollBarWidth === "undefined") {
+            scrollBarWidth = window.innerWidth - body.innerWidth();
+            if (scrollBarWidth < 0)
+              scrollBarWidth = 0;
+            scrollBarWidth_half = scrollBarWidth/2 + 'px';
+            scrollBarWidth = scrollBarWidth + 'px';
+          }
+
+          blastingmodal = $("#blasting-modal-" + settings.id + ".modal-id-"+modal_idn);
+          blastingmodal.on('hidden.bs.modal', function () {
+            if(settings.on_close_remove) {
+              if ($.isFunction(_onclosefunction)) {
+                _onclosefunction();
+              }
+              blastingmodal.removeData('bs.modal');
+              blastingmodal.detach();
+              for (var i = 0; i < settings.destroy_var_on_close.length; i++) {
+                window[settings.destroy_var_on_close[i]] = null;
+              }
+            }
+            body.removeClass('fixed');
+            body.css('padding-right', 0);
+            $('#header').removeClass('modal-aperta-fixed');
+            $('#header').css('padding-right', 0);
+            $('#tbn_esplosa_pixel_skin_news_1x1').css('left', '0px');
+            __initf[settings.id] = false;
+          });
+          
+          blastingmodal.on('show.bs.modal', function () {
+            setTimeout( function() {
+              $(".modal-backdrop").addClass("modal-backdrop-" + settings.id);
+            }, 1); //wait a little moment
+          });
+          
+        }
+        __initf[settings.id] = true;
+      }
+    }
+
+
+    /**
+     * Append Modal
+     * @returns {Boolean}
+     */
+    var append = function () {
+      if ($("#blasting-modal-" + settings.id).length > 0) {
+        return true;
+      } else {
+        modal_idn++;
+        var modal_structure_elab = '';
+        modal_structure_elab = modal_structure.replace(/%id%/g, settings.id);
+        modal_structure_elab = modal_structure_elab.replace(/%incr%/g, modal_idn);
+        var __body = document.getElementsByTagName("BODY")[0];
+        elChild = document.createElement('div');
+        elChild.innerHTML = modal_structure_elab;
+        __body.appendChild(elChild);
+        return true;
+      }
+    };
+
+
+    /**
+     * Prepare Modal Html & Customization
+     * @returns {unresolved}
+     */
+    var prepare = function (callback) {
+      init();
+      /*
+       * Customization
+       */
+      if (settings.fade === false) {
+        blastingmodal.removeClass("fade");
+      }
+      
+      if (settings.swashin === true) {
+        blastingmodal.removeClass("fade");
+        blastingmodal.addClass("modal-swash-in");
+      }
+
+      if(settings.titlebar === false) {
+        $("#modal-content-" + settings.id + " .modal-header").css("display","none");
+      } else {
+        $("#modal-title-" + settings.id).html(settings.titlebar);
+      }
+
+      if(settings.b_logo === false) {
+        $("#modal-logo-" + settings.id).css("display", "none");
+      }
+
+      $("#modal-slogan-" + settings.id).html(settings.slogan);
+
+      if (settings.ajax_content === false) {
+        $("#modal-inner-html-" + settings.id).html(settings.inner_html);
+      } else if (settings.ajax_content === true && settings.ajax_url.length > 0) {
+        //>> AJAX
+        $.ajax({
+          type: settings.ajax_type,
+          data: settings.ajax_post_data,
+          url: settings.ajax_url,
+        }).done(function(data) {
+          var modal_inner_html = $("#modal-inner-html-" + settings.id);
+          modal_inner_html.html(data);
+          modal_inner_html.css("width", settings.ajax_content_width);
+          modal_inner_html.css("min-height", settings.ajax_content_height);
+
+          if($.isFunction(_callbackAfterRendering)){
+            _callbackAfterRendering(settings.params_callback);
+          }
+        }).fail(function() {
+          closeLatestModal();
+        });
+        //<< end;
+      } else {
+        console.log(">>>> Blasting Modal Error: ajax settings are incomplete");
+      }
+
+      if (settings.footer_html !== false) {
+        var el_footer_html = '<div id="modal-footer-"' + settings.id + ' class="modal-footer">'
+                + settings.footer_html
+                + '</div>';
+        $("#modal-content-" + settings.id).append(el_footer_html);
+      }
+
+      if (settings.close === false) {
+        $("#modal-close-" + settings.id).remove();
+        $.extend(bootstrap_options, {backdrop: 'static'});
+      }
+      
+      if (settings.no_default_layout === true) {
+        $("#modal-header-" + settings.id).remove();
+        $("#modal-content-top-" + settings.id).remove();
+        $("#modal-footer-" + settings.id).remove();
+      }
+
+      /*
+       * Fix Body
+       */
+      body.addClass('fixed');
+      body.css('padding-right', scrollBarWidth);
+      $('#header').addClass('modal-aperta-fixed');
+      $('#header').css('padding-right', scrollBarWidth);
+      $('#tbn_esplosa_pixel_skin_news_1x1').css('left', '-'+scrollBarWidth_half);
+      callback();
+      return true;
+    };
+
+
+    /*
+     * Open Modal
+     */
+    var open = function () {
+      $.when(closeOldestBnModal()).done(function() {
+        $.when(append()).done(function () {
+          prepare(function () {
+            $("#blasting-modal-" + settings.id + "[class^=modal-id-]").not(blastingmodal).remove();
+            if ($.isFunction(_function)) {
+              _function();
+            }
+
+            var show_if_true_eval = (typeof window[settings.show_if_true] !== 'undefined') ? window[settings.show_if_true] : true;
+            var show_if_false_eval = (typeof window[settings.show_if_false] !== 'undefined') ? window[settings.show_if_false] : false;
+
+            if (show_if_true_eval == true && show_if_false_eval == false) {
+              blastingmodal.modal(bootstrap_options);
+            }
+          });
+        });
+      });
+    };
+
+    /**
+     * Removing Oldest Blasting News Modal
+     * to avoid bug about html structure
+     * @returns {*}
+     */
+    var closeOldestBnModal = function() {
+      return $("#loggin-follow-modal").remove();
+    };
+
+    /*
+     * Close Modal
+     */
+    var close = function () {
+      init();
+      blastingmodal.modal('hide');
+    };
+    
+    
+    /*
+     * Actions
+     */
+    if (action === "open") {
+      open();
+      return __return;
+    }
+    if (action === "close") {
+      close();
+      return __return;
+    }
+    if (action === "unbind") {
+      this.unbind();
+      return __return;
+    }
+
+    /*
+     * Returns
+     */
+    if (this.is(document)) {
+      open();
+    } else {
+      this.css("cursor", "pointer");
+      this.on("click", function () {
+        open();
+      });
+    }
+
+    return __return;
+    //<--
+  };
+
+}(jQuery));
+
+
+//-->
+//Addons
+
+function closeLatestModal() {
+  if ($(".modal-id-" + modal_idn).length > 0) {
+    var latest_modal = $(".modal-id-" + modal_idn);
+    modal_idn--;
+    latest_modal.modal('hide');
+    latest_modal.on('hidden.bs.modal', function () {
+      latest_modal.remove();
+    });
+  }
+
+}

@@ -1,0 +1,1288 @@
+var chiSeguireReload;
+var checkSharedNews;
+var pushItem;
+var sharedNewsFromUser;
+var sharedVideoFromUser;
+var flushShareLink;
+var tot_contacts;
+var tot_contacts_policed;
+var contact_no_policy_with_label;
+var i_do_rating = false;
+var getAdvice;
+var redirect_url_login;
+
+$(document).ready(function () {
+
+  $(document).on("click", "#login-facebook-login", function (event) {
+    event.stopPropagation();
+    FBBNLOGIN(true);
+  });
+
+  if (loggedAuthor != "") {
+    $('#login').hide();
+    $('#logged').show();
+    $('#login-mobile').hide();
+    $('#register-mobile').hide();
+
+    $('#login-follow').hide();
+    $('#logged-follow').show();
+    $('#login-mobile-follow').hide();
+    $('#register-mobile-follow').hide();
+    
+    $('#login-poll').hide();
+    $('#logged-poll').show();
+    $('#login-mobile-poll').hide();
+    $('#register-mobile-poll').hide();
+    
+    //$("#suggestion").hide();
+  }
+
+  $(document).click(function (event) {
+    $('#logged-content').hide();
+    $('.logged-button').removeClass('active');
+    $('.icon-logged-bottom').removeClass('active');
+    $('#logged').removeClass('active');
+    $('.menu-mobile-trigger').removeClass('active');
+
+    //$('#logged-content-follow').hide();
+    //$('#logged-follow').removeClass('active');
+  });
+
+  $(document).on("click", ".logged-button", function (event) {
+    event.stopPropagation();
+  });
+
+  $(document).on("click", ".logged-button", function () {
+    if ($('.logged-button').hasClass('active')) {
+      $('.logged-button').removeClass('active');
+      $('.icon-logged-bottom').removeClass('active');
+      $('#logged-content').hide();
+      $('#logged').removeClass('active');
+      if (device == "Mobile") {
+        removeBodyFixed();//in blasting generic
+      }
+    } else {
+      showTopBarElement($(this));
+//      $('.logged-button').addClass('active');
+//      $('.icon-logged-bottom').addClass('active');
+//      $('#logged-content').show();
+//      $('#logged').addClass('active');
+//      $('#search').removeClass('active');
+//      $('#search-content').hide();
+//      $('#section').removeClass('active');
+//      $('#section-bottom').removeClass('active');
+//      $('#section-content').hide();
+//      $('#edition').removeClass('active');
+//      $('#edition-bottom').removeClass('active');
+//      $('#edition-content').hide();
+    }
+  });
+
+//    $("#login-bottom").click(function() {
+//        if (loggedAuthor == "") {
+//            $("#add_err").html("");
+//            //$("#login_form").fadeIn("normal");//TODO
+//            //$("#login-form-form").show();//TODO
+//            //$("#suggestion").hide();
+//        } else {
+//            logout();
+//            //$("#edit_info_form").fadeOut("normal");//TODO ??
+//            //$("#author_like_form").fadeOut("normal");//TODO ??
+//        }
+//    });
+
+  $(document).on("click", ".logout", function () {
+    
+    logout();
+    logout_follow();
+
+
+    
+
+//        $('#tbn-header-right-loggato').hide();
+    $('#edit_info_form').hide();
+    $('#author_like_form').hide();
+    $('#tbn-header-right').show();
+    $('.follow').removeClass('touch');
+    $('.poll').removeClass('touch');
+
+
+    $('#logged').hide();
+    $('#login').show();
+    $('#login-mobile').show();
+    $('#register').show();
+    $('#register-mobile').show();
+    $('#login-content').hide();
+    $('#add_err').hide();
+    $('#add_err-follow').hide();
+    $('#add_err-poll').hide();
+    $('#login').removeClass('active');
+    $('#login-button').removeClass('active');
+    $('.menu-mobile-trigger').removeClass('active');
+
+    if (typeof flushShareLink == 'function') {
+
+      flushShareLink();
+    }
+
+  });
+  /*
+   $("#cancel_hide").click(function() {
+   $("#login_form").fadeOut("normal");
+   $("#user_name").val("");
+   $("#password").val("");
+   });
+   */
+  $(document).on("click", "#login-signin", function (e) {
+    e.preventDefault();
+    user = $("#login-user").val();
+    pwd = $("#login-password").val();
+    ps = $("#persistent-signin").is(":checked");
+    /*if (user == "" || pwd == "") {//TODO (forse mike lo fa direttamente in bootstrap)
+     $("#add_err").html("Username o password vuoti");
+     return false;
+     }*/
+      var rating_d = getBlastingRateData();
+    $.ajax({
+      type: "POST",
+      url: "/app/login/",
+      data: {
+        username: user,
+        password: pwd,
+        persistentSignin: ps,
+        srand: sessRand,
+        rating_data: JSON.stringify(rating_d)
+      },
+      success: function (jsonData) {
+        if ($(".pol-cookie-accept").length > 0) { /*to auto-accept cookie policy */ $('.pol-cookie-accept').trigger('click'); }
+        init_login(jsonData);
+          document.dispatchEvent(new CustomEvent("login-success", {
+            detail: jsonData
+        }));
+      },
+      beforeSend: function ()
+      {
+        $("#add_err").html("<img src="+cdn_resource+"/images/blasting.news/blaster.loader.gif />");
+      },
+      error: function (data)
+      {
+        $("#add_err").html(message_2);
+      }
+    });
+    return false;
+  });
+
+  checkEdit();
+
+
+
+  $(document).on("click", "#login-signin-follow", function (e) {
+    e.preventDefault();
+    user = $("#login-user-follow").val();
+    pwd = $("#login-password-follow").val();
+    ps = $("#persistent-signin-follow").is(":checked");
+    idf = $("#id_following").val();
+    /*if (user == "" || pwd == "") {//TODO (forse mike lo fa direttamente in bootstrap)
+     $("#add_err-follow").html("Username o password vuoti");
+     return false;
+     }*/
+       var rating_d = getBlastingRateData();
+    $.ajax({
+      type: "POST",
+      url: "/app/login/",
+      data: {
+        username: user,
+        password: pwd,
+        persistentSignin: ps,
+        srand: sessRand,
+        id_following: idf,
+         rating_data: JSON.stringify(rating_d)
+      },
+      success: function (jsonData) {        
+        init_login_follow(jsonData);
+        if (jsonData.status == 'Ok') {
+          click_for_share();
+/*          if (typeof BlastingArrate !== "undefined") {
+            for (var i in BlastingArrate){
+              if (!BlastingArrate.hasOwnProperty(i)) {
+                continue;
+              }
+              BlastingArrate[i]._can_rate = true;
+              if(BlastingArrate[i]._temp_rate != null){
+                  BlastingArrate[i].rate();
+                  i_do_rating = true;
+                  break;
+              }
+            }
+
+          }*/
+        }
+
+      },
+      beforeSend: function ()
+      {
+        $("#add_err-follow").html("<img src="+cdn_resource+"/images/blasting.news/blaster.loader.gif />");
+      },
+      error: function (data)
+      {
+        $("#add_err-follow").html(message_2);
+      }
+    });
+    return false;
+  });
+  
+  
+   $(document).on("click", "#login-signin-poll", function (e) {
+    e.preventDefault();
+    user = $("#login-user-poll").val();
+    pwd = $("#login-password-poll").val();
+    ps = $("#persistent-signin-poll").is(":checked");
+    idf = $("#id_following").val();
+    $('#login-content-poll').hide();
+    BlastingPoll.togglePleaseWait();
+    var rating_d = getBlastingRateData();
+    $.ajax({
+      type: "POST",
+      url: "/app/login/",
+      data: {
+        username: user,
+        password: pwd,
+        persistentSignin: ps,
+        srand: sessRand,
+        rating_data: JSON.stringify(rating_d)
+      },
+      success: function (jsonData) {
+        init_login_poll(jsonData);
+      },
+      beforeSend: function ()
+      {
+        $("#add_err-poll").html("<img src="+cdn_resource+"/images/blasting.news/blaster.loader.gif />");
+      },
+      error: function (data)
+      {
+        
+        $('#login-content-poll').show();
+        BlastingPoll.togglePleaseWait();
+        
+        $("#add_err-poll").html(message_2);
+      }
+    });
+    return false;
+  });
+
+  checkEdit_follow();
+
+  $(document).on("click", "#a-recover-password", function (e) {
+    e.preventDefault();
+    $("#form-recover-password").show();
+    $("#form-login").hide();
+    $("#add_err").html("");
+  });
+
+  $(document).on("click", "#a-recover-password-follow", function (e) {
+    e.preventDefault();
+    $("#form-recover-password-follow").show();
+    $("#form-login-follow").hide();
+    $("#add_err-follow").html("");
+  });
+  
+  $(document).on("click", "#a-recover-password-poll", function (e) {
+    e.preventDefault();
+    $("#form-recover-password-poll").show();
+    $("#form-login-poll").hide();
+    $("#add_err-poll").html("");
+  });
+
+  $(document).on("click", "#a-form-login", function (e) {
+    e.preventDefault();
+    $("#form-recover-password").hide();
+    $("#form-login").show();
+    $("#add_err").html("");
+  });
+
+  $(document).on("click", "#a-form-login-follow", function (e) {
+    e.preventDefault();
+    $("#form-recover-password-follow").hide();
+    $("#form-login-follow").show();
+    $("#add_err-follow").html("");
+  });
+  
+  $(document).on("click", "#a-form-login-poll", function (e) {
+    e.preventDefault();
+    $("#form-recover-password-poll").hide();
+    $("#form-login-poll").show();
+    $("#add_err-poll").html("");
+  });
+  
+  
+  $(document).on("click", "#a-register-poll", function() {
+    $("#login-content-poll").hide();
+    $(".register-poll").show();
+    $(".accedi-desk-poll").show();
+    if (!$("#slogan-poll-invitation").is(":visible")) {
+      $(".slogan-poll").show();
+    }
+  });
+  
+  $(document).on("click", "#a-register-poll-mobile", function() {
+    $("#login-content-poll").hide();
+    $(".register-poll").show();
+    $(".accedi-desk-poll").show();
+    if (!$("#slogan-poll-invitation").is(":visible")) {
+      $(".slogan-poll").show();
+    }
+  });
+  
+
+  $(document).on("submit", '#form-recover-password', function (e) {
+    $('#login-recover').prop("disabled",true);
+    e.preventDefault();
+    if (verifyRecoverPassword()) {
+      var email_recover = $('#email_recover').val();
+      $.ajax({
+        url: '/app/recover_password/',
+        type: "POST",
+        data: {
+          email_recover: email_recover
+        },
+        success: function (res) {
+          if (res.result == 'ok') {
+            $("#contact_email_recover_error").html("");
+            $("#contact_email_recover_error").hide();
+            $("#contact_email_recover_success").html(message_3).fadeIn();
+            setTimeout(function () {
+              $('#login-recover').prop("disabled",false);
+              $("#form-recover-password").hide();
+              $("#form-login").show();
+              $('#email_recover').val("");
+              $("#contact_email_recover_success").html("");
+
+            }, 5000);
+          } else if (res.reason == 'LSP') {
+            $('#login-recover').prop("disabled",false);
+            $("#contact_email_recover_error").html("");
+            $("#contact_email_recover_error").html(message_4).fadeIn();
+          } else if (res.reason == 'CKE') {
+            $('#login-recover').prop("disabled",false);
+            $("#contact_email_recover_error").html("");
+            $("#contact_email_recover_error").html(message_5).fadeIn();
+          } else {
+            $('#login-recover').prop("disabled",false);
+            $("#contact_email_recover_error").html("");
+            $("#contact_email_recover_error").html(message_5).fadeIn();
+          }
+        }
+      });
+    } else {
+      $('#login-recover').prop("disabled",false);
+    }
+  });
+
+  $(document).on("submit", '#form-recover-password-follow', function (e) {
+    $('#login-recover-follow').prop("disabled",true);
+    e.preventDefault();
+    if (verifyRecoverPassword_follow()) {
+      var email_recover = $('#email_recover-follow').val();
+      $.ajax({
+        url: '/app/recover_password/',
+        type: "POST",
+        data: {
+          email_recover: email_recover
+        },
+        success: function (res) {
+          if (res.result == 'ok') {
+            $("#contact_email_recover_error-follow").html("");
+            $("#contact_email_recover_error-follow").hide();
+            $("#contact_email_recover_success-follow").html(message_3).fadeIn();
+            setTimeout(function () {
+              $('#login-recover-follow').prop("disabled",false);
+              $("#form-recover-password-follow").hide();
+              $("#form-login-follow").show();
+              $('#email_recover-follow').val("");
+              $("#contact_email_recover_success-follow").html("");
+
+            }, 5000);
+          } else if (res.reason == 'LSP') {
+            $('#login-recover-follow').prop("disabled",false);
+            $("#contact_email_recover_error-follow").html("");
+            $("#contact_email_recover_error-follow").html(message_4).fadeIn();
+          } else if (res.reason == 'CKE') {
+            $('#login-recover-follow').prop("disabled",false);
+            $("#contact_email_recover_error-follow").html("");
+            $("#contact_email_recover_error-follow").html(message_5).fadeIn();
+          } else {
+            $('#login-recover-follow').prop("disabled",false);
+            $("#contact_email_recover_error-follow").html("");
+            $("#contact_email_recover_error").html(message_5).fadeIn();
+          }
+        }
+      });
+    } else {
+      $('#login-recover-follow').prop("disabled",false);
+    }
+  });
+
+ $(document).on("submit", '#form-recover-password-poll', function (e) {
+    $('#login-recover-poll').prop("disabled",true);
+    e.preventDefault();
+    if (verifyRecoverPassword_poll()) {
+      var email_recover = $('#email_recover-poll').val();
+      $.ajax({
+        url: '/app/recover_password/',
+        type: "POST",
+        data: {
+          email_recover: email_recover
+        },
+        success: function (res) {
+          if (res.result == 'ok') {
+            $("#contact_email_recover_error-poll").html("");
+            $("#contact_email_recover_error-poll").hide();
+            $("#contact_email_recover_success-poll").html(message_3).fadeIn();
+            setTimeout(function () {
+              $('#login-recover-poll').prop("disabled",false);
+              $("#form-recover-password-poll").hide();
+              $("#form-login-follow").show();
+              $('#email_recover-follow').val("");
+              $("#contact_email_recover_success-poll").html("");
+
+            }, 5000);
+          } else if (res.reason == 'LSP') {
+            $('#login-recover-poll').prop("disabled",false);
+            $("#contact_email_recover_error-poll").html("");
+            $("#contact_email_recover_error-poll").html(message_4).fadeIn();
+          } else if (res.reason == 'CKE') {
+            $('#login-recover-poll').prop("disabled",false);
+            $("#contact_email_recover_error-poll").html("");
+            $("#contact_email_recover_error-poll").html(message_5).fadeIn();
+          } else {
+            $('#login-recover-poll').prop("disabled",false);
+            $("#contact_email_recover_error-poll").html("");
+            $("#contact_email_recover_error").html(message_5).fadeIn();
+          }
+        }
+      });
+    } else {
+      $('#login-recover-poll').prop("disabled",false);
+    }
+  });
+
+
+  $(".login-camera-pencil").click(function () {
+    if (loggedAuthor == "") {
+      $('#login-button').trigger("click");
+    }
+  });
+
+});
+
+function logout() {
+  
+  delete_cookie( persistent_cookie_name );
+  delete_cookie( lgf_cookie_name );
+  
+
+   
+  $.ajax({
+    type: "POST",
+    url: "/app/logout/",
+    success: function (jsonData) {
+      jsonObj = eval(jsonData);
+      if (jsonObj.status == 'Ok')
+      {
+        dealer_status = 3;
+        dealer_status_description = 'disabled';
+        $('.login_a').text(message_33);
+        defollowingInjection();
+        followMeOwnShow();
+        loggedAuthor = "";
+        flagLogged = false;
+        loggedAuthorId = "";
+        sessRand = jsonObj.response_data.logout.session_rand;
+        checkEdit();
+        Blasting.FacebookSDK.deleteFBComments();
+        if(typeof Notifiche !== "undefined" ) {
+          if(Notifiche.getJwt() !== undefined){
+            try {
+              Notifiche.closeNotification();
+            }
+            catch (e) {
+              console.log(e.message);
+            }
+          }
+        }
+        if(typeof directliveAttendeeLogout !== "undefined") {
+          directliveAttendeeLogout();
+        }
+
+        if (typeof BlastingArrate !== "undefined") {
+          for (var i in BlastingArrate) {
+            if (!BlastingArrate.hasOwnProperty(i)) {
+              continue;
+            }
+
+            BlastingArrate[i].init(i);
+            BlastingArrate[i]._can_rate = true;
+            BlastingArrate[i]._changeDescribeText();
+          }
+
+        }
+      }
+      $(document).trigger('UserStatusChanged');
+    },
+    error: function () {
+      alert(message_6);
+    }
+  });
+  
+}
+
+function logout_follow() {
+//  Refuso:
+//  =================
+//  $.ajax({
+//    type: "POST",
+//    url: "/app/logout/",
+//    success: function (jsonData) {
+//      jsonObj = eval(jsonData);
+//      if (jsonObj.status == 'Ok')
+//      {
+//        $('.login_a').text(message_33);
+//        defollowingInjection_follow();
+//        followMeOwnShow_follow();
+//        loggedAuthor = "";
+//        flagLogged = false;
+//        sessRand = jsonObj.response_data.logout.session_rand;
+
+        if (typeof chiSeguireReload == 'function') {
+          chiSeguireReload();
+        }
+        checkEdit_follow();
+//        if(typeof Notifiche !== "undefined" ) {
+//        if(Notifiche.getJwt()  !== undefined) {
+//          Notifiche.closeNotification();
+//          }
+//        }
+//      }
+//    },
+//    error: function () {
+//      alert(message_6);
+//    }
+//  });
+}
+
+function setProfileHandlerHtml() {
+  var profileHandlerHtml = '';
+  if (flagCountry) {
+    profileHandlerHtml = "<span class='fa-stack fa-lg'><i class='fa fa-circle fa-stack-2x'></i><i class='fa fa-user fa-stack-1x fa-inverse'></i></span><a href='" + redazione_prefix_url + "/" + loggedAuthor + "/' title='" + authorFullname + "' target='_self'> " + message_7 + " </a>"
+  }
+  else {
+    profileHandlerHtml = "<span class='fa-stack fa-lg'><i class='fa fa-circle fa-stack-2x'></i><i class='fa fa-user fa-stack-1x fa-inverse'></i></span><p>" + message_7 + "</p>";
+  }
+  return profileHandlerHtml;
+}
+
+function checkEdit() {
+  // Se non sono loggato
+  if (loggedAuthor == "") {
+    //$("#welcome-msn").hide();
+    $("#profile-link").hide();
+    $("#scrivi-news").hide();
+    $('#lock').removeClass("logged");
+    $("#name-author").html("");
+
+    //invita amici e trova amici
+    $("#chk-flag-policy-send").removeAttr('checked');
+    $(".spunta").addClass("spunta-hide");
+    $(".aggiorna").addClass("aggiorna-hide");
+    $(".alert").addClass("custom-hide");
+    $(".content-box-form").addClass("content-box-form-hide");
+    $(".content-thanks").hide();
+  } else {
+    // Se sono loggato
+    $(".login-camera").hide();
+    $(".login-pencil").hide();
+    //$("#profile-link").prop("href", "/redazione/" + loggedAuthor + "/");
+    $("#logged-bottom").html("" + authorName + "<i class='icon-logged-bottom'></i></a>");
+    //if (redazione_prefix_url != false) {
+    $(".profile").html(setProfileHandlerHtml());
+    //}
+    
+    $("#loggedAuthorImage").html("<img class=\"img-responsive img-circle\" src='" + loggedAuthorImage + "'/>");
+    $("#name-author").text(authorFullname);
+
+    //invita amici e trova amici
+    /*   if (flag_policy_send) {
+     $("#chk-flag-policy-send").attr('checked', 'checked');
+     }*/
+    $(".spunta").removeClass("spunta-hide");
+    $(".aggiorna").removeClass("aggiorna-hide");
+    $(".alert").removeClass("custom-hide");
+    $('.content-box-form').removeClass('content-box-form-hide');
+    
+    switchBoxRegisterLogin();
+  }
+}
+
+function checkEdit_follow() {
+  // Se non sono loggato
+  if (loggedAuthor == "") {
+    //$("#welcome-msn-follow").hide();
+    $("#profile-link").hide();
+    $("#scrivi-news").hide();
+    $('#lock').removeClass("logged");
+    $("#name-author").html("");
+
+    $(".first-box-no-log").show();
+    $(".first-box-log").hide();
+
+    $("#li-all-my-news").hide();
+    $("#li-all-news").show();
+
+    $("#title-no-my-page").show();
+    $("#title-my-page").hide();
+
+    $("#top-news-no-my-page").show();
+    $("#top-news-my-page").hide();
+
+    $("#top-follower-no-my-page").show();
+    $("#top-follower-my-page").hide();
+
+    $(".trends").hide();
+    $(".trends-no-log").show();
+
+
+    if (typeof removeOpacity !== "undefined") {
+      removeOpacity($("#fb-send-button"));
+    }
+    //$("#fb-send-button").hide();
+
+
+
+  } else {
+    // Se sono loggato
+    $(".login-camera").hide();
+    $(".login-pencil").hide();
+    //$("#profile-link-follow").prop("href", "/redazione/" + loggedAuthor + "/");
+    $("#logged-bottom").html("" + authorName + "<i class='icon-logged-bottom'></i></a>");
+
+    $(".profile").html(setProfileHandlerHtml());
+
+    /*
+     if (redazione_prefix_url != false) {
+     $(".profile").html("<i class=\"fa fa-cog\"></i><a href='" + redazione_prefix_url + "/" + loggedAuthor + "/' title='" + authorFullname + "' target='_self'> " + message_7 + " </a>");
+     }*/
+    $("#loggedAuthorImage").html("<img class=\"img-responsive img-circle\" src='" + loggedAuthorImage + "'/>");
+    $("#name-author").text(authorFullname);
+
+    $(".first-box-no-log").hide();
+    $(".first-box-log").show();
+
+    $("#li-all-my-news").hide();
+    $("#li-all-news").show();
+
+    $("#title-no-my-page").show();
+    $("#title-my-page").hide();
+
+    $("#top-news-no-my-page").show();
+    $("#top-news-my-page").hide();
+
+    $("#top-follower-no-my-page").show();
+    $("#top-follower-my-page").hide();
+
+    $(".trends").show();
+    $(".trends-no-log").hide();
+
+    if (typeof removeOpacity !== "undefined") {
+      removeOpacity($("#fb-send-button"));
+    }
+    
+    switchBoxRegisterLogin();
+  }
+
+  if (loggedAuthor == pageAuthorSlug) {
+
+    //se sono loggato e sono nella mia blaster page
+
+    $("#li-all-my-news").show();
+    $("#li-all-news").hide();
+
+    $("#title-no-my-page").hide();
+    $("#title-my-page").show();
+
+    $("#top-news-no-my-page").hide();
+    $("#top-news-my-page").show();
+
+    $("#top-follower-no-my-page").hide();
+    $("#top-follower-my-page").show();
+
+    $(".trends").show();
+    $(".trends-no-log").hide();
+
+    if (typeof addOpacity !== "undefined") {
+      addOpacity($("#fb-send-button"));
+    }
+  }
+}
+
+function verifyRecoverPassword() {
+  var email_recover = $("#email_recover").val();
+  var fCheckMail = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  if (email_recover.lenght > 0 || email_recover == "") {
+    $('#contact_email_recover_error').text(message_8);
+    return false;
+  } else if (!fCheckMail.test($("#email_recover").val())) {
+    $('#contact_email_recover_error').text(message_8);
+    return false;
+  } else {
+    return true;
+  }
+}
+
+function verifyRecoverPassword_follow() {
+  var email_recover = $("#email_recover-follow").val();
+  var fCheckMail = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  if (email_recover.lenght > 0 || email_recover == "") {
+    $('#contact_email_recover_error-follow').text(message_8);
+    return false;
+  } else if (!fCheckMail.test($("#email_recover-follow").val())) {
+    $('#contact_email_recover_error-follow').text(message_8);
+    return false;
+  } else {
+    return true;
+  }
+}
+
+function verifyRecoverPassword_poll() {
+  var email_recover = $("#email_recover-poll").val();
+  var fCheckMail = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  if (email_recover.lenght > 0 || email_recover == "") {
+    $('#contact_email_recover_error-poll').text(message_8);
+    $('#contact_email_recover_error-poll').show();
+    return false;
+  } else if (!fCheckMail.test($("#email_recover-poll").val())) {
+    $('#contact_email_recover_error-poll').text(message_8);
+     $('#contact_email_recover_error-poll').show();
+    return false;
+  } else {
+    return true;
+  }
+}
+
+function init_login(jsonData) {
+  
+  
+  var jsonObj = eval(jsonData);
+  if (jsonObj.status == 'Ok') {
+    //console.log(jsonObj);
+    
+    injectModalLogged(jsonObj);
+
+    /*setTimeout(function() {
+     $("#suggestion").fadeOut("slow", function() {
+     $("#suggestion").fadeOut();
+     $("#logged").removeClass("active");
+     });
+
+     }, 5000);*/
+    //console.log(jsonData);
+    followingInjection(jsonObj.following_list);
+    followMeOwnHide(jsonObj.author_id_follow_class);
+    $('#login').hide();
+    $('#login-mobile').hide();
+    $('#register').hide();
+    $('#register-mobile').hide();
+    $('#logged').show();
+    $('#jPanelMenu-menu').hide();
+    $('#login-register-breadcrumb-mobile').hide();
+
+
+    $('body').removeClass("fixed")
+    $('#menu-mobile').hide();
+    $('#menu-mobile').css("opacity", "0");
+    $('#menu-mobile').css("z-index", "-1");
+    $('#menu-mobile').css("left", "-95%");
+    $('.footer').css("opacity", "1");
+
+
+    $('#menu-mobile-trigger').removeClass('active');
+    //$("#suggestion").fadeIn();
+    //$("#logged").addClass("active");
+
+    //$('#menu-mobile-trigger').trigger('click');
+
+    $("#login-user").val("");
+    $("#login-password").val("");
+    flagLogged = true;
+    Blasting.FacebookSDK.createFBComments();
+    flagCountry = jsonObj.flag_country;
+    if (flagCountry == 0) {
+      $('#nocountry').show();
+    } else {
+      $('#nocountry').hide();
+    }
+    loggedAuthor = jsonObj.response_data.login.slug;
+    authorFullname = jsonObj.response_data.login.full_name;
+      authorNickname = jsonObj.response_data.login.author_nickname;
+    authorName = jsonObj.response_data.login.user_name;
+    loggedAuthorId = jsonObj.response_data.login.user_id;
+    loggedAuthorImage = jsonObj.response_data.login.author_image;
+    redazione_prefix_url = jsonObj.response_data.login.redazione_prefix_url;
+    invitation_author_prefix_slug = jsonObj.response_data.login.invitation_author_prefix_slug;
+    share_author_prefix_slug = jsonObj.response_data.login.share_author_prefix_slug;
+    invitation_author_url = jsonObj.response_data.login.redazione_prefix_url + "/" + loggedAuthor + "/" + invitation_author_prefix_slug + "/";
+    sharedNewsFromUser = [].concat(jsonObj.response_data.login.shared_news);
+    sharedVideoFromUser = [].concat(jsonObj.response_data.login.shared_video);
+    contacts = jsonObj.response_data.login.contacts;
+    //
+    dealer_status = jsonObj.dealer_status;
+    dealer_status_description = jsonObj.dealer_status_description;
+    
+    
+    //salvo jwt
+    if(jsonObj.jwt !== undefined) {
+      window.requireNotificationLibrary(function(jsonObj){
+        if(typeof window.callbackNotificheNotLogged == 'function') {
+          window.callbackNotificheNotLogged();
+        }
+
+        window.Notifiche.setJwt(jsonObj.jwt);
+        window.Notifiche.setUserId(jsonObj.response_data.login.user_id);
+        window.Notifiche.openNotificationsWs();
+      },jsonObj);
+    }
+    if(typeof directliveAttendeeInit !== "undefined") {
+      directliveAttendeeInit();
+    }
+    if(typeof directlive_attendee_temp_value !== "undefined" && directlive_attendee_temp_value != null) {
+      directliveAttendee(directlive_attendee_temp_value);
+    }
+    updateBlastingRateData(jsonObj);
+
+    /* variabile per la modale */
+    getAdvice = jsonObj.response_data.login.getAdvice;
+
+    flag_policy_send = jsonObj.response_data.login.flag_policy_send;
+
+
+    if (typeof chiSeguireReload == 'function') {
+      chiSeguireReload();
+    }
+
+    if (typeof checkSharedNews == 'function') {
+      checkSharedNews(sharedNewsFromUser, sharedVideoFromUser);
+    }
+
+
+    checkEdit();
+    /* richiedo, solo  al login, la modale trova/invita amici */
+    if (flagLogged && typeof getAdvice != "undefined" && getAdvice != "" && !i_do_rating) {
+      getModalAdvice();
+    }
+  } else {
+    flagLogged = false;
+    $("#add_err").html(message_1);
+  }
+
+  loginEndRedirect();
+  
+  $(document).trigger('UserStatusChanged');
+
+  
+}
+
+function init_login_follow(jsonData) {
+  jsonObj = eval(jsonData);
+  if (jsonObj.status == 'Ok') {
+    injectModalLogged(jsonObj);
+    
+    if( typeof adblockManager !== 'undefined'){
+      adblockManager.callEventLoginMail();
+    }
+
+    /*setTimeout(function() {
+     $("#suggestion").fadeOut("slow", function() {
+     $("#suggestion").fadeOut();
+     $("#logged").removeClass("active");
+     });
+
+     }, 5000);*/
+    //console.log(jsonData);
+    followingInjection_follow(jsonData.following_list);
+    followMeOwnHide_follow(jsonData.author_id_follow_class);
+    $('#login').hide();
+    $('#login-mobile').hide();
+    $('#register').hide();
+    $('#register-mobile').hide();
+    $('#logged').show();
+    $('#jPanelMenu-menu').hide();
+    $('#login-register-breadcrumb-mobile').hide();
+    $('.menu-mobile-trigger').removeClass('active');
+
+    //$("#suggestion").fadeIn();
+    //$("#logged").addClass("active");
+
+    $("#login-user-follow").val("");
+    $("#login-password-follow").val("");
+    $("#add_err-follow").html("");
+    flagLogged = true;
+    flagCountry = jsonObj.flag_country;
+    Blasting.FacebookSDK.createFBComments();
+    if (flagCountry == 0) {
+      $('#nocountry').show();
+    }
+    else {
+      $('#nocountry').hide();
+    }
+    loggedAuthor = jsonObj.response_data.login.slug;
+    loggedAuthorId = jsonObj.response_data.login.user_id;
+    authorFullname = jsonObj.response_data.login.full_name;
+      authorNickname = jsonObj.response_data.login.author_nickname;
+    authorName = jsonObj.response_data.login.user_name;
+    loggedAuthorImage = jsonObj.response_data.login.author_image;
+    redazione_prefix_url = jsonObj.response_data.login.redazione_prefix_url;
+    invitation_author_prefix_slug = jsonObj.response_data.login.invitation_author_prefix_slug;
+    share_author_prefix_slug = jsonObj.response_data.login.share_author_prefix_slug;
+    invitation_author_url = jsonObj.response_data.login.redazione_prefix_url + "/" + loggedAuthor + "/" + invitation_author_prefix_slug + "/";
+
+    dealer_status = jsonObj.dealer_status;
+    dealer_status_description = jsonObj.dealer_status_description;
+
+    /* variabile per la modale */
+    getAdvice = jsonObj.response_data.login.getAdvice;
+    
+    //salvo jwt
+    if(jsonObj.jwt !== undefined) {
+
+      window.requireNotificationLibrary(function(jsonObj){
+
+        if(typeof window.callbackNotificheNotLogged == 'function') {
+          window.callbackNotificheNotLogged();
+        }
+
+        window.Notifiche.setJwt(jsonObj.jwt);
+        window.Notifiche.setUserId(jsonObj.response_data.login.user_id);
+        window.Notifiche.openNotificationsWs();
+      },jsonObj);
+    }
+    if(typeof directliveAttendeeInit !== "undefined") {
+      directliveAttendeeInit();
+    }
+    if(typeof directlive_attendee_temp_value !== "undefined" && directlive_attendee_temp_value != null) {
+      directliveAttendee(directlive_attendee_temp_value);
+    }
+
+    updateBlastingRateData(jsonObj);
+    $("#login-facebook-tracking").remove();
+    checkEdit_follow();
+    if (typeof chiSeguireReload == 'function') {
+      chiSeguireReload();
+    }
+    closeOverlay_follow();//funzione in blasting-follow.js
+
+    /* richiedo, solo  al login, la modale trova/invita amici */
+    if (flagLogged && typeof getAdvice != "undefined" && i_do_rating) {
+      getModalAdvice();
+    }
+
+  } else {
+    flagLogged = false;
+    $("#add_err-follow").html(message_1);
+  }
+ // Blasting.FacebookSDK.createFBComments();
+  loginEndRedirect();
+  $(document).trigger('UserStatusChanged');
+}
+
+function init_login_poll(jsonData) {
+  jsonObj = eval(jsonData);
+  if (jsonObj.status == 'Ok') {
+    injectModalLogged(jsonObj);
+
+    /*setTimeout(function() {
+     $("#suggestion").fadeOut("slow", function() {
+     $("#suggestion").fadeOut();
+     $("#logged").removeClass("active");
+     });
+
+     }, 5000);*/
+    //console.log(jsonData);
+    followingInjection_follow(jsonData.following_list);
+    followMeOwnHide_follow(jsonData.author_id_follow_class);
+    $('#login').hide();
+    $('#login-mobile').hide();
+    $('#register').hide();
+    $('#register-mobile').hide();
+    $('#logged').show();
+    $('#jPanelMenu-menu').hide();
+    $('#login-register-breadcrumb-mobile').hide();
+    $('.menu-mobile-trigger').removeClass('active');
+
+    //$("#suggestion").fadeIn();
+    //$("#logged").addClass("active");
+
+    $("#login-user-poll").val("");
+    $("#login-password-poll").val("");
+    $("#add_err-poll").html("");
+    flagLogged = true;
+    Blasting.FacebookSDK.createFBComments();
+    flagCountry = jsonObj.flag_country;
+    if (flagCountry == 0) {
+      $('#nocountry').show();
+    }
+    else {
+      $('#nocountry').hide();
+    }
+    loggedAuthor = jsonObj.response_data.login.slug;
+    loggedAuthorId = jsonObj.response_data.login.user_id;
+    authorFullname = jsonObj.response_data.login.full_name;
+      authorNickname = jsonObj.response_data.login.author_nickname;
+    authorName = jsonObj.response_data.login.user_name;
+    loggedAuthorImage = jsonObj.response_data.login.author_image;
+    redazione_prefix_url = jsonObj.response_data.login.redazione_prefix_url;
+    invitation_author_prefix_slug = jsonObj.response_data.login.invitation_author_prefix_slug;
+    share_author_prefix_slug = jsonObj.response_data.login.share_author_prefix_slug;
+    invitation_author_url = jsonObj.response_data.login.redazione_prefix_url + "/" + loggedAuthor + "/" + invitation_author_prefix_slug + "/";
+
+    dealer_status = jsonObj.dealer_status;
+    dealer_status_description = jsonObj.dealer_status_description;
+
+    /* variabile per la modale */
+    getAdvice = jsonObj.response_data.login.getAdvice;
+    
+     //salvo jwt
+    if(jsonObj.jwt !== undefined) {
+      window.requireNotificationLibrary(function(jsonObj){
+
+        if(typeof window.callbackNotificheNotLogged == 'function') {
+          window.callbackNotificheNotLogged();
+        }
+
+        window.Notifiche.setJwt(jsonObj.jwt);
+        window.Notifiche.setUserId(jsonObj.response_data.login.user_id);
+        window.Notifiche.openNotificationsWs();
+      },jsonObj);
+    }
+    updateBlastingRateData(jsonObj);
+    $("#login-facebook-tracking").remove();
+    checkEdit_follow();
+    if (typeof chiSeguireReload == 'function') {
+      chiSeguireReload();
+    }
+    closeOverlay_follow();//funzione in blasting-follow.js
+
+    /* richiedo, solo  al login, la modale trova/invita amici */
+    if (flagLogged && typeof getAdvice != "undefined" && i_do_rating) {
+      getModalAdvice();
+    }
+
+      BlastingPoll.updtaeVoteAfterLogin();
+  } else {
+    $('#login-content-poll').show();
+    BlastingPoll.togglePleaseWait();
+    flagLogged = false;
+    $("#add_err-poll").html(message_1);
+  }
+  loginEndRedirect();
+  $(document).trigger('UserStatusChanged');
+  
+}
+
+function loginEndRedirect() {
+  //global var redirect_url_login
+  if (typeof redirect_url_login !== "undefined") {
+    if (redirect_url_login != null) {
+
+      //redirect to social blaster landing
+      var sb_red = redirect_url_login.indexOf("/social-blaster/");
+      if (sb_red !== -1 && parseInt(dealer_status) != 1 && parseInt(dealer_status) != 2) {
+
+        //se il dealer è sospeso non lo redirigo da nessuna parte
+        if(parseInt(dealer_status) !== 4){
+          window.location.href = redirect_url_login;
+        }
+
+        //others redirect  
+      } else if (sb_red === -1) {
+        window.location.href = redirect_url_login;
+      }
+    }
+  }
+}
+
+function followingInjection(following_list) {
+  if (typeof following_list !== "undefined") {
+    $.each(following_list, function( index, value ) {
+      $('.' + value).siblings('.follow').removeClass('not-following').addClass('following');
+    });
+
+  }
+}
+
+function followingInjection_follow(following_list) {
+  if (typeof following_list !== "undefined") {
+    for (var i in following_list) {
+      if (!following_list.hasOwnProperty(i)) {
+        continue;
+      }
+
+      $('.' + following_list[i]).siblings('.follow').removeClass('not-following').addClass('following');
+    }
+
+  }
+}
+
+function followMeOwnHide(id_cr) {
+  $('.' + id_cr).parent().addClass('hide');
+}
+
+function followMeOwnHide_follow(id_cr) {
+  $('.' + id_cr).parent().addClass('hide');
+}
+
+function followMeOwnShow() {
+  $('.follow').parent().removeClass('hide');
+}
+
+function followMeOwnShow_follow() {
+  $('.follow').parent().removeClass('hide');
+}
+
+function defollowingInjection() {
+  $('.follow').removeClass('following').addClass('not-following');
+}
+
+function defollowingInjection_follow() {
+  $('.follow').removeClass('following').addClass('not-following');
+}
+
+function getModalLogin() {
+  if ($("#form-login").length == 0) {//inietto il form di login
+    $.ajax({
+      type: "POST",
+      url: "/app/get_modal_login/",
+      success: function (html) {
+
+//          if (flagLogged == false) {
+//            if ($('#social-js').length === 0) {
+//              var s = document.createElement('script');
+//              s.setAttribute('type', 'text/javascript');
+//              s.setAttribute('src', social_js_with_version);
+//              s.setAttribute('id', 'social-js');
+//              document.body.appendChild(s);
+//            }
+//          }
+        $('#login-content').html(html);
+          sessRand = document.getElementById('jsCFR').value
+      },
+      error: function (data) {
+        $("#login").append("error");
+      }
+    });
+  }
+}
+
+function injectModalLogged(jsonObj) {
+  if ($("#logged-content").length == 0 && typeof jsonObj.response_data.login.blasting_logged_HTML !== "undefined") {//inietto l'html di logged
+    $("#logged").html(jsonObj.response_data.login.blasting_logged_HTML);
+  }
+}
+
+function getModalAdvice() {
+
+
+  $.ajax({
+    type: "GET",
+    url: "/app/modaladvice/",
+    data: {action: 'getmodal', advice: getAdvice},
+    cache: false,
+    success: function (data) {
+
+      if (data != '' && data != false) {
+        $('body').append(data);
+        if(!$('#popup-poll').is(':visible')){
+           $('#modal-advice').modal('show');
+        }
+        
+      }
+    },
+    error: function (data) {
+
+    }
+  });
+
+}
+
+function updateBlastingRateData(resp) {
+  if (typeof BlastingArrate !== "undefined") {
+
+    if (resp.data_rate != null) {
+
+      var server_data_rate = eval(resp.data_rate);
+      for (var i in server_data_rate) {
+        if (!server_data_rate.hasOwnProperty(i)) {
+          continue;
+        }
+
+        if (!server_data_rate[i].data.result) {
+          BlastingArrate[server_data_rate[i].nwd]._can_rate=false;
+          BlastingArrate[server_data_rate[i].nwd]._rateCallback(server_data_rate[i].data);
+          BlastingArrate[server_data_rate[i].nwd]._updateRating(server_data_rate[i].data.data_rating);
+        }
+      }
+    }
+
+    for (var i in BlastingArrate) {
+      if (!BlastingArrate.hasOwnProperty(i)) {
+        continue;
+      }
+
+      if (BlastingArrate[i]._temp_rate != null) {
+        BlastingArrate[i].rate();
+        i_do_rating = true;
+        break;
+      }
+    }
+  }
+}
+
+function getBlastingRateData(){
+  var RatingData=null;
+
+  if (typeof BlastingArrate !== "undefined") {
+    RatingData = Array();
+    for(var i in BlastingArrate) {
+      if (!BlastingArrate.hasOwnProperty(i)) {
+        continue;
+      }
+
+      var time = $('#rate-data-'+i).data('time');
+      var dj = Array(i, BlastingArrate[i]._type, time);
+      RatingData.push(dj);
+    }
+
+  }
+  return RatingData;
+}
+
+
+function switchBoxRegisterLogin() {
+  if (flagLogged) {
+    
+    if (flagCountry == true) {
+      $("#icon-write").removeClass("hide");
+      $("#user-text-write").removeClass("hide");
+      $("#icon-country").addClass("hide");
+      $("#user-text-country").addClass("hide");
+      $(".user-li").removeClass("no-country");
+
+      
+    } else {
+      $("#icon-write").addClass("hide");
+      $("#user-text-write").addClass("hide");
+      $("#icon-country").removeClass("hide");
+      $("#user-text-country").removeClass("hide");      
+      $(".user-li").addClass("no-country");
+
+    }
+  }
+}
