@@ -74,7 +74,7 @@ const JSservices  = (fileData) => {
 
 
 const identifyServices = (services,jsLinks) => {
-	jsServices = {"Other":[]}
+	jsServices = {}
 	jsLinks.forEach(link => {
         hostname = (new URL(link)).hostname;
         done = false
@@ -85,7 +85,7 @@ const identifyServices = (services,jsLinks) => {
 			}
 		})
 		if (done === false){
-			jsServices["Other"].push(link);
+			Object.prototype.hasOwnProperty.call(jsServices,"Other") ? jsServices["Other"].push(link) : (jsServices["Other"] = [link]);
 		}
 	})
 	return jsServices;
@@ -120,7 +120,7 @@ const a = async () => {
         harFiles = readDir(dirName);
 
         services = JSservices(await readFile("jsServices.json"))
-
+        services["Other"] = []
         toPrint = {}
 
         harFiles.forEach(async (file) => {
@@ -136,20 +136,21 @@ const a = async () => {
                 getIdentifiers(tokens,content,allLinks,contentFirstParty,LinksFirstParty,JSLinks_sameOrigin,JSLinks_nonOrigin);
 
                 jsSer = identifyServices(services,JSLinks_nonOrigin);
+                // console.log(jsSer)
                 state = ""
 
                 Object.keys(services).forEach(a => {
                 	// console.log(a)
                 	state += ((Object.prototype.hasOwnProperty.call(jsSer,a) ? jsSer[a].length : 0)).toString() + " ";
                 })
-                // console.log(  file.split("/")[7], 
-                //               JSLinks_nonOrigin.length+JSLinks_sameOrigin.length,
-                //               JSLinks_sameOrigin.length ,
-                //               JSLinks_nonOrigin.length, 
-                //               state
-                //             )
+                console.log(  file.split("/")[7], 
+                              JSLinks_nonOrigin.length+JSLinks_sameOrigin.length,
+                              JSLinks_sameOrigin.length ,
+                              JSLinks_nonOrigin.length, 
+                              state
+                            )
                 toPrint[path.parse(file).name] = JSLinks_nonOrigin;
-        		console.log(toPrint)
+        		// console.log(toPrint)
             } catch(err){
                 console.log(err)
             }
