@@ -114,6 +114,20 @@ const findObj = (tokens, obj, num) => {
     })
 }
 
+//Not Working Correctly
+const jsServiceName = (map,file) => {
+    const site = file.split('/')[1]
+    const name = file.split('/')[2]
+
+    var serv = "Other";
+    const x = map.filter(a => (a.Name === name && a.JS === site));
+    if (x.length){
+        return x[0].Service;
+    }
+    else{
+        return serv;
+    }
+}
 
 
 const sepLinks = allLinks => {
@@ -221,7 +235,11 @@ var readDir = (dir, filelist) => {
 const main2 = async () => {
     try{
         list = []
-        readDir("./SameOrigin/", list)
+        readDir("./Non-Origin/", list)
+
+        const jsMapSer = await readFile("jsMapServ.json");
+        var mapping = JSON.parse(jsMapSer);
+
         list.forEach(async (a) => {
         	try{
 				let diction = {
@@ -239,16 +257,17 @@ const main2 = async () => {
 		            findObj(tokens,a,diction.identifiers[a]);
 		        })
 
-		        Object.keys(tokens).forEach(t => {
-		            Object.keys(tokens[t]).forEach(b => {
-		                console.log(a,t,b,Object.values(tokens[t][b]).reduce((x,y) => x+y))
-		                // Object.keys(tokens[t][b]).forEach(c => {
-		                //     if (tokens[t][b][c] > 0){
-		                //         console.log(a,t,b,c , tokens[t][b][c]);
-		                //     }
-		                // })
-		            })
-		        })
+                console.log(a,jsServiceName(mapping,a))
+		        // Object.keys(tokens).forEach(t => {
+		        //     Object.keys(tokens[t]).forEach(b => {
+		        //         console.log(a,t,b,Object.values(tokens[t][b]).reduce((x,y) => x+y))
+		        //         // Object.keys(tokens[t][b]).forEach(c => {
+		        //         //     if (tokens[t][b][c] > 0){
+		        //         //         console.log(a,t,b,c , tokens[t][b][c]);
+		        //         //     }
+		        //         // })
+		        //     })
+		        // })
 			        	
 	        	// allUrls = getAllStringLiterals(tree).filter(a => isURL(a));
 	            // console.log(a,findNumOfVariables(tree),findNumOfFunctions(tree),allUrls.length);

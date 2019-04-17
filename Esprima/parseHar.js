@@ -2,124 +2,250 @@ const esprima = require('esprima');
 const fs = require('fs');
 const path = require('path')
 
+//Reading a File Asynchronously
 const readFile = f => new Promise((resolve,reject) =>
     fs.readFile(f,'utf-8', (e,d) => e ? reject(e) : resolve(d) ) )
 
-
-
-// var content     = {}
-// var allLinks    = []
-// var contentFirstParty = {}
-// var LinksFirstParty = []
-// var JSLinks_sameOrigin = []
-// var JSLinks_nonOrigin = []
-
+//Check If URL2 is same same-orgin as that of url1
 const isSameOrigin = (url1,url2) => {
     let x = url1.split("//")[1].split(".")[0]
     if (x === "www"){
         let x = url1.split("//")[1].split(".")[1]
     }
     return (String((new URL(url2)).hostname).includes(x)) ? 1: 0;
-
 }
-const getIdentifiers = (tree,content,allLinks,contentFirstParty,LinksFirstParty,JSLinks_sameOrigin,JSLinks_nonOrigin) => {
 
-    main_url =tree.log.pages[0].title
+//Convert a File to Esprima Tree
+const getTree = data => new Promise((resolve, reject) => {
+    try {
+        ans = {}    
+        ans = esprima.parseScript(data, { comment: true });
+        resolve(ans)
+    } catch(err) {
+        reject(err)
+    }
+})
 
+//Check if given string is a Valid URL or not
+const isURL = (str) => {
+	if ((str.includes("http") && str.length < 9)|| (str.includes(":") && !str.includes("\/"))) { return false}
+	var validUrl = require('valid-url');
+	if (validUrl.isUri(str)){
+		return true;
+	} 
+	else {
+		return false;
+	}
+}
+
+//Get all identifiers from a Tree
+const getIdentifiers = (tree,dict) => {
     Object.keys(tree).forEach(a => {
-        Object.keys(tree[a]).forEach(b => {
-            if (b == "entries"){
-                Object.keys(tree[a][b]).forEach(c => {
-                    allLinks.push(tree[a][b][c].request.url)
-                    cur_url = tree[a][b][c].request.url;
-                    if (tree[a][b][c].response.headers.filter(a => a.name === "content-type").length) {
-                        ext = tree[a][b][c].response.headers.filter(a => a.name === "content-type")
-                        // console.log(ext)
-                        if (Object.prototype.hasOwnProperty.call(content,ext[0].value)){
-                            content[ext[0].value] += 1 
-                            if (isSameOrigin(main_url, cur_url)){
-                                if (ext[0].value.includes("javascript")) {
-                                    JSLinks_sameOrigin.push(tree[a][b][c].request.url)
-                                }
-                                contentFirstParty[ext[0].value] += 1
-                                LinksFirstParty.push(tree[a][b][c].request.url)
-                            } else {
-                                if (ext[0].value.includes("javascript")) {
-                                    JSLinks_nonOrigin.push(tree[a][b][c].request.url)
-                                }
-                            }
-                        } else {
-                            content[ext[0].value] = 1
-                            if (isSameOrigin(main_url, cur_url)){
-                                contentFirstParty[ext[0].value] = 1
-                                LinksFirstParty.push(tree[a][b][c].request.url)
-                                if (ext[0].value.includes("javascript")) {
-                                    JSLinks_sameOrigin.push(tree[a][b][c].request.url)
-                                }
-                            } else {
-                                if (ext[0].value.includes("javascript")) {
-                                    JSLinks_nonOrigin.push(tree[a][b][c].request.url)
-                                }
-                            }
-                        }
-                    }
-                })
+    	if (Array.isArray(tree[a])){
+        	tree[a].forEach(b => {
+                if (b) {
+                  getIdentifiers(b,dict);
+                }
+        	})
+        } else if (tree[a] instanceof Object){
+            getIdentifiers(tree[a],dict);
+        } else if (a === "type" && tree.type === "Identifier"){
+    		if (Object.prototype.hasOwnProperty.call(dict.identifiers,tree.name)){
+                dict.identifiers[tree.name] += 1 
+            } else {
+                dict.identifiers[tree.name] = 1
             }
-        })
-    })
+        }
+    })                   
+}
+
+//Given the tree, Returns Number of Variable Declarations in JS File.
+const findNumOfVariables = (tree) => {
+    let numOfVar = 0;
+    Object.keys(tree).forEach(a => {
+        if (Array.isArray(tree[a])){
+            tree[a].forEach(b => {numOfVar += b ? findNumOfVariables(b) : 0;})
+        } else if (tree[a] instanceof Object){
+            numOfVar +=  findNumOfVariables(tree[a]);
+        } else if (a === "type" && tree.type === "VariableDeclaration"){
+            numOfVar += 1;
+        }
+    })   
+    return numOfVar;
+}
+
+//Given the tree, Returns Number of Function Declarations in JS File.
+const findNumOfFunctions = (tree) => {
+    let numOfVar = 0;
+    Object.keys(tree).forEach(a => {
+        if (Array.isArray(tree[a])){
+            tree[a].forEach(b => {numOfVar += b ? findNumOfFunctions(b) : 0;})
+        } else if (tree[a] instanceof Object){
+            numOfVar +=  findNumOfFunctions(tree[a]);
+        } else if (a === "type" && (tree.type === "ArrowFunctionExpression" ||
+                                    tree.type === "FunctionDeclaration"       )){
+            numOfVar += 1;
+        }
+    })   
+    return numOfVar;
+}
+
+//Given the tree, Returns all String Literals in JS File.
+const getAllStringLiterals = (tree) => {
+    let literals = [];
+    Object.keys(tree).forEach(a => {
+        if (Array.isArray(tree[a])){
+            tree[a].forEach(b => { if (b) { literals.push(...getAllStringLiterals(b)) } })
+        } else if (tree[a] instanceof Object){
+            literals.push(...getAllStringLiterals(tree[a]));
+        } else if ( a === "type"  &&
+                    tree.type === "Literal" &&
+                    (tree.value instanceof String || typeof tree.value === "string" ) ) {
+            literals.push(tree.value);
+        }
+    })   
+    return literals;
+}
+
+//Categories Given Links into list of services...
+const identifyServices = (services,jsLinks) => {
+	jsServices = {}
+	jsLinks.forEach(link => {
+        hostname = (new URL(link)).hostname;
+        done = false
+		Object.keys(services).forEach(serv => {
+			if (services[serv].includes(hostname)){
+				done = true;
+				Object.prototype.hasOwnProperty.call(jsServices,serv) ? jsServices[serv].push(link) : (jsServices[serv] = [link]);
+			}
+		})
+		if (done === false){
+			Object.prototype.hasOwnProperty.call(jsServices,"Other") ? jsServices["Other"].push(link) : (jsServices["Other"] = [link]);
+		}
+	})
+	return jsServices;
 }
 
 
-const identifyServices = (services, jsLinks) => {
-    allServices = { "Advertising":[],
-                    "Services_Widgets":[],
-                    "Analytics":[],
-                    "Social_Networking":[],
-                    "Programming_Framework":[],
-                    "Other":[],
-                    "Cookie":[],
-                    "CDN":[]}
-    jsLinks.forEach( a => {
-        hostname = (new URL(a)).hostname;
-        done = false
-        Object.keys(services).forEach( b => {
-            if (hostname.includes(b)){
-                Object.prototype.hasOwnProperty.call(allServices,services[b]) ? allServices[services[b]].push(a) : allServices[services[b]] = [a];
-                done = true
-            }
-        })
-        if (done === false) {
-            Object.prototype.hasOwnProperty.call(allServices,"Other") ? allServices["Other"].push(a) : allServices["Other"] = [a];
+
+//Reading a given Directory
+var readDir = (dir, filelist) => {
+    files = fs.readdirSync(dir)
+    files.forEach(file => {
+        if (fs.statSync(path.join(dir, file)).isDirectory()) {
+            filelist = readDir(path.join(dir, file), filelist)
+        }
+        else {
+            filelist.push(path.join(dir, file))
         }
     })
-    return allServices;
+    return filelist
 }
 
-const readJSservices  = (fileData) => {
+//Given a file data, identify different services with their Domains.
+const JSservices  = (fileData) => {
     services = {}
-    fileData.split("\n").forEach(a => {
-        host = a.split("\t");
-        services[host[0]] = host[1];
+    data = JSON.parse(fileData)
+    data.forEach(i => {
+        Object.prototype.hasOwnProperty.call(services, i.categories[0]) ? services[i.categories[0]].push(...i.domains) : (services[i.categories[0]] = [...i.domains])
     })
     return services;
 }
 
-const readDir = (dirName) => {
-    allFiles = []
-    fs.readdir(dirName, (err, filenames) =>  {
-        if (err) {
-            console.log(err)
-            return;
+//Given a list of links, separate these links..
+const sepLinks = allLinks => {
+    types = 
+        {
+          Image: {
+            png: [],
+            jpg: [],
+            jpeg: [],
+            exif: [],
+            bmp:  [],
+            gif:  [],
+            ico:  []
+          },
+          Script: {
+            js: [],
+            php:[]
+          },
+          CSS: {
+            css: []
+          },
+          HTML: {
+            html: []
+          },
+          Others: {
+            other: []
+          }
         }
-        filenames.forEach( file => {
-            if (file.includes(".har")) {
-                allFiles.push(path.resolve(dirName, file));
-            }
+    allLinks.forEach(a => {
+        done = false
+        Object.keys(types).forEach(type => {
+            Object.keys(types[type]).forEach(ext => {
+                if (a.includes("."+ext)){
+                    types[type][ext].push(a)
+                    done = true
+                }
+            })
         })
-        
-    });
-    return allFiles;
+        if (done === false) {
+            types.Others.other.push(a)
+        }
+    })
+    return types;
 }
+
+//Given tokens, a token and its quantity, find the token in tokens and increase quantity.
+const findObj = (tokens, obj, num) => {
+    Object.keys(tokens).forEach(a => {
+        Object.keys(tokens[a]).forEach(b => {
+            Object.keys(tokens[a][b]).forEach(c => {
+                if (c === obj){
+                    tokens[a][b][c] += num;
+                }
+            })
+        })
+    })
+}
+
+//Main Function
+const runMe = async () => {
+    const args = process.argv;
+    if (args.length < 2) {
+        console.log("Error: node parseHar.js directory")
+    }
+    dirName = args[2];
+    harFiles = readDir(dirName);
+    services = JSservices(await readFile("jsServices.json"))
+
+
+
+}
+
+runMe();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 //Function for 1 file
 const main = async () => {
@@ -180,20 +306,21 @@ const main2 = async () => {
                 getIdentifiers(tokens,content,allLinks,contentFirstParty,LinksFirstParty,JSLinks_sameOrigin,JSLinks_nonOrigin);
 
                 jsSer = identifyServices(services,JSLinks_nonOrigin);
-                console.log(  file.split("/")[7], 
-                              JSLinks_nonOrigin.length+JSLinks_sameOrigin.length,
-                              JSLinks_sameOrigin.length ,
-                              JSLinks_nonOrigin.length, 
-                              jsSer["Analytics"].length || 0,
-                              jsSer["Advertising"].length || 0 ,
-                              jsSer["Services_Widgets"].length || 0, 
-                              jsSer["Social_Networking"].length || 0, 
-                              jsSer["CDN"].length || 0, 
-                              jsSer["Cookie"].length || 0, 
-                              jsSer["Programming_Framework"].length || 0 ,
-                              jsSer["Other"].length || 0 
-                            )
-
+                // console.log(  file.split("/")[7], 
+                //               JSLinks_nonOrigin.length+JSLinks_sameOrigin.length,
+                //               JSLinks_sameOrigin.length ,
+                //               JSLinks_nonOrigin.length, 
+                //               jsSer["Analytics"].length || 0,
+                //               jsSer["Advertising"].length || 0 ,
+                //               jsSer["Services_Widgets"].length || 0, 
+                //               jsSer["Social_Networking"].length || 0, 
+                //               jsSer["CDN"].length || 0, 
+                //               jsSer["Cookie"].length || 0, 
+                //               jsSer["Programming_Framework"].length || 0 ,
+                //               jsSer["Other"].length || 0 
+                //             )
+                serv = ["Analytics","Advertising","Services_Widgets","Social_Networking","Cookie","CDN","Programming_Framework","Other"]
+                serv.forEach(se => jsSer[se].forEach(a => console.log( se + " ", file.split('/')[7].slice(0,-4), a.split('/')[a.split('/').length -1])))
                 // JSLinks_sameOrigin.forEach(a => {
                 //     console.log(file, a, "Same-Origin");
                 // })
@@ -216,4 +343,3 @@ const main2 = async () => {
     }
 }
 
-main2()

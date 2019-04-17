@@ -109,6 +109,9 @@ const readDir = (dirName) => {
     return allFiles;
 }
 
+const jsServiceName = (map,file) => {
+    return "Other";
+}
 
 const a = async () => {
 	try{
@@ -122,6 +125,9 @@ const a = async () => {
         services = JSservices(await readFile("jsServices.json"))
         services["Other"] = []
         toPrint = {}
+
+        const jsMapSer = await readFile("jsMapServ.json");
+        var mapping = JSON.parse(jsMapSer);
 
         harFiles.forEach(async (file) => {
         	try{
@@ -143,11 +149,12 @@ const a = async () => {
                 	// console.log(a)
                 	state += ((Object.prototype.hasOwnProperty.call(jsSer,a) ? jsSer[a].length : 0)).toString() + " ";
                 })
-                console.log(  file.split("/")[7], 
-                              JSLinks_nonOrigin.length+JSLinks_sameOrigin.length,
-                              JSLinks_sameOrigin.length ,
-                              JSLinks_nonOrigin.length, 
-                              state
+                console.log(  file, 
+                              //JSLinks_nonOrigin.length+JSLinks_sameOrigin.length,
+                              //JSLinks_sameOrigin.length ,
+                              //JSLinks_nonOrigin.length, 
+                              //state
+                              jsServiceName(mapping,file.split("/")[7])
                             )
                 toPrint[path.parse(file).name] = JSLinks_nonOrigin;
         		// console.log(toPrint)
