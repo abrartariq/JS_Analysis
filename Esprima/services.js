@@ -92,22 +92,6 @@ const identifyServices = (services,jsLinks) => {
 }
 
 
-const readDir = (dirName) => {
-    allFiles = []
-    fs.readdir(dirName, (err, filenames) =>  {
-        if (err) {
-            console.log(err)
-            return;
-        }
-        filenames.forEach( file => {
-            if (file.includes(".har")) {
-                allFiles.push(path.resolve(dirName, file));
-            }
-        })
-        
-    });
-    return allFiles;
-}
 
 const jsServiceName = (map,file) => {
     return "Other";

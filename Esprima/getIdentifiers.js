@@ -1,7 +1,6 @@
 const esprima = require('esprima');
 const fs = require('fs');
 const path = require('path')
-const urlExists = require("url-exists");
 
 const readFile = f => new Promise((resolve,reject) =>
     fs.readFile(f,'utf-8', (e,d) => e ? reject(e) : resolve(d) ) )
@@ -172,6 +171,8 @@ const sepLinks = allLinks => {
     })
     return types;
 }
+
+
 const main = async () => {
     try{   
         const args = process.argv;

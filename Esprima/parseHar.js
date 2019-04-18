@@ -1,16 +1,22 @@
 const esprima = require('esprima');
 const fs = require('fs');
-const path = require('path')
+const path = require('path');
+const request = require('request');
 
 //Reading a File Asynchronously
 const readFile = f => new Promise((resolve,reject) =>
     fs.readFile(f,'utf-8', (e,d) => e ? reject(e) : resolve(d) ) )
 
+//Writing A file
+const writeFile = (f,data) => new Promise((resolve,reject) =>
+    fs.writeFile(f,data, (e) => e ? reject(e) : resolve("Done") ) )
+
+
 //Check If URL2 is same same-orgin as that of url1
 const isSameOrigin = (url1,url2) => {
     let x = url1.split("//")[1].split(".")[0]
     if (x === "www"){
-        let x = url1.split("//")[1].split(".")[1]
+        x = url1.split("//")[1].split(".")[1]
     }
     return (String((new URL(url2)).hostname).includes(x)) ? 1: 0;
 }
@@ -129,11 +135,12 @@ const identifyServices = (services,jsLinks) => {
 
 
 //Reading a given Directory
-var readDir = (dir, filelist) => {
+var readDir = (dir) => {
     files = fs.readdirSync(dir)
+    let filelist = [];
     files.forEach(file => {
         if (fs.statSync(path.join(dir, file)).isDirectory()) {
-            filelist = readDir(path.join(dir, file), filelist)
+            filelist.push(...readDir(path.join(dir, file)))
         }
         else {
             filelist.push(path.join(dir, file))
@@ -209,19 +216,153 @@ const findObj = (tokens, obj, num) => {
     })
 }
 
-//Main Function
-const runMe = async () => {
-    const args = process.argv;
-    if (args.length < 2) {
-        console.log("Error: node parseHar.js directory")
-    }
-    dirName = args[2];
-    harFiles = readDir(dirName);
-    services = JSservices(await readFile("jsServices.json"))
 
+//Download JS File and Save It
+const downloadJS = async (filename,link) => {
+    let file = fs.createWriteStream(filename);
+    await new Promise((resolve, reject) => {
+        let stream = request({
+            uri: link,
+            headers: {
+                'Accept-Encoding': 'gzip, deflate, br',
+                'Accept-Language': 'en-US,en;q=0.9,fr;q=0.8,ro;q=0.7,ru;q=0.6,la;q=0.5,pt;q=0.4,de;q=0.3',
+                'Cache-Control': 'max-age=0',
+                'Connection': 'keep-alive',
+                'Upgrade-Insecure-Requests': '1',
+                'User-Agent': 'Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.90 Mobile Safari/537.36'
+            },
+            gzip: true
+        })
+        .pipe(file)
+        .on('finish', () => {
+            console.log(`The file is finished downloading.`);
+            resolve();
+        })
+        .on('error', (error) => {
+            reject(error);
+        })
+    })
+    .catch(error => {
+        console.log(`Something happened: ${error}`);
+    });
+};
 
-
+//Parse Har File
+const parseHar = (tree,content,allLinks,contentFirstParty,LinksFirstParty,JSLinks_sameOrigin,JSLinks_nonOrigin) => {
+    main_url =tree.log.pages[0].title
+    Object.keys(tree).forEach(a => {
+        Object.keys(tree[a]).forEach(b => {
+            if (b == "entries"){
+                Object.keys(tree[a][b]).forEach(c => {
+                    allLinks.push(tree[a][b][c].request.url)
+                    cur_url = tree[a][b][c].request.url;
+                    if (tree[a][b][c].response.headers.filter(a => a.name === "content-type").length) {
+                        ext = tree[a][b][c].response.headers.filter(a => a.name === "content-type")
+                        // console.log(ext)
+                        if (Object.prototype.hasOwnProperty.call(content,ext[0].value)){
+                            content[ext[0].value] += 1 
+                            if (isSameOrigin(main_url, cur_url)){
+                                if (ext[0].value.includes("script")) {
+                                    JSLinks_sameOrigin.push(tree[a][b][c].request.url)
+                                }
+                                contentFirstParty[ext[0].value] += 1
+                                LinksFirstParty.push(tree[a][b][c].request.url)
+                            } else {
+                                if (ext[0].value.includes("script")) {
+                                    JSLinks_nonOrigin.push(tree[a][b][c].request.url)
+                                }
+                            }
+                        } else {
+                            content[ext[0].value] = 1
+                            if (isSameOrigin(main_url, cur_url)){
+                                contentFirstParty[ext[0].value] = 1
+                                LinksFirstParty.push(tree[a][b][c].request.url)
+                                if (ext[0].value.includes("script")) {
+                                    JSLinks_sameOrigin.push(tree[a][b][c].request.url)
+                                }
+                            } else {
+                                if (ext[0].value.includes("script")) {
+                                    JSLinks_nonOrigin.push(tree[a][b][c].request.url)
+                                }
+                            }
+                        }
+                    }
+                })
+            }
+        })
+    })
 }
+
+//Main Function
+/**
+ * # of JS in each Site
+ * # of same-origin JS
+ * # of non-origin
+ * Classification of non-origin links
+ * # of other Objects in Webpage
+ * JSON/CSV
+ * **/
+const runMe = async () => {
+    try{
+        const args = process.argv;
+        if (args.length < 2) {
+            console.log("Error: node parseHar.js directory")
+        }
+        const dirName = args[2];
+        let harFiles = [];
+        harFiles =  readDir(dirName);
+        console.log(harFiles)
+        const services = JSservices(await readFile("jsServices.json"))
+        services["Other"] = []
+
+        allFilesData = {}
+
+        await Promise.all( harFiles.map(async (file) => {
+            try{
+                // console.log("Parsing File ",file)
+                const content     = {}
+                const allLinks    = []
+                const contentFirstParty = {}
+                const LinksFirstParty = []
+                const JSLinks_nonOrigin = []
+                const JSLinks_sameOrigin = []
+
+                let dict = {
+                    totalJSFiles:0,
+                    sameOriginJS:0,
+                    nonOriginJS:0,
+                    jsClassification:{},
+                    otherObjects:{},  
+                };
+
+                tree = await readFile(file);
+                var tokens = JSON.parse(tree);
+
+                parseHar(tokens,content,allLinks,contentFirstParty,LinksFirstParty,JSLinks_sameOrigin,JSLinks_nonOrigin);
+                jsSer = identifyServices(services,JSLinks_nonOrigin);
+
+                let classifiedJS = jsSer;
+                dict.totalJSFiles = JSLinks_nonOrigin.length+JSLinks_sameOrigin.length;
+                dict.sameOriginJS = JSLinks_sameOrigin.length;
+                dict.nonOriginJS  = JSLinks_nonOrigin.length;
+                dict.jsClassification = classifiedJS;
+                dict.otherObjects = content;
+                dict.sameOriginLinks = JSLinks_sameOrigin;
+                allFilesData[file] = dict;
+                // console.log(dict)
+            } catch(err){
+                console.log(err)
+            }
+
+        }))
+
+        console.log("Writing Results to the file results.JSON")
+        await writeFile("results.JSON", JSON.stringify(allFilesData));
+    } catch(err){
+        console.log(err)
+    }
+}
+
 
 runMe();
 
