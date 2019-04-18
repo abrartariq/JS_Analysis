@@ -302,6 +302,88 @@ const parseHar = (tree,content,allLinks,contentFirstParty,LinksFirstParty,JSLink
  * # of other Objects in Webpage
  * JSON/CSV
  * **/
+
+const analyzeHarFile = async (file,services) => {
+    try{
+        // console.log("Parsing File ",file)
+        const content     = {}
+        const allLinks    = []
+        const contentFirstParty = {}
+        const LinksFirstParty = []
+        const JSLinks_nonOrigin = []
+        const JSLinks_sameOrigin = []
+
+        let dict = {
+            totalJSFiles:0,
+            sameOriginJS:0,
+            nonOriginJS:0,
+            jsClassification:{},
+            otherObjects:{}, 
+            sameOriginLinks:[], 
+        };
+
+        tree = await readFile(file);
+        var tokens = JSON.parse(tree);
+
+        parseHar(tokens,content,allLinks,contentFirstParty,LinksFirstParty,JSLinks_sameOrigin,JSLinks_nonOrigin);
+        jsSer = identifyServices(services,JSLinks_nonOrigin);
+
+        let classifiedJS = jsSer;
+        dict.totalJSFiles = JSLinks_nonOrigin.length+JSLinks_sameOrigin.length;
+        dict.sameOriginJS = JSLinks_sameOrigin.length;
+        dict.nonOriginJS  = JSLinks_nonOrigin.length;
+        dict.jsClassification = classifiedJS;
+        dict.otherObjects = content;
+        dict.sameOriginLinks = JSLinks_sameOrigin;
+        return dict;
+    } catch(err){
+        console.log(err)
+    }    
+}
+
+//Download the File, parse, tokenize and categorize it!
+/** Returns Following:
+ * # of variables
+ * # of URLs and their types
+ * # of Function Declarations
+ * Tokens and their appearance number
+*/
+const analyzeJSFile = async (webpage,link,type,dir) => {
+    let diction = {
+        variableDec: 0,
+        identifiers: {},
+        literals : [],
+        funcDec : 0
+    };
+    let fileName = link.split("/")[ link.split("/").length-1 ];
+    await downloadJS(path.join(dir,webpage,type,fileName),link);
+    let tree = await getTree(await readFile(path.join(dir,webpage,type,fileName)));
+    getIdentifiers(tree,diction);
+
+    var tokens = JSON.parse(await readFile("tokens.json"));
+    Object.keys(diction.identifiers).forEach(a => {
+        findObj(tokens,a,diction.identifiers[a]);
+    })
+
+    allUrls = getAllStringLiterals(tree).filter(a => isURL(a));
+
+    let dict = {
+        website: webpage, 
+        numOfVar: 0,
+        numOfFunc: 0,
+        numOfURL: 0,
+        URLtypes: {},
+        identifiers: {},
+    };
+
+
+    dict.numOfVar = findNumOfVariables(tree);
+    dict.numOfFunc = findNumOfFunctions(tree);
+    dict.numOfURL = allUrls.length;
+    dict.URLtypes = sepLinks(allUrls);
+    dict.identifiers = diction.identifiers;
+    return dict;
+}
 const runMe = async () => {
     try{
         const args = process.argv;
@@ -319,37 +401,8 @@ const runMe = async () => {
 
         await Promise.all( harFiles.map(async (file) => {
             try{
-                // console.log("Parsing File ",file)
-                const content     = {}
-                const allLinks    = []
-                const contentFirstParty = {}
-                const LinksFirstParty = []
-                const JSLinks_nonOrigin = []
-                const JSLinks_sameOrigin = []
-
-                let dict = {
-                    totalJSFiles:0,
-                    sameOriginJS:0,
-                    nonOriginJS:0,
-                    jsClassification:{},
-                    otherObjects:{},  
-                };
-
-                tree = await readFile(file);
-                var tokens = JSON.parse(tree);
-
-                parseHar(tokens,content,allLinks,contentFirstParty,LinksFirstParty,JSLinks_sameOrigin,JSLinks_nonOrigin);
-                jsSer = identifyServices(services,JSLinks_nonOrigin);
-
-                let classifiedJS = jsSer;
-                dict.totalJSFiles = JSLinks_nonOrigin.length+JSLinks_sameOrigin.length;
-                dict.sameOriginJS = JSLinks_sameOrigin.length;
-                dict.nonOriginJS  = JSLinks_nonOrigin.length;
-                dict.jsClassification = classifiedJS;
-                dict.otherObjects = content;
-                dict.sameOriginLinks = JSLinks_sameOrigin;
+                dict = await analyzeHarFile(file,services);
                 allFilesData[file] = dict;
-                // console.log(dict)
             } catch(err){
                 console.log(err)
             }
