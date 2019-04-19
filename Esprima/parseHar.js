@@ -2,6 +2,7 @@ const esprima = require('esprima');
 const fs = require('fs');
 const path = require('path');
 const request = require('request');
+const createCsvWriter = require('csv-writer').createObjectCsvWriter;  
 
 //Reading a File Asynchronously
 const readFile = f => new Promise((resolve,reject) =>
@@ -314,11 +315,12 @@ const analyzeHarFile = async (file,services) => {
         const JSLinks_sameOrigin = []
 
         let dict = {
+            website: file,
             totalJSFiles:0,
             sameOriginJS:0,
             nonOriginJS:0,
             jsClassification:{},
-            otherObjects:{}, 
+            // otherObjects:{}, 
             sameOriginLinks:[], 
         };
 
@@ -333,7 +335,7 @@ const analyzeHarFile = async (file,services) => {
         dict.sameOriginJS = JSLinks_sameOrigin.length;
         dict.nonOriginJS  = JSLinks_nonOrigin.length;
         dict.jsClassification = classifiedJS;
-        dict.otherObjects = content;
+        // dict.otherObjects = content;
         dict.sameOriginLinks = JSLinks_sameOrigin;
         return dict;
     } catch(err){
@@ -369,13 +371,13 @@ const analyzeJSFile = async (webpage,link,type,dir) => {
 
     let dict = {
         website: webpage, 
+        jsType: type,
         numOfVar: 0,
         numOfFunc: 0,
         numOfURL: 0,
         URLtypes: {},
         identifiers: {},
     };
-
 
     dict.numOfVar = findNumOfVariables(tree);
     dict.numOfFunc = findNumOfFunctions(tree);
@@ -384,6 +386,61 @@ const analyzeJSFile = async (webpage,link,type,dir) => {
     dict.identifiers = diction.identifiers;
     return dict;
 }
+
+let headers = [
+    {id:"website",title:"website"},
+    {id:"totalJSFiles",title:"totalJSFiles"},
+    {id:"sameOriginJS",title:"sameOriginJS"},
+    {id:"nonOriginJS",title:"nonOriginJS"},
+    // {id:"html",title:"html"},
+    // {id:"css",title:"css"},
+    // {id:"image",title:"image"},
+    // {id:"other",title:"other"},
+    {id:"ad",title:"ad"},
+    {id:"analytics",title:"analytics"},
+    {id:"social",title:"social"},
+    {id:"library",title:"library"},
+    {id:"utility",title:"utility"},
+    {id:"tag-manager",title:"tag-manager"},
+    {id:"video",title:"video"},
+    {id:"hosting",title:"hosting"},
+    {id:"content",title:"content"},
+    {id:"Other",title:"Other"},
+];
+//Write data in CSV File
+const writeToCSV = (data, filename,headers) => {       
+    const csvWriter = createCsvWriter({  
+        path: filename,
+        header: headers
+      });
+      
+    let dataToInsert = [];
+
+    data.forEach(item => {
+        let eachItem = {}
+        Object.keys(item).forEach(key => {
+            if(item[key] instanceof Object) {
+                Object.keys(item[key]).forEach(a => {
+                    // eachItem[a] = item[key][a].length;
+                    if(Array.isArray(item[key][a])){
+                        eachItem[a] = item[key][a].length;
+                    } else {
+                        eachItem[a] = item[key][a];
+                    }
+                })
+            } else if(Array.isArray(item[key])){
+                eachItem[key] = item[key].length;
+            } else {
+                eachItem[key] = item[key];
+            }
+        })
+        dataToInsert.push(eachItem);
+    })
+    csvWriter  
+    .writeRecords(dataToInsert)
+    .then(()=> console.log('The CSV file was written successfully'));
+}
+
 const runMe = async () => {
     try{
         const args = process.argv;
@@ -397,12 +454,12 @@ const runMe = async () => {
         const services = JSservices(await readFile("jsServices.json"))
         services["Other"] = []
 
-        allFilesData = {}
+        allFilesData = []
 
         await Promise.all( harFiles.map(async (file) => {
             try{
                 dict = await analyzeHarFile(file,services);
-                allFilesData[file] = dict;
+                allFilesData.push(dict);
             } catch(err){
                 console.log(err)
             }
@@ -410,7 +467,8 @@ const runMe = async () => {
         }))
 
         console.log("Writing Results to the file results.JSON")
-        await writeFile("results.JSON", JSON.stringify(allFilesData));
+        // await writeFile("results.JSON", JSON.stringify(allFilesData));
+        writeToCSV(allFilesData,"results.csv",headers)
     } catch(err){
         console.log(err)
     }
