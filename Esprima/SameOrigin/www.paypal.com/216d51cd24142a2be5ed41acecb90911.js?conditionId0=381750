@@ -1,1 +1,0 @@
-Bootstrapper.bindImmediate(function(){var Bootstrapper=window["Bootstrapper"];var ensightenOptions=Bootstrapper.ensightenOptions;if(dataLayer.fptiGuid&&dataLayer.fptiGuid.length>0)(new Image).src="//secure.adnxs.com/mapuid?member\x3d1961\x26user\x3d"+dataLayer.fptiGuid},1299934,326103);

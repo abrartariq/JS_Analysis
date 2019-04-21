@@ -160,6 +160,14 @@ const JSservices  = (fileData) => {
     return services;
 }
 
+//get File Size
+const getFileSize = (filename) =>  {
+    const stats = fs.statSync(filename);
+    const fileSizeInBytes = stats.size;
+    const fileSizeInMegabytes = fileSizeInBytes / 1000000.0;
+    return fileSizeInMegabytes;
+}
+
 //Given a list of links, separate these links..
 const sepLinks = allLinks => {
     types = 
@@ -225,7 +233,7 @@ const downloadJS = async (filename,link) => {
         let stream = request({
             uri: link,
             headers: {
-                'Accept-Encoding': 'gzip, deflate, br',
+                // 'Accept-Encoding': 'gzip, deflate, br',
                 'Accept-Language': 'en-US,en;q=0.9,fr;q=0.8,ro;q=0.7,ru;q=0.6,la;q=0.5,pt;q=0.4,de;q=0.3',
                 'Cache-Control': 'max-age=0',
                 'Connection': 'keep-alive',
@@ -236,10 +244,13 @@ const downloadJS = async (filename,link) => {
         })
         .pipe(file)
         .on('finish', () => {
-            console.log(`The file is finished downloading.`);
+            console.log(`Downloaded File ${filename}`)
             resolve();
         })
         .on('error', (error) => {
+            reject(error);
+        })
+        .on('timeout', (error) => {
             reject(error);
         })
     })
@@ -351,43 +362,80 @@ const analyzeHarFile = async (file,services) => {
  * Tokens and their appearance number
 */
 const analyzeJSFile = async (webpage,link,type,dir) => {
-    let diction = {
-        variableDec: 0,
-        identifiers: {},
-        literals : [],
-        funcDec : 0
-    };
-    let fileName = link.split("/")[ link.split("/").length-1 ];
-    await downloadJS(path.join(dir,webpage,type,fileName),link);
-    let tree = await getTree(await readFile(path.join(dir,webpage,type,fileName)));
-    getIdentifiers(tree,diction);
+    try{
+        let diction = {
+            variableDec: 0,
+            identifiers: {},
+            literals : [],
+            funcDec : 0
+        };
+        let fileName = link.split("/")[ link.split("/").length-1 ];
+        if (!fs.existsSync(path.join(dir,webpage,type))){
+            fs.mkdirSync(path.join(dir,webpage,type),{ recursive: true });
+        }
+        await downloadJS(path.join(dir,webpage,type,fileName.substr(1,20)),link);
+        let tree = await getTree(await readFile(path.join(dir,webpage,type,fileName.substr(1,20))));
+        getIdentifiers(tree,diction);
 
-    var tokens = JSON.parse(await readFile("tokens.json"));
-    Object.keys(diction.identifiers).forEach(a => {
-        findObj(tokens,a,diction.identifiers[a]);
-    })
+        var tokens = JSON.parse(await readFile("tokens.json"));
+        Object.keys(diction.identifiers).forEach(a => {
+            findObj(tokens,a,diction.identifiers[a]);
+        })
 
-    allUrls = getAllStringLiterals(tree).filter(a => isURL(a));
+        allUrls = getAllStringLiterals(tree).filter(a => isURL(a));
 
-    let dict = {
-        website: webpage, 
-        jsType: type,
-        numOfVar: 0,
-        numOfFunc: 0,
-        numOfURL: 0,
-        URLtypes: {},
-        identifiers: {},
-    };
+        let dict = {
+            website: webpage, 
+            jsType: type,
+            numOfVar: 0,
+            numOfFunc: 0,
+            numOfURL: 0,
+            URLtypes: {},
+            identifiers: {},
+            fileSize : 0
+        };
 
-    dict.numOfVar = findNumOfVariables(tree);
-    dict.numOfFunc = findNumOfFunctions(tree);
-    dict.numOfURL = allUrls.length;
-    dict.URLtypes = sepLinks(allUrls);
-    dict.identifiers = diction.identifiers;
-    return dict;
+        dict.numOfVar = findNumOfVariables(tree);
+        dict.numOfFunc = findNumOfFunctions(tree);
+        dict.numOfURL = allUrls.length;
+        dict.URLtypes = sepLinks(allUrls);
+        dict.identifiers = tokens;
+        dict.fileSize = getFileSize(path.join(dir,webpage,type,fileName.substr(1,20)));
+        return dict;
+    } catch(_) {
+    } 
 }
 
-let headers = [
+
+//Convert JS Dict to headersJS Format
+const convertHeadersFormat = (dict) => {
+    let newDict = {}
+    Object.keys(dict).forEach(a => {
+        if(a === "URLtypes"){
+            Object.keys(dict[a]).forEach(k => {
+                newDict[k] = Object.keys(dict[a][k]).reduce( (previous, key) => {
+                                return previous + dict[a][k][key].length;
+                            }, 0);
+            })
+        }  else if(a === "identifiers"){
+            Object.keys(dict[a]).forEach(k => {
+                let num = 0;
+                num = Object.keys(dict[a][k]).reduce((prev, q) => {
+                    newDict[q] = Object.keys(dict[a][k][q]).reduce( (prev,cur) => {
+                        return prev + parseInt(dict[a][k][q][cur]);
+                    },0);
+                    return prev +  newDict[q];
+                },0)
+                newDict[k] = num;
+            })
+        } else {
+            newDict[a] = dict[a];
+        }
+    })
+    return newDict;
+}
+// Headers for HAR files
+let headers1 = [
     {id:"website",title:"website"},
     {id:"totalJSFiles",title:"totalJSFiles"},
     {id:"sameOriginJS",title:"sameOriginJS"},
@@ -407,40 +455,105 @@ let headers = [
     {id:"content",title:"content"},
     {id:"Other",title:"Other"},
 ];
+
+//Headers for JS files
+let headers2 = [
+    {id:"website",title:"website"},
+    {id:"fileSize",title:"fileSize"},
+    {id:"jsType",title:"jsType"},
+    {id:"numOfVar",title:"numOfVar"},
+    {id:"numOfFunc",title:"numOfFunc"},
+    {id:"numOfURL",title:"numOfURL"},
+    {id:"Image",title:"Image"},
+    {id:"Script",title:"Script"},
+    {id:"CSS",title:"CSS"},
+    {id:"HTML",title:"HTML"},
+    {id:"Others",title:"Others"},
+    {id:"BrowserBOM",title: "BrowserBOM"},
+    {id:"DOM",title: "DOM"},
+    {id:"File_API",title: "File_API"},
+    {id:"ImageData",title: "ImageData"},
+    {id:"Images",title: "Images"},
+    {id:"IndexedDB",title: "IndexedDB"},
+    {id:"Window",title: "Window"},
+    {id:"Video",title: "Video"},
+    {id:"StyleSheet",title: "StyleSheet"},
+    {id:"PerformanceTiming",title: "PerformanceTiming"},
+    {id:"LoadingResource",title: "LoadingResource"},
+    {id:"XML_HTPP_Request",title:"XML_HTPP_REQUEST"},
+    {id:"RegularExpressions", title:"RegularExpressions"},
+    {id:"CryptoCurrency",title:"CryptoCurrency"},
+    {id:"Canvas_API",title:"Canvas_API"},
+    {id:"Constructor",title:"Constructor"},
+    {id:"Cookie",title:"Cookie"},
+    {id:"CSS",title:"CSS"},
+    {id:"document",title:"document"},
+    {id:"downlaod",title:"downlaod"},
+    {id:"elements",title:"elements"},
+    {id:"Event_Handlers",title:"Event_Handlers"},
+    {id:"events",title:"events"},
+    {id:"Events",title:"Events"},
+    {id:"Forms",title:"Forms"},
+    {id:"History",title:"History"},
+    {id:"Inheritance",title:"Inheritance"},
+    {id:"Interfaces",title:"Interfaces"},
+    {id:"Location",title:"Location"},
+    {id:"Methods",title:"Methods"},
+    {id:"methods",title:"methods"},
+    {id:"Navigation",title:"Navigation"},
+    {id:"Navigator",title:"Navigator"},
+    {id:"Node",title:"Node"},
+    {id:"Other",title:"Other"},
+    {id:"Popup",title:"Popup"},
+    {id:"Properties",title:"Properties"},
+    {id:"properties",title:"properties"},
+    {id:"Related",title:"Related"},
+    {id:"Screen",title:"Screen"},
+    {id:"Timing",title:"Timing"},
+    {id:"Type",title:"Type"},
+    {id:"type",title:"type"},
+    {id:"Window",title:"Window"},
+    {id:"regularExpressions",title:"regularExpressions"},
+    {id:"Mining", title:"Mining"}
+];
+
 //Write data in CSV File
-const writeToCSV = (data, filename,headers) => {       
+const writeToCSV = async (data, filename,headers) => {       
     const csvWriter = createCsvWriter({  
         path: filename,
         header: headers
       });
-      
     let dataToInsert = [];
-
     data.forEach(item => {
         let eachItem = {}
         Object.keys(item).forEach(key => {
-            if(item[key] instanceof Object) {
-                Object.keys(item[key]).forEach(a => {
-                    // eachItem[a] = item[key][a].length;
-                    if(Array.isArray(item[key][a])){
-                        eachItem[a] = item[key][a].length;
-                    } else {
-                        eachItem[a] = item[key][a];
-                    }
-                })
-            } else if(Array.isArray(item[key])){
-                eachItem[key] = item[key].length;
-            } else {
-                eachItem[key] = item[key];
+            try{
+                if( item[key] instanceof Object) {
+                    Object.keys(item[key]).forEach(a => {
+                        // eachItem[a] = item[key][a].length;
+                        if(Array.isArray(item[key][a])){
+                            eachItem[a] = item[key][a].length;
+                        } else {
+                            eachItem[a] = item[key][a];
+                        }
+                    })
+                } else if(Array.isArray(item[key])){
+                    eachItem[key] = item[key].length;
+                } else {
+                    eachItem[key] = item[key];
+                }
+            } catch(err){
+                console.log(err)
             }
         })
         dataToInsert.push(eachItem);
     })
     csvWriter  
     .writeRecords(dataToInsert)
-    .then(()=> console.log('The CSV file was written successfully'));
+    .then(()=> console.log(`The CSV file ${filename} was written successfully`));
 }
 
+//Run this file and do everything!...
 const runMe = async () => {
     try{
         const args = process.argv;
@@ -455,20 +568,37 @@ const runMe = async () => {
         services["Other"] = []
 
         allFilesData = []
-
+        allJSFilesData = []
         await Promise.all( harFiles.map(async (file) => {
             try{
                 dict = await analyzeHarFile(file,services);
                 allFilesData.push(dict);
+                await Promise.all( dict.sameOriginLinks.map(async link => {
+                    try{
+                        ans = await analyzeJSFile(file,link,"sameOrigin","./dummy")
+                        allJSFilesData.push(convertHeadersFormat(ans));
+                    } catch(_){
+
+                    }
+                }))
+                await Promise.all( Object.keys(dict.jsClassification).map(async key => {
+                    await Promise.all( dict.jsClassification[key].map(async link => {
+                        ans = await analyzeJSFile(file,link,key,"./dummy")
+                        // console.log(ans)
+                        allJSFilesData.push(convertHeadersFormat(ans));
+                    }))
+                }))
             } catch(err){
                 console.log(err)
             }
 
         }))
 
-        console.log("Writing Results to the file results.JSON")
+        console.log("Writing Results to the file results.csv")
         // await writeFile("results.JSON", JSON.stringify(allFilesData));
-        writeToCSV(allFilesData,"results.csv",headers)
+        await writeToCSV(allFilesData,"results.csv",headers1)
+        console.log("Writing Results to the file resultsjsFiles.csv")
+        await writeToCSV(allJSFilesData,"resultsjsFiles.csv",headers2)
     } catch(err){
         console.log(err)
     }

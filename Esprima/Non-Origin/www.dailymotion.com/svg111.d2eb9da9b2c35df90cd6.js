@@ -1,1 +1,0 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([[240],{Wwet:function(w,n){w.exports='<svg xmlns="http://www.w3.org/2000/svg" width="12" height="14" viewBox="0 0 12 14">\n    <path fill="#0AF" fill-rule="evenodd" d="M10.866 7.882l-8.532 5.25a1 1 0 0 1-1.524-.851V1.779A1 1 0 0 1 2.334.928l8.532 5.25a1 1 0 0 1 0 1.704z"/>\n</svg>\n'}}]);
