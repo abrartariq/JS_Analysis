@@ -1,1 +1,0 @@
-window.optimizely.push({type:"load",data:{changes:[{"name": "Bar1", "config": {"subscribe_url": "https://www.nytimes.com/subscription/inyt/lp8RODS.html?campaignId=7WWFH", "button_label": "Subscribe Today"}, "id": "9D9A5877-2714-4168-8027-7FFAD309175E", "dependencies": [], "type": "widget", "widget_id": "10649375220"}]}});
