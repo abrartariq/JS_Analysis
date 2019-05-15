@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+    <body>
+        <div id="ex"></div>
+        <div ng-app="myApp" ng-controller="customersCtrl">
+            <div>
+                <button type="button"id="run" ng-click="run()">Create 100 rows</button>
+                <button type="button"id="runlots" ng-click="runLots()">Create 1,000 rows</button>
+                <button type="button"id="clear" ng-click="clear()">Clear rows</button>
+                <button type="button"id="clear" ng-click="swapRows()">Swap rows</button>
+                <button type="button"id="clear" ng-click="add()">Add 10 rows</button>
+                <button type="button"id="clear" ng-click="update()">Update  rows</button>
+                <button type="button"id="clear" ng-click="updateStyle()">Update Style</button>
+
+
+            </div>
+            <table ng-style="styleObj">
+                <tr ng-repeat="x in names | orderBy : 'Country'">
+                    <td>{{ x.id }}</td>
+                    <td>{{ x.label }}</td>
+                </tr>
+            </table>
+        </div>
+       
+        <script src="angular.js"></script>
+        <script>
+            let x = 0
+            let XX = () => {
+                document.getElementById("ex").innerHTML = x+1
+                x+=1
+                setInterval(XX,1000);
+            }
+            XX();
+        </script>
+    </body>
+</html>

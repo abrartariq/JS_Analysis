@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="https://unpkg.com/react@16/umd/react.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js" crossorigin></script>
+  </head>
+  <body>
+      <div id="ex"></div>
+    <div>
+        <button type="button"id="run" onClick="run()">Create 100 rows</button>
+        <button type="button"id="runlots" onClick="runLots()">Create 1,000 rows</button>
+        <button type="button"id="clear" onClick="clearA()">Clear rows</button>
+        <button type="button"id="clear" onClick="swapRows()">Swap rows</button>
+        <button type="button"id="clear" onClick="add()">Add 10 rows</button>
+        <button type="button"id="clear" onClick="update()">Update  rows</button>
+        <button type="button"id="clear" onClick="updateStyle()">Update Style</button>
+
+    </div>
+    
+    <div id="root">
+    </div>
+    
+    <script src="react1.js"></script>
+    <script>
+        let x = 0
+        let XX = () => {
+          document.getElementById("ex").innerHTML = x+1
+          x+=1
+          setInterval(XX,1000);
+        }
+        XX();
+    </script>
+
+  </body>
+</html>
