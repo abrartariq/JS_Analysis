@@ -1,10 +1,10 @@
-### JavaScript Benchmarking
+# JavaScript Benchmarking
 
-# Scripts to benchmark different JS Libraries
+### Scripts to benchmark different JS Libraries
 
 Libraries: Angular, React, VanillaJS, JQuery, JQuery-Optimized (removed extra functionality)
 
-# Different Methods used to benchmark JS Libraries:
+### Different Methods used to benchmark JS Libraries:
 
   1. Loading Libarary
   2. Creating 1000 nodes in DOM
