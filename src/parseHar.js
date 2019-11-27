@@ -571,7 +571,7 @@ const runMe = async () => {
         allJSFilesData = []
         await Promise.all( harFiles.map(async (file) => {
             try{
-                dict = await analyzeHarFile(file,services);
+                const dict = await analyzeHarFile(file,services);
                 allFilesData.push(dict);
                 await Promise.all( dict.sameOriginLinks.map(async link => {
                     try{
