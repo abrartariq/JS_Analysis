@@ -1,14 +1,5 @@
 # What does it mean to add a JavaScript to a Webpage?
 
-## Abdul Manan
-
-```
-Lahore University of Management
-Science
-20100198@lums.edu.pk
-```
-## ABSTRACT
-
 Web pages often embed scripts for a variety of purposes,
 including advertising and dynamic interaction.
 Understanding embedded scripts and their purposes can not
